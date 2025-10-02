@@ -1,0 +1,121 @@
+
+/* Quitar paddings raros del menú */
+.ant-menu {
+  background-color: #000 !important;
+  border-right: 1px solid var(--secondary-color);
+  width: 100%;
+  max-width: 200px; 
+  flex-direction: column;
+}
+
+/* Ítems del menú */
+.ant-menu-item {
+  display: flex !important;
+  align-items: center !important;
+  padding-right: 0 !important;
+  height: 80px !important;   
+  color: #626161 !important;      
+  background: transparent !important;
+}
+
+.ant-menu-item:hover {
+  background-color: rgba(208, 228, 241, 0.1) !important;
+  color: #ffffff !important;     
+}
+
+
+/* Seleccionado */
+.ant-menu-item-selected {
+  background-color: transparent !important;
+  color: #ffffff !important;     
+}
+
+
+/* Iconos */
+.anticon {
+  font-size: 28px !important;   /* Escala general */
+  width: 28px !important;       /* Fuerza ancho uniforme */
+  height: 28px !important;      /* Fuerza alto uniforme */
+  display: flex;
+  align-items: center;
+  justify-content: center;      
+}
+
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/* Select */
+
+.custom-select .ant-select-selector {
+  background-color: var(--primary-color) !important;
+  color: var(--text-color) !important;
+  border-radius: 8px;
+  border: 1px solid var(--secondary-color) !important;
+}
+.custom-select .ant-select-selector:hover {
+  border: 1px solid var(--text-color) !important;
+}
+
+/* Texto seleccionado */
+.custom-select .ant-select-selection-item {
+  color: var(--secondary-color) !important;
+}
+
+/* Placeholder */
+.custom-select .ant-select-selection-placeholder {
+  color: var(--secondary-color) !important;
+}
+
+/* Icono */
+/* .custom-select .ant-select-arrow{
+  color: var(--text-color)  !important;
+} */
+
+/* Termina el Select*/
+
+/* Segmented */
+
+.custom-segmented {
+  width: 100%;                   
+  background: var(--primary-color) !important;
+  border-bottom: 1px solid var(--secondary-color) !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  display: flex;                  
+  justify-content: space-around;  
+  padding: 0;
+}
+
+.custom-segmented .ant-segmented-item{
+  flex: 1;
+  background: var(--primary-color) !important;
+  border-radius: 0 !important;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--secondary-color) !important;
+}
+
+.custom-segmented .ant-segmented-item:hover{
+  color: var(--text-color) !important; 
+}
+
+.custom-segmented .ant-segmented-item-selected{
+  color: var(--text-color) !important; 
+  font-weight: 600;
+}
+
+
+
+/* Termina el Segmented*/
+
+
+/* Contenedor de Publicacion*/
+
+.content-publicacion {
+  background-color: var(--primary-color);
+  border-bottom: 1px solid var(--secondary-color);
+  height: 20px;
+}
+
+/* Termina el Contenedor de Publicacion*/

@@ -1,13 +1,8 @@
-import './App.css'
+import AppRoutes from "./routes/Routes"
 
-function App() {
-
+function App () {
   return (
-    <>
-      <h1>Hola Programacion III</h1>
-
-      <h2>Bienvenidos a React con Vite</h2>
-    </>
+    <AppRoutes></AppRoutes>
   )
 }
 
