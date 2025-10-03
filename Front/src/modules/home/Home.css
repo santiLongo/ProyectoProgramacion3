@@ -6,6 +6,11 @@
   width: 100%;
   max-width: 200px; 
   flex-direction: column;
+  position: fixed;     /* 👈 fijo en la pantalla */
+  top: 0;
+  left: 0;
+  height: 100vh;       /* ocupa toda la altura */
+  overflow: auto;      /* por si hay muchos ítems */
 }
 
 /* Ítems del menú */
@@ -115,7 +120,53 @@
 .content-publicacion {
   background-color: var(--primary-color);
   border-bottom: 1px solid var(--secondary-color);
-  height: 20px;
+  /* display: flex; */
+  align-items: top;
 }
+
+
+/* Card de Publicacion*/
+.custom-card {
+  background-color: var(--primary-color);
+  border-radius: 0%;
+  border: 1px solid var(--secondary-color);
+}
+
+.custom-card-meta {
+  display: flex;
+  min-height: 300px;
+  max-height: 600px;
+  gap: 16px; 
+  background-color: var(--primary-color);   
+  color: var(--text-color);
+}
+
+.custom-card-meta .ant-avatar {
+  align-items: top;
+  width: 48px; /* Tamaño del avatar */
+  height: 48px; /* Tamaño del avatar */
+}
+
+.custom-card-meta .ant-card-meta-title {
+  align-items: top;
+  font-size: 18px; /* Tamaño del título */
+  font-weight: 600; /* Peso del título */
+  color: var(--text-color); /* Color del título */
+}
+
+.custom-card-meta .ant-card-meta-description {
+  display: flex;
+  align-items: center;
+  font-size: 14px; /* Tamaño de la descripción */
+  color: var(--text-color); /* Color de la descripción */
+}
+
+.custom-card-meta .ant-typography {
+  color: var(--text-color); /* Color del texto dentro de la descripción */
+}
+
+/* Termina Card de Publicacion*/
+
+
 
 /* Termina el Contenedor de Publicacion*/

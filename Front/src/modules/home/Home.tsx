@@ -8,7 +8,7 @@ import {
   SettingOutlined,
   UserOutlined
 } from '@ant-design/icons';
-import { Avatar, Col, Layout, Menu, Row, Segmented, Select, type MenuProps } from 'antd';
+import { Avatar, Card, Col, Layout, Menu, Row, Segmented, Select, type MenuProps } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import './home.css';
 import type { SegmentedLabeledOption } from 'antd/es/segmented';
@@ -48,7 +48,7 @@ const Home: React.FC = () => {
             inlineCollapsed={true}
             items={items}
           />
-        <Layout style={{ backgroundColor: 'var(--primary-color)', borderLeft: '1px solid var(--secondary-color)' }}>
+        <Layout style={{ backgroundColor: 'var(--primary-color)', borderLeft: '1px solid var(--secondary-color)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', marginLeft: 191}}>
           <Content style={{ border: 'none', backgroundColor: 'var(--primary-color)' }}>
             <Row>
               <Segmented
@@ -60,17 +60,38 @@ const Home: React.FC = () => {
             </Row>
           </Content>
           <Content className='content-publicacion' hidden={soyEmprendedor}>
-            <Row >
-              <Col span={4}>
-                <Avatar
-                  style={{ backgroundColor: 'var(--primary-color)', margin: '16px' }}
-                  size={{ xxl: 100 }}
-                  icon={<AntDesignOutlined />}
-                />
-              </Col>
-              <Col span={8}>
-              </Col>
-            </Row>
+            <Card className='custom-card'>
+              <Card.Meta
+                className='custom-card-meta'
+                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />}
+                title="Problematica Ejemplo"
+                description='descripcion de la problematica ejemplo'
+              />
+            </Card>
+            <Card className='custom-card'>
+              <Card.Meta
+                className='custom-card-meta'
+                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />}
+                title="Problematica Ejemplo"
+                description='descripcion de la problematica ejemplo'
+              />
+            </Card>
+            <Card className='custom-card'>
+              <Card.Meta
+                className='custom-card-meta'
+                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />}
+                title="Problematica Ejemplo"
+                description='descripcion de la problematica ejemplo'
+              />
+            </Card>
+            <Card className='custom-card'>
+              <Card.Meta
+                className='custom-card-meta'
+                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />}
+                title="Problematica Ejemplo"
+                description='descripcion de la problematica ejemplo'
+              />
+            </Card>
           </Content>
         </Layout>
         <Layout style={{ maxWidth: 400, backgroundColor: 'var(--primary-color)', borderLeft: '1px solid var(--secondary-color)' }}>
