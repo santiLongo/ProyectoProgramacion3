@@ -29,3 +29,7 @@
   color: var(--text-color) !important;     
 }
 
+.ant-menu .ant-menu-submenu-title .anticon{
+  font-size: 30px;
+}
+

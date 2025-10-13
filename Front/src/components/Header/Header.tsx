@@ -14,9 +14,9 @@ import { Header } from "antd/es/layout/layout";
 type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
-  { key: "1", icon: <AppstoreOutlined />, label: "Inicio" },
+  { key: "1", icon: <AppstoreOutlined />, label: "Inicio", onClick: () => { window.location.href = "/"; } },
   { key: "2", icon: <CommentOutlined />, label: "Mensajes" },
-  { key: "3", icon: <PushpinOutlined />, label: "Publicacion" },
+  { key: "3", icon: <PushpinOutlined />, label: "Mis Publicaciones", onClick: () => { window.location.href = "/gestion-propuestas"; } },
   { key: "4", icon: <SettingOutlined />, label: "Ajustes" },
   { key: "5", icon: <UserOutlined />, label: "Mi Perfil" },
 ];
@@ -31,7 +31,7 @@ const HeaderComponent: React.FC = () => {
           zIndex: 1,
           width: "100%",
           height: "100%",
-          maxHeight: 120,
+          maxHeight: 150,
           display: "flex",
           alignItems: "center",
           background: "var(--primary-color)",
@@ -55,7 +55,7 @@ const HeaderComponent: React.FC = () => {
           }}
         >
           <Avatar
-            onClick={() => console.log("Te llevo al home")}
+            onClick={() => window.location.href = "/"}
             size="large"
             src="https://api.dicebear.com/8.x/adventurer/svg?seed=RoboDev"
             icon={<AntDesignOutlined />}

@@ -1,35 +1,104 @@
 import React from "react";
-import {
-  Layout,
-} from "antd";
-import { Content } from "antd/es/layout/layout";
-import "./home.css";
-import HeaderComponent from "../../components/Header/Header";
-
-
+import { DashboardCards } from "../../components/dashboard-card/DashboardCards";
+import { PublicacionActions, type DashboardCardsProps } from "../../components/card-publicacion/CardPublicacion";
+import { CardView } from "../../components/card-view/CardView";
 
 const Home: React.FC = () => {
   const soyEmprendedor = false;
+  const cardsData: DashboardCardsProps[] = [
+    {
+      title: "Ventas del mes",
+      description: "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
+      coorpName: "ACME Corp",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Usuarios activos",
+      description: "Cantidad de logins diarios",
+      coorpName: "Beta Labs",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Ventas del mes",
+      description: "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
+      coorpName: "ACME Corp",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Usuarios activos",
+      description: "Cantidad de logins diarios",
+      coorpName: "Beta Labs",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Ventas del mes",
+      description: "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
+      coorpName: "ACME Corp",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Usuarios activos",
+      description: "Cantidad de logins diarios",
+      coorpName: "Beta Labs",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Ventas del mes",
+      description: "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
+      coorpName: "ACME Corp",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Usuarios activos",
+      description: "Cantidad de logins diarios",
+      coorpName: "Beta Labs",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Ventas del mes",
+      description: "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
+      coorpName: "ACME Corp",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Usuarios activos",
+      description: "Cantidad de logins diarios",
+      coorpName: "Beta Labs",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Ventas del mes",
+      description: "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
+      coorpName: "ACME Corp",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
+      actions: PublicacionActions,
+    },
+    {
+      title: "Usuarios activos",
+      description: "Cantidad de logins diarios",
+      coorpName: "Beta Labs",
+      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
+      actions: PublicacionActions,
+    },
+    
+  ];
+
 
   return (
     <>
-      <Layout style={{ height: " 100vh " }}>
-        <HeaderComponent></HeaderComponent>
-        <Content style={{ padding: "0 48px" }}>
-          <div
-            style={{
-              marginTop: 30,
-              padding: 24,
-              height: "100%",
-              maxHeight: 600,
-              background: "var(--text-color)",
-              borderRadius: "var(--secundary-color)",
-            }}
-          >
-            Content
-          </div>
-        </Content>
-      </Layout>
+      <CardView title="Publicaciones">
+        <DashboardCards cards={cardsData}></DashboardCards>
+      </CardView>
     </>
   );
 };
