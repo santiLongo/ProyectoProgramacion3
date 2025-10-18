@@ -2,10 +2,8 @@ import React from "react";
 import {
   AntDesignOutlined,
   AppstoreOutlined,
-  CommentOutlined,
   HolderOutlined,
   PushpinOutlined,
-  SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { type MenuProps, Menu, Avatar } from "antd";
@@ -15,13 +13,12 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
   { key: "1", icon: <AppstoreOutlined />, label: "Inicio", onClick: () => { window.location.href = "/"; } },
-  { key: "2", icon: <CommentOutlined />, label: "Mensajes" },
-  { key: "3", icon: <PushpinOutlined />, label: "Mis Publicaciones", onClick: () => { window.location.href = "/gestion-propuestas"; } },
-  { key: "4", icon: <SettingOutlined />, label: "Ajustes" },
-  { key: "5", icon: <UserOutlined />, label: "Mi Perfil" },
+  { key: "2", icon: <PushpinOutlined />, label: "Mis Publicaciones", onClick: () => { window.location.href = "/gestion-publicaciones"; } },
+  { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },
 ];
 
 const HeaderComponent: React.FC = () => {
+
   return (
     <>
       <Header

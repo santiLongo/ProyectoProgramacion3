@@ -17,8 +17,8 @@ export const CardPublicacion: React.FC<DashboardCardsProps> = ({
           border: "1px solid var(--secondary-color)",
           height: "100%",
         }}
-        actions={actions.items.map(action => (
-            <a key={action.key}>{action.label}</a>
+        actions={actions.map(action => (
+            <a key={action.key} onClick={action.onClick}>{action.label}</a>
         ))}
       >
         <div className="card-content">
@@ -42,37 +42,11 @@ export interface DashboardCardsProps {
   description: string;
   coorpName: string;
   imageUrl: string;
-  actions: TypeGestionActions | TypePublicacionActions;
+  actions: TypeActions[];
 }
 
-type TypeGestionActions = {
-  type: "gestion";
-  items: [
-    { key: "edit"; label: "Editar" },
-    { key: "delete"; label: "Eliminar" },
-    { key: "view"; label: "Ver Propuestas" }
-  ];
+type TypeActions = {
+  key: string;
+  label: string;
+  onClick?: () => undefined;
 };
-
-type TypePublicacionActions = {
-  type: "publicacion";
-  items: [
-    { key: "view"; label: "Hacer Propuesta" }
-  ];
-};
-
-export const GestionActions: TypeGestionActions = {
-  type: "gestion",
-  items: [
-    { key: "edit", label: "Editar" },
-    { key: "delete", label: "Eliminar" },
-    { key: "view", label: "Ver Propuestas" }
-  ]
-} as const; 
-
-export const PublicacionActions: TypePublicacionActions = {
-  type: "publicacion",
-  items: [
-    { key: "view", label: "Hacer Propuesta" }
-  ]
-} as const;
