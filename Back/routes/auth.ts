@@ -1,13 +1,14 @@
-import { Router } from 'express'
-import User from '../schemas/user.js'
+import  express  from 'express'
+import User from '../schemas/user.ts'
+import type { IUserLogin, IUserLoginReq } from '../schemas/user.ts'
 
-import generateUserToken from '../utils/generate-user-and-token.js'
+import generateUserToken from '../utils/generate-user-and-token.ts'
 
-const router = new Router()
+const router = express.Router()
 
 router.post('/', createUserToken)
 
-async function createUserToken(req, res, next) {
+async function createUserToken(req: IUserLoginReq, res: any, next: any) {
   console.log(`Creating user token for ${req.body.email}`)
 
   if (!req.body.email) {
@@ -29,7 +30,7 @@ async function createUserToken(req, res, next) {
     }
 
     console.log('Checking user password')
-    const result = await user.checkPassword(req.body.password)
+    const result = await user.checkPassword(req.body.password);
 
     if (result.isLocked) {
       console.error('User is locked. Sending 400 (Locked) to client')
@@ -41,7 +42,12 @@ async function createUserToken(req, res, next) {
       return res.status(401).end()
     }
 
-    const response = await generateUserToken(req, user)
+    const userLogin: IUserLogin = {
+        email: req.body.email,
+        password: req.body.password
+    }
+
+    const response = await generateUserToken(userLogin, user)
 
     res.status(201).json(response)
   } catch (err) {
