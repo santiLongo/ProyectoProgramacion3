@@ -48,5 +48,5 @@ export interface DashboardCardsProps {
 type TypeActions = {
   key: string;
   label: string;
-  onClick?: () => undefined;
+  onClick?: () => void;
 };
