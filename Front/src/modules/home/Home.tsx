@@ -15,7 +15,7 @@ const formConfigs: Array<BasicFormConfig> = [
     required: true
   },
   {
-    formControlName: 'presupuiesto',
+    formControlName: 'presupuesto',
     label: 'Presupuesto',
     type: 'form-number',
     col: 12,
