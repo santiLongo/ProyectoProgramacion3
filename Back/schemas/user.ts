@@ -53,13 +53,6 @@ export interface IUserSchema {
   estado: boolean
 }
 
-export interface IUserLoginReq {
-  body: {
-    email: string
-    password: string
-  }
-}
-
 export interface IUserLogin {
   email: string
   password: string

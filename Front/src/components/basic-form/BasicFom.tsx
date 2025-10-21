@@ -1,69 +1,3 @@
-// import React from 'react';
-// import type { FormProps } from 'antd';
-// import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
-
-// export const BasicForm : React.FC = (formulario: Form.useForm(), config: BasicFormConfig[]) => {
-//     let groupedRows: { row: number; items: BasicFormConfig[]}[] = [];
-    
-//     const map = new Map<number, BasicFormConfig[]>();
-//     for (const item of config) {
-//       if (!map.has(item.row)) map.set(item.row, []);
-//       map.get(item.row)!.push(item);
-//     }
-
-//     groupedRows = Array.from(map.entries())
-//       .map(([row, items]) => ({ row, items }))
-//       .sort((a, b) => a.row - b.row);
-    
-//     return (
-//         <>
-//             <Form
-//             form={formulario}
-//     labelCol={{ span: 8 }}
-//     wrapperCol={{ span: 16 }}
-//     style={{ maxWidth: 600 }}
-//     initialValues={{ remember: true }}
-//     autoComplete="off"
-//   >
-
-//     {{groupedRows.forEach(group => {
-//         <Row>
-//             {{group.items.forEach(item => {
-//                 <Col span={item.col}>
-//                     <Form.Item<>
-//                         label={item.label}
-//                         name={item.formControlName}
-//                         rules={[{ required: item.required === undefined? false : item.required, message: 'Este campo es requerido' }]}
-//                         hidden={item.hidden === undefined? false : item.hidden}
-//                         >
-//                             {{if(item.type === 'form-field'){
-//                                 <Input readOnly={item.readonly=== undefined? false : item.readonly}/>
-//                             }}}
-                        
-//                     </Form.Item>
-//                 </Col>
-//             });}}
-//         </Row>
-        
-//     });}}
-    
-//   </Form>
-//         </>
-//     )
-// } 
-
-// export interface BasicFormConfig{
-//     formControlName: string,
-//     type: 'form-date' | 'form-field' | 'form-number' | 'textarea' | 'checkbox' | 'combo',
-//     comboType?: string,
-//     label: string,
-//     col: 2 | 4 | 6 | 8 | 12 | 24,
-//     row: number
-//     readonly?: boolean,
-//     required?: boolean,
-//     hidden?: boolean
-// }
-
 import React from "react";
 import { Form, Input, Checkbox, Row, Col, DatePicker } from "antd";
 import type { FormInstance } from "antd/es/form";
@@ -87,7 +21,7 @@ interface BasicFormProps {
 }
 
 export const BasicForm: React.FC<BasicFormProps> = ({ form, config, onSubmit }) => {
-  // Agrupar por filas
+  // Agrupar por las rows para ordenar el codigo
   const groupedRows = Array.from(
     config.reduce((acc, item) => {
       if (!acc.has(item.row)) acc.set(item.row, []);
@@ -98,7 +32,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({ form, config, onSubmit }) 
     .map(([row, items]) => ({ row, items }))
     .sort((a, b) => a.row - b.row);
 
-  // Renderizador de campos
+  // Switch con todos los posibles campos
   const renderField = (item: BasicFormConfig) => {
     switch (item.type) {
       case "form-field":

@@ -25,7 +25,7 @@ const formConfigs: Array<BasicFormConfig> = [
   {
     formControlName: 'descripcion',
     label: 'Descripcion',
-    type: 'form-field',
+    type: 'textarea',
     col: 24,
     row: 2,
     required: true

@@ -7,7 +7,11 @@ import mongoose from 'mongoose';
 const router = express.Router();
 
 router.get('/status', (req: void, res: any) => {
-    res.status(200).send({ status:'Tamo Activo'});
+    res.status(200).send({ 
+        status:'Tamo Activo', 
+        dataBase: mongoose.connection.name,
+    });
+
     console.log('📦 Base de datos:', mongoose.connection.name);
 });
 

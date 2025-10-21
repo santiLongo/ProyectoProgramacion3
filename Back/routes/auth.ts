@@ -1,14 +1,13 @@
 import  express  from 'express'
 import User from '../schemas/user.ts'
-import type { IUserLogin, IUserLoginReq } from '../schemas/user.ts'
-
+import type { IUserLogin } from '../schemas/user.ts'
 import generateUserToken from '../utils/generate-user-and-token.ts'
 
 const router = express.Router()
 
 router.post('/', createUserToken)
 
-async function createUserToken(req: IUserLoginReq, res: any, next: any) {
+async function createUserToken(req: { body: IUserLogin }, res: any, next: any) {
   console.log(`Creating user token for ${req.body.email}`)
 
   if (!req.body.email) {
