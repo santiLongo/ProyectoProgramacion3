@@ -50,211 +50,20 @@ export const GestionPublicaciones: React.FC = () => {
 
   const cardsData: DashboardCardsProps[] = [
     {
+      id: 1,
       title: "Ventas del mes",
       description:
         "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
       coorpName: "ACME Corp",
       imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
       actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
+        { key: "edit", label: "Editar", onClick: () => setOpen(true) },
         { key: "delete", label: "Eliminar", onClick: () => undefined },
         {
           key: "view",
           label: "Ver Propuestas",
           onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Usuarios activos",
-      description: "Cantidad de logins diarios",
-      coorpName: "Beta Labs",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Ventas del mes",
-      description:
-        "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
-      coorpName: "ACME Corp",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Usuarios activos",
-      description: "Cantidad de logins diarios",
-      coorpName: "Beta Labs",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Ventas del mes",
-      description:
-        "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
-      coorpName: "ACME Corp",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Usuarios activos",
-      description: "Cantidad de logins diarios",
-      coorpName: "Beta Labs",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Ventas del mes",
-      description:
-        "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
-      coorpName: "ACME Corp",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Usuarios activos",
-      description: "Cantidad de logins diarios",
-      coorpName: "Beta Labs",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Ventas del mes",
-      description:
-        "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
-      coorpName: "ACME Corp",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Usuarios activos",
-      description: "Cantidad de logins diarios",
-      coorpName: "Beta Labs",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Ventas del mes",
-      description:
-        "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
-      coorpName: "ACME Corp",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
-          },
-        },
-      ],
-    },
-    {
-      title: "Usuarios activos",
-      description: "Cantidad de logins diarios",
-      coorpName: "Beta Labs",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=2",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => undefined },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate("./ver-propuesta");
+            navigate(`./ver-propuesta/${1}`);
           },
         },
       ],
@@ -263,6 +72,7 @@ export const GestionPublicaciones: React.FC = () => {
 
   const handleOk = () => {
     console.log("Salio todo piola");
+    console.log(form.getFieldsValue());
     setOpen(false);
   };
   const handleCancel = () => {

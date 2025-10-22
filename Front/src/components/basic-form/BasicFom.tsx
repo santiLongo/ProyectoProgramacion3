@@ -53,7 +53,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({ form, config, onSubmit }) 
   return (
     <Form
       form={form}
-      style={{ maxWidth: 800 }}
+      style={{ width: '100%' }}
       autoComplete="off"
       onFinish={onSubmit}
     >
