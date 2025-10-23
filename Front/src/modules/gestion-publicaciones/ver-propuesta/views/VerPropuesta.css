@@ -1,0 +1,9 @@
+.ant-collapse-header-text{
+    width: auto !important;
+    margin-right: 10px !important;
+    flex: none !important;
+}
+
+.ant-collapse-extra{
+    margin-right: auto;
+}

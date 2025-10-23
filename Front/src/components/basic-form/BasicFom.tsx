@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, Checkbox, Row, Col, DatePicker } from "antd";
 import type { FormInstance } from "antd/es/form";
+import { BasicCombo, Combo } from "../combo/Combo";
 
 export interface BasicFormConfig {
   formControlName: string;
@@ -45,6 +46,8 @@ export const BasicForm: React.FC<BasicFormProps> = ({ form, config, onSubmit }) 
         return <Checkbox style={{width: '100%',}} disabled={item.readonly ?? false} />;
       case "form-date":
         return <DatePicker style={{width: '100%',}}  disabled={item.readonly ?? false} />;
+      case "combo":
+        return <BasicCombo comboName={item.comboType ?? ''} readonly={item.readonly ?? false}></BasicCombo>
       default:
         return <Input style={{width: '100%',}} readOnly={item.readonly ?? false} />;
     }

@@ -1,0 +1,8 @@
+Editar la publicacion (Esto lo podria hacer),
+Eliminar la publicacion (Esto es algo mas del back),
+Hacer componente dialog (No lo veo necesario por el momento, el component Modal es muy completo),
+Hacer config de usuario (Deberia Hacerlo),
+Hacer componente de combo (Listo),
+Hacer el login (No tengo ganas personalmente),
+
+
