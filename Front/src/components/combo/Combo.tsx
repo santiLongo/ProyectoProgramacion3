@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Select } from "antd";
 import { getCombo, type ComboModel } from "./services/combo.service";
 
-interface ComboProps {
+export interface ComboProps {
   comboName: string;
   readonly?: boolean;
 }
@@ -30,7 +30,6 @@ export const BasicCombo: React.FC<ComboProps> = ({ comboName, readonly = false }
       loading={loading}
       disabled={readonly}
       style={{ width: "100%" }}
-      placeholder={`Seleccione ${comboName}`}
     />
   );
 };

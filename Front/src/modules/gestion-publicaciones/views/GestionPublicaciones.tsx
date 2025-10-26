@@ -91,7 +91,7 @@ export const GestionPublicaciones: React.FC = () => {
       </CardView>
 
       <Modal
-        title={"Enviar Propuesta"}
+        title={"Editar Publicacion"}
         width={800}
         centered
         open={open}

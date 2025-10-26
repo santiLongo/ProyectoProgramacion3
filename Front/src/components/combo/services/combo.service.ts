@@ -10,8 +10,8 @@ export const getCombo = async (comboName: string): Promise<ComboModel[]> => {
     if (!response.ok) {
       throw new Error(`Error al obtener el combo: ${response.statusText}`);
     }
-    const data: ComboModel[] = await response.json();
-    return data;
+    const json = await response.json();
+    return json.data ?? [];
   } catch (error) {
     console.error("Error en getCombo:", error);
     return [];

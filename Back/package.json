@@ -7,7 +7,9 @@
   "scripts": {
     "tsc": "tsc",
     "start": "node dist/bin/www.ts",
-    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node ./bin/www.ts"
+    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node ./bin/www.ts",
+    "migrate": "migrate-mongo",
+    "migrate-dev": "cross-env NODE_ENV=development migrate-mongo"
   },
   "keywords": [
     "node",

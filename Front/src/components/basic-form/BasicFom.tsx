@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Checkbox, Row, Col, DatePicker } from "antd";
 import type { FormInstance } from "antd/es/form";
-import { BasicCombo, Combo } from "../combo/Combo";
+import { BasicCombo } from "../combo/Combo";
 
 export interface BasicFormConfig {
   formControlName: string;

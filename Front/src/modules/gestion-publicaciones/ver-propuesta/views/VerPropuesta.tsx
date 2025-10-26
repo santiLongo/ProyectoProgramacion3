@@ -34,7 +34,7 @@ const config: BasicFormConfig[] = [
     formControlName: "estado",
     label: "Estado",
     type: "combo",
-    comboType: "ComboEstadoV1",
+    comboType: "EstadoPublicacionV1",
     row: 1,
     col: 12,
   },
@@ -55,8 +55,7 @@ const config: BasicFormConfig[] = [
   {
     formControlName: "emprededor",
     label: "Emprededor",
-    type: "combo",
-    comboType: "ComboEmprededorV1",
+    type: "form-field",
     row: 2,
     col: 12,
   },

@@ -5,6 +5,8 @@ import cors from 'cors'
 
 import statusRouter from './routes/status.ts'
 import authRouter from './routes/auth.ts'
+import comboRouter from './routes/combo-manager.ts'
+import publicacionesRouter from './routes/publicaciones.ts'
 
 const app = express();
 
@@ -16,5 +18,7 @@ app.use(cookieParser())
 
 app.use('/api', statusRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/combos', comboRouter)
+app.use('/api/publicaciones', publicacionesRouter)
 
 export default app;
