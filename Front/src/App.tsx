@@ -1,7 +1,8 @@
 import Layout, { Content } from "antd/es/layout/layout"
-import AppRoutes from "./routes/Routes"
+import AppRoutes from "./routes/AppRoutes"
 import HeaderComponent from "./components/Header/Header"
 import "./App.css"
+import MainRoutes from "./routes/MainRoutes"
 
 function App () {
   return (
@@ -9,7 +10,7 @@ function App () {
     <Layout style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         <HeaderComponent></HeaderComponent>
         <Content style={{ padding: "0 48px", flex: 1 }}>
-            <AppRoutes></AppRoutes>
+            <MainRoutes></MainRoutes>
         </Content>
       </Layout>
     </>

@@ -16,6 +16,7 @@ export class GetAllPublicacionesHandler {
 
             publicaciones.forEach((publicacion) => {
                 const data: GetAllCardsPublicaciones = {
+                    id: Number(publicacion._id),
                     titulo: publicacion.titulo,
                     descripcion: publicacion.descripcion,
                     empresaName: publicacion.empresa?.name,
@@ -35,6 +36,7 @@ export class GetAllPublicacionesHandler {
 }
 
 interface GetAllCardsPublicaciones {
+    id: number;
     titulo: string;
     descripcion: string;
     sector: string;

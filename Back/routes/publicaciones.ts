@@ -12,12 +12,14 @@ router.get('/getAll', async (req: RequestWithParams<GetAllCommand>, res: any) =>
     const response = await getAllHandler.handler(idEmpresa);
 
     if(response.length == 0){
-        res.status(400).send("No se allaron publicaciones")
+        res.status(400).send("No se encontraron publicaciones")
+        return;
     }
 
     res.status(200).send({
         response
     })
+    return;
 });
 
 export default router

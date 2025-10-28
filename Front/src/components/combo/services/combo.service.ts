@@ -1,3 +1,4 @@
+import { environments } from "../../../configs/enviroments";
 // src/services/comboService.ts
 export interface ComboModel {
   numero: number | string;
@@ -5,8 +6,10 @@ export interface ComboModel {
 }
 
 export const getCombo = async (comboName: string): Promise<ComboModel[]> => {
+ const path = environments.apiUrl;
+  
   try {
-    const response = await fetch(`http://localhost:9000/api/combos/${comboName}`);
+    const response = await fetch(path + `combos/${comboName}`);
     if (!response.ok) {
       throw new Error(`Error al obtener el combo: ${response.statusText}`);
     }

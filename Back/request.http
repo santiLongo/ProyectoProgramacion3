@@ -25,6 +25,6 @@ GET http://localhost:9000/api/combos/EstadoPublicacionV1
 GET http://localhost:9000/api/combos/SectorEmpresaV1
 
 ###
-
+GET http://localhost:9000/api/publicaciones/getAll
 
 

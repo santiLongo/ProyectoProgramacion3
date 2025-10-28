@@ -42,7 +42,7 @@ export interface DashboardCardsProps {
   title: string;
   description: string;
   coorpName: string;
-  imageUrl: string;
+  imageUrl?: string;
   actions: TypeActions[];
 }
 

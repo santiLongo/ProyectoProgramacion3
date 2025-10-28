@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DashboardCards } from "../../../components/dashboard-card/DashboardCards";
 import { type DashboardCardsProps } from "../../../components/card-publicacion/CardPublicacion";
 import { CardView } from "../../../components/card-view/CardView";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Modal, Row } from "antd";
+import { Button, Form, Modal, Row, Spin } from "antd";
+import { LoadingOutlined } from '@ant-design/icons';
 import {
   BasicForm,
   type BasicFormConfig,
 } from "../../../components/basic-form/BasicFom";
+import { getAll } from "../services/gestion-publicacion-http.service";
 
 const formConfigs: Array<BasicFormConfig> = [
   {
@@ -44,50 +46,100 @@ const formConfigs: Array<BasicFormConfig> = [
 ];
 
 export const GestionPublicaciones: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
+  const [cardsData, setCardsData] = useState<DashboardCardsProps[]>([]);
   const navigate = useNavigate();
 
-  const cardsData: DashboardCardsProps[] = [
-    {
-      id: 1,
-      title: "Ventas del mes",
-      description:
-        "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
-      coorpName: "ACME Corp",
-      imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-      actions: [
-        { key: "edit", label: "Editar", onClick: () => setOpen(true) },
-        { key: "delete", label: "Eliminar", onClick: () => undefined },
-        {
-          key: "view",
-          label: "Ver Propuestas",
-          onClick: () => {
-            navigate(`./ver-propuesta/${1}`);
-          },
-        },
-      ],
-    },
-  ];
+  // const cardsData: DashboardCardsProps[] = [
+  //   {
+  //     id: 1,
+  //     title: "Ventas del mes",
+  //     description:
+  //       "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
+  //     coorpName: "ACME Corp",
+  //     imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
+  //     actions: [
+  //       { key: "edit", label: "Editar", onClick: () => setOpen(true) },
+  //       { key: "delete", label: "Eliminar", onClick: () => undefined },
+  //       {
+  //         key: "view",
+  //         label: "Ver Propuestas",
+  //         onClick: () => {
+  //           navigate(`./ver-propuesta/${1}`);
+  //         },
+  //       },
+  //     ],
+  //   },
+  // ];
+
+  useEffect(() => {
+    const fetchData = async () =>{
+      try{
+        setLoading(true);
+        const data = await getAll(1);
+        const mappedData = data.map((item) => ({
+              id: item.id,
+              title: item.titulo,
+              description: item.descripcion,
+              coorpName: item.empresaName,
+              imageUrl: item.empresaImg,
+              actions: [
+                { key: "edit", label: "Editar", onClick: () => setOpen(true) },
+                { key: "delete", label: "Eliminar", onClick: () => undefined },
+                {
+                  key: "view",
+                  label: "Ver Propuestas",
+                  onClick: () => navigate(`./ver-propuesta/${item.id}`),
+                },
+              ],
+            }));
+        setCardsData(mappedData);
+      } catch (error) {
+        console.error("Error al obtener publicaciones:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, [navigate]);
 
   const handleOk = () => {
     console.log("Salio todo piola");
     console.log(form.getFieldsValue());
     setOpen(false);
+    // TODO: Tiene que actualizar cada vez que cierra el dialog
   };
   const handleCancel = () => {
     setOpen(false);
+    //Tiene que actualizar cada vez que cierra el dialog
   };
 
   return (
     <>
       <CardView title="Mis Publicaciones">
         <Row>
-          <Button type="primary" style={{ marginLeft: "auto" }} onClick={() => {setOpen(true)}}>
+          <Button
+            type="primary"
+            style={{ marginLeft: "auto" }}
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
             Crear Publicacion
           </Button>
         </Row>
-        <DashboardCards cards={cardsData}></DashboardCards>
+
+        {loading ? (
+          <Spin
+            indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />}
+            style={{ display: "block", marginTop: 50, textAlign: "center" }}
+          />
+        ) : (
+          <DashboardCards cards={cardsData} />
+        )}
+        
       </CardView>
 
       <Modal
