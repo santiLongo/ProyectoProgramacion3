@@ -9,9 +9,12 @@ export const login = async (values: LoginForm) => {
     try{
         const data = await post(fullUrl, body);
 
+        if(data.token == null){
+            return;
+        }
         window.localStorage.setItem('token',data.token);
         window.localStorage.setItem('user',data.user);
-        console.log(data)
+        window.location.href = '/'
         return;
     }catch (error){
         console.log('Error al logear' + error)

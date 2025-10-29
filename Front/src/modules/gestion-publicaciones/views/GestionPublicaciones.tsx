@@ -9,7 +9,8 @@ import {
   BasicForm,
   type BasicFormConfig,
 } from "../../../components/basic-form/BasicFom";
-import { getAll } from "../services/gestion-publicacion-http.service";
+import { create, getAll } from "../services/gestion-publicacion-http.service";
+import type { PublicacionFormModel } from "../models/publicacion-form.model";
 
 const formConfigs: Array<BasicFormConfig> = [
   {
@@ -21,9 +22,10 @@ const formConfigs: Array<BasicFormConfig> = [
     required: true,
   },
   {
-    formControlName: "categoria",
-    label: "Categoria",
-    type: "form-number",
+    formControlName: "sector",
+    label: "Sector",
+    type: "combo",
+    comboType: 'SectorEmpresaV1',
     col: 12,
     row: 1,
     required: true,
@@ -105,9 +107,11 @@ export const GestionPublicaciones: React.FC = () => {
     fetchData();
   }, [navigate]);
 
-  const handleOk = () => {
-    console.log("Salio todo piola");
+  const handleOk = async () => {
+    // console.log("Salio todo piola");
     console.log(form.getFieldsValue());
+    const req = form.getFieldsValue() as PublicacionFormModel;
+    await create(req);
     setOpen(false);
     // TODO: Tiene que actualizar cada vez que cierra el dialog
   };

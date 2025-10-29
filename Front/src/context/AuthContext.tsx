@@ -24,15 +24,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Redirecciones automáticas
     if (!token) {
       navigate("/login");
-    } else if (window.location.pathname === "/" || window.location.pathname === "/login") {
-      navigate("/home");
+    } else if (window.location.pathname === "/login") {
+      navigate("/");
     }
   }, [navigate]);
 
   const login = (token: string) => {
     localStorage.setItem("token", token);
     setIsAuthenticated(true);
-    navigate("/home");
+    navigate("/");
   };
 
   const logout = () => {

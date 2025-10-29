@@ -5,7 +5,13 @@ import { BasicCombo } from "../combo/Combo";
 
 export interface BasicFormConfig {
   formControlName: string;
-  type: "form-date" | "form-field" | "form-number" | "textarea" | "checkbox" | "combo";
+  type:
+    | "form-date"
+    | "form-field"
+    | "form-number"
+    | "textarea"
+    | "checkbox"
+    | "combo";
   comboType?: string;
   label: string;
   col: 2 | 4 | 6 | 8 | 12 | 24;
@@ -21,7 +27,11 @@ interface BasicFormProps {
   onSubmit?: (values: any) => void;
 }
 
-export const BasicForm: React.FC<BasicFormProps> = ({ form, config, onSubmit }) => {
+export const BasicForm: React.FC<BasicFormProps> = ({
+  form,
+  config,
+  onSubmit,
+}) => {
   // Agrupar por las rows para ordenar el codigo
   const groupedRows = Array.from(
     config.reduce((acc, item) => {
@@ -37,26 +47,56 @@ export const BasicForm: React.FC<BasicFormProps> = ({ form, config, onSubmit }) 
   const renderField = (item: BasicFormConfig) => {
     switch (item.type) {
       case "form-field":
-        return <Input style={{width: '100%',}} readOnly={item.readonly ?? false} />;
+        return (
+          <Input style={{ width: "100%" }} readOnly={item.readonly ?? false} />
+        );
       case "form-number":
-        return <Input style={{width: '100%',}} type="number" readOnly={item.readonly ?? false} />;
+        return (
+          <Input
+            style={{ width: "100%" }}
+            type="number"
+            readOnly={item.readonly ?? false}
+          />
+        );
       case "textarea":
-        return <Input.TextArea style={{width: '100%',}} readOnly={item.readonly ?? false} />;
+        return (
+          <Input.TextArea
+            style={{ width: "100%" }}
+            readOnly={item.readonly ?? false}
+          />
+        );
       case "checkbox":
-        return <Checkbox style={{width: '100%',}} disabled={item.readonly ?? false} />;
+        return (
+          <Checkbox
+            style={{ width: "100%" }}
+            disabled={item.readonly ?? false}
+          />
+        );
       case "form-date":
-        return <DatePicker style={{width: '100%',}}  disabled={item.readonly ?? false} />;
+        return (
+          <DatePicker
+            style={{ width: "100%" }}
+            disabled={item.readonly ?? false}
+          />
+        );
       case "combo":
-        return <BasicCombo comboName={item.comboType ?? ''} readonly={item.readonly ?? false}></BasicCombo>
+        return (
+          <BasicCombo
+            comboName={item.comboType ?? ""}
+            readonly={item.readonly ?? false}
+          ></BasicCombo>
+        );
       default:
-        return <Input style={{width: '100%',}} readOnly={item.readonly ?? false} />;
+        return (
+          <Input style={{ width: "100%" }} readOnly={item.readonly ?? false} />
+        );
     }
   };
 
   return (
     <Form
       form={form}
-      style={{ width: '100%' }}
+      style={{ width: "100%" }}
       autoComplete="off"
       onFinish={onSubmit}
     >
@@ -65,9 +105,10 @@ export const BasicForm: React.FC<BasicFormProps> = ({ form, config, onSubmit }) 
           {group.items.map((item) => (
             <Col key={item.formControlName} span={item.col}>
               <Form.Item
-                layout="vertical" 
+                layout="vertical"
                 label={item.label}
                 name={item.formControlName}
+                valuePropName={item.type === "checkbox" ? "checked" : "value"}
                 rules={[
                   {
                     required: item.required ?? false,

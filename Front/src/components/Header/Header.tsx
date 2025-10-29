@@ -8,16 +8,18 @@ import {
 } from "@ant-design/icons";
 import { type MenuProps, Menu, Avatar } from "antd";
 import { Header } from "antd/es/layout/layout";
+import { useNavigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-const items: MenuItem[] = [
-  { key: "1", icon: <AppstoreOutlined />, label: "Inicio", onClick: () => { window.location.href = "/"; } },
-  { key: "2", icon: <PushpinOutlined />, label: "Mis Publicaciones", onClick: () => { window.location.href = "/gestion-publicaciones"; } },
+const HeaderComponent: React.FC = () => {
+  const navigate = useNavigate();
+
+  const items: MenuItem[] = [
+  { key: "1", icon: <AppstoreOutlined />, label: "Inicio", onClick: () => { navigate('/') } },
+  { key: "2", icon: <PushpinOutlined />, label: "Mis Publicaciones", onClick: () => { navigate('/gestion-publicaciones') } },
   { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },
 ];
-
-const HeaderComponent: React.FC = () => {
 
   return (
     <>

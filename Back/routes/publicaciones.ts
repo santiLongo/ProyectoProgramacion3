@@ -22,8 +22,23 @@ router.get('/getAll', async (req: RequestWithParams<GetAllCommand>, res: any) =>
     return;
 });
 
+router.post('/create', (req: RequestWithBody<FormAltaModel>, res: any) => {
+    console.log(req.body);
+
+    res.status(200).send(
+        "Se procesaron bien los datos"
+    );
+})
+
 export default router
 
 interface GetAllCommand {
     idEmpresa: number
+}
+
+interface FormAltaModel{
+    titulo: string,
+    sector: string,
+    tags: string,
+    descripcion: string,
 }

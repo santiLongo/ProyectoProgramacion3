@@ -12,9 +12,7 @@ function MainRoutes() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
-
-          <Route path="/home" element={<ProtectedRoute element={<Home />} />} />
-          <Route path="/gestion-publicaciones" element={<ProtectedRoute element={<GestionPublicacionesRouter />} />} />
+          <Route path="/*" element={<ProtectedRoute element={<App />} />} /> 
         </Routes>
       </AuthProvider>
     </BrowserRouter>

@@ -1,18 +1,17 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GestionPublicacionesRouter } from "../modules/gestion-publicaciones/GestionPublicacionesRouter";
 import Home from "../modules/home/Home";
 
-
-function AppRoutes () {
-  
-    return (
+function AppRoutes() {
+  return (
     <div className="AppRoutes">
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/gestion-publicaciones/*" element={<GestionPublicacionesRouter/>}/>
-            </Routes>
-        </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/gestion-publicaciones/*"
+          element={<GestionPublicacionesRouter />}
+        />
+      </Routes>
     </div>
   );
 }
