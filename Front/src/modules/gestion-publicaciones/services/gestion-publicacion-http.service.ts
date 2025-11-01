@@ -5,13 +5,11 @@ import type { PublicacionFormModel } from "../models/publicacion-form.model";
 
 const urlPublicaciones = environments.apiUrl +  'publicaciones/'
 
-export const getAll = async (idEmpresa: number): Promise<GestionPublicacionesGetAll[]> => {
+export const getAll = async (): Promise<GestionPublicacionesGetAll[]> => {
     const fullUrl = urlPublicaciones + 'getAll'
-    //
-    const params = { idEmpresa: idEmpresa };
-    //
+    
     try{
-        const data = await get(fullUrl, params);
+        const data = await get(fullUrl, null);
 
         return data;
     }catch (error){
@@ -23,6 +21,34 @@ export const getAll = async (idEmpresa: number): Promise<GestionPublicacionesGet
 
 export const create = async (form: PublicacionFormModel): Promise<any> => {
     const fullUrl  =  urlPublicaciones + 'create';
+
+    try{
+        const response = await post(fullUrl, form);
+
+        return response;
+    }catch (error){
+        console.log(error);
+    }
+
+    return;
+}
+
+export const eliminar = async (idPublicacion: string): Promise<any> => {
+    const fullUrl  =  urlPublicaciones + 'delete';
+    const params = { idPublicacion: idPublicacion}
+    try{
+        const response = await post(fullUrl, params);
+
+        return response;
+    }catch (error){
+        console.log(error);
+    }
+
+    return;
+}
+
+export const update = async (form: PublicacionFormModel): Promise<any> => {
+    const fullUrl  =  urlPublicaciones + 'update';
 
     try{
         const response = await post(fullUrl, form);

@@ -1,46 +1,66 @@
-import mongoose, { type ObjectId } from "mongoose"
-import Pubicacion from "../../../schemas/publicacion.ts";
-import Empresa from "../../../schemas/empresa.ts";
+import mongoose, { type ObjectId } from 'mongoose'
+import Publicacion from '../../../schemas/publicacion.ts'
+import Empresa from '../../../schemas/empresa.ts'
+import type { RequestWithParams } from '../../../models/generic-request.ts'
 
 export class GetAllPublicacionesHandler {
-    private _dataBase = new mongoose.Connection;
+  public async handler(
+    command: RequestWithParams<void>,
+  ): Promise<{ errores: boolean; mensaje: string | any }> {
+    let response: GetAllCardsPublicaciones[] = []
 
-    public async handler(idEmpresa?: number): Promise<Array<GetAllCardsPublicaciones>>{
-        let  response: GetAllCardsPublicaciones[] = []
-        
-        try{
-            const publicaciones = await Pubicacion.find({empresa: idEmpresa})
-            .populate<{ empresa: { name: string } }>('empresa')
-            .populate<{ sector: { name: string } }>('sector');
+    try {
+      const userIdHeader = command.headers['user-id']
 
+      if (!userIdHeader) {
+        return { errores: true, mensaje: 'Falta el header user-id' }
+      }
 
-            publicaciones.forEach((publicacion) => {
-                const data: GetAllCardsPublicaciones = {
-                    id: Number(publicacion._id),
-                    titulo: publicacion.titulo,
-                    descripcion: publicacion.descripcion,
-                    empresaName: publicacion.empresa?.name,
-                    sector: publicacion.sector?.name,
-                    tags: publicacion.tags,
-                }
+      const userIdStr = Array.isArray(userIdHeader) ? userIdHeader[0] : userIdHeader
 
-                response.push(data);
-            })
-            
-        }catch (error){
-            console.log(error);
+      const empresa = await Empresa.findOne({ user: userIdStr })
+
+      if (!empresa) {
+        return { errores: true, mensaje: 'No se encontró una empresa asociada al usuario' }
+      }
+
+      const publicaciones = await Publicacion.find({ empresa: empresa?._id })
+        .populate<{ empresa: { name: string } }>('empresa')
+        .populate<{ sector: { _id: ObjectId, name: string } }>('sector')
+
+      publicaciones.forEach((publicacion) => {
+        const id = publicacion?._id;
+        const data: GetAllCardsPublicaciones = {
+          id: id.toString(),
+          titulo: publicacion.titulo,
+          descripcion: publicacion.descripcion,
+          empresaName: publicacion.empresa?.name,
+          idSector: publicacion.sector?._id.toString(),
+          sector: publicacion.sector?.name,
+          tags: publicacion.tags,
         }
 
-        return response;
-    }  
+        response.push(data)
+      })
+    } catch (error) {
+      console.log(error)
+    }
+
+    if (response.length == 0) {
+      return { errores: true, mensaje: "No se encontraron publicaciones" }
+    }
+
+    return { errores: false, mensaje: response }
+  }
 }
 
 interface GetAllCardsPublicaciones {
-    id: number;
-    titulo: string;
-    descripcion: string;
-    sector: string;
-    tags: string;
-    empresaName: string;
-    empresaImg?: string;
+  id: string
+  titulo: string
+  descripcion: string
+  idSector:string;
+  sector: string
+  tags: string
+  empresaName: string
+  empresaImg?: string
 }

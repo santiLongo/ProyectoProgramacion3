@@ -38,7 +38,7 @@ export const CardPublicacion: React.FC<DashboardCardsProps> = ({
   );
 };
 export interface DashboardCardsProps {
-  id: number;
+  id: string;
   title: string;
   description: string;
   coorpName: string;

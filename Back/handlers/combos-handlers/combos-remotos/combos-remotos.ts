@@ -10,7 +10,7 @@ export class CombosRemotos{
 
             data.forEach((dato) => {
                 const resp: ComboModel = {
-                    numero: Number(dato._id),
+                    numero: dato._id,
                     descripcion: dato.name
                 }
                 response.push(resp)

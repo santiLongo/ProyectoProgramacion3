@@ -1,44 +1,79 @@
 import express from 'express';
 import type { RequestWithParams, RequestWithBody } from '../models/generic-request.ts';
 import { GetAllPublicacionesHandler } from '../handlers/publicaciones-handlers/get-all/get-all-handler.ts';
+import { CreatePublicacionesHandler, type FormAltaModel } from '../handlers/publicaciones-handlers/create/create-handler.ts';
+import { DeletePublicacionesHandler, type DeleteCommand } from '../handlers/publicaciones-handlers/delete/delete-handler.ts';
+import { UpdatePublicacionesHandler } from '../handlers/publicaciones-handlers/update/update-handler.ts';
 
 const router = express.Router();
 
-const getAllHandler = new GetAllPublicacionesHandler;
+router.get('/getAll', async (req: RequestWithParams<void>, res: any) => {
 
-router.get('/getAll', async (req: RequestWithParams<GetAllCommand>, res: any) => {
-    const idEmpresa: number = req.params.idEmpresa
+    const getAllHandler = new GetAllPublicacionesHandler;
     
-    const response = await getAllHandler.handler(idEmpresa);
+    const response = await getAllHandler.handler(req);
 
-    if(response.length == 0){
-        res.status(400).send("No se encontraron publicaciones")
-        return;
+    if(response.errores){
+        res.status(400).send(response.mensaje)
     }
 
-    res.status(200).send({
-        response
-    })
-    return;
+    res.status(200).send(
+        response.mensaje
+    )
 });
 
-router.post('/create', (req: RequestWithBody<FormAltaModel>, res: any) => {
+router.post('/create', async (req: RequestWithBody<FormAltaModel>, res: any) => {
     console.log(req.body);
 
+    const handler = new CreatePublicacionesHandler();
+
+    const response = await handler.handler(req);
+
+    if(response.errores){
+        res.status(500).send(
+            response
+        );
+    }
+
     res.status(200).send(
-        "Se procesaron bien los datos"
+        response
+    );
+})
+
+router.post('/delete', async (req: RequestWithBody<DeleteCommand>, res: any) => {
+    console.log(req.body);
+
+    const handler = new DeletePublicacionesHandler();
+
+    const response = await handler.handler(req);
+
+    if(response.errores){
+        res.status(500).send(
+            response
+        );
+    }
+
+    res.status(200).send(
+        response
+    );
+})
+
+router.post('/update', async (req: RequestWithBody<FormAltaModel>, res: any) => {
+    console.log(req.body);
+
+    const handler = new UpdatePublicacionesHandler();
+
+    const response = await handler.handler(req);
+
+    if(response.errores){
+        res.status(500).send(
+            response
+        );
+    }
+
+    res.status(200).send(
+        response
     );
 })
 
 export default router
-
-interface GetAllCommand {
-    idEmpresa: number
-}
-
-interface FormAltaModel{
-    titulo: string,
-    sector: string,
-    tags: string,
-    descripcion: string,
-}

@@ -13,7 +13,7 @@ export const login = async (values: LoginForm) => {
             return;
         }
         window.localStorage.setItem('token',data.token);
-        window.localStorage.setItem('user',data.user);
+        window.localStorage.setItem('user',JSON.stringify(data.user));
         window.location.href = '/'
         return;
     }catch (error){

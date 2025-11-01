@@ -84,6 +84,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
           <BasicCombo
             comboName={item.comboType ?? ""}
             readonly={item.readonly ?? false}
+            value={form.getFieldValue(item.formControlName) ?? undefined}
           ></BasicCombo>
         );
       default:

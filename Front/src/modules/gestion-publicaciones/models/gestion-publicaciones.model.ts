@@ -1,7 +1,8 @@
 export interface GestionPublicacionesGetAll{
-    id: number;
+    id: string;
     titulo: string;
     descripcion: string;
+    idSector: string;
     sector: string;
     tags: string;
     empresaName: string;

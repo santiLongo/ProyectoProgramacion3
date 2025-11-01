@@ -5,7 +5,7 @@ import { getCombo, type ComboModel } from "./services/combo.service";
 export interface ComboProps {
   comboName: string;
   readonly?: boolean;
-  value?: any; // <-- Agregado
+  value?: number | string; // <-- Agregado
   onChange?: (value: any) => void; // <-- Agregado
 }
 

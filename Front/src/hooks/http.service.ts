@@ -44,8 +44,8 @@ api.interceptors.request.use(
 
     if (user) {
       // Opcional: enviar info del usuario
-      config.headers["X-User-Id"] = user.id ?? user._id ?? "";
-      config.headers["X-User-Name"] = user.username ?? "";
+      config.headers["user-id"] = user._id ?? "";
+      config.headers["user-name"] = user.userName ?? "";
     }
 
     return config;

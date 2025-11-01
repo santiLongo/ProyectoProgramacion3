@@ -4,18 +4,23 @@ import { type DashboardCardsProps } from "../../../components/card-publicacion/C
 import { CardView } from "../../../components/card-view/CardView";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Modal, Row, Spin } from "antd";
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   BasicForm,
   type BasicFormConfig,
 } from "../../../components/basic-form/BasicFom";
-import { create, getAll } from "../services/gestion-publicacion-http.service";
+import {
+  create,
+  eliminar,
+  getAll,
+  update,
+} from "../services/gestion-publicacion-http.service";
 import type { PublicacionFormModel } from "../models/publicacion-form.model";
 
 const formConfigs: Array<BasicFormConfig> = [
   {
     formControlName: "titulo",
-    label: "TiTulo",
+    label: "Titulo",
     type: "form-field",
     col: 12,
     row: 1,
@@ -25,7 +30,7 @@ const formConfigs: Array<BasicFormConfig> = [
     formControlName: "sector",
     label: "Sector",
     type: "combo",
-    comboType: 'SectorEmpresaV1',
+    comboType: "SectorEmpresaV1",
     col: 12,
     row: 1,
     required: true,
@@ -45,77 +50,95 @@ const formConfigs: Array<BasicFormConfig> = [
     row: 3,
     required: true,
   },
+  {
+    formControlName: "id",
+    label: "Id",
+    type: "form-field",
+    col: 24,
+    row: 4,
+    hidden: true,
+  },
 ];
 
 export const GestionPublicaciones: React.FC = () => {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const data = await getAll();
+      const mappedData = data.map((item) => ({
+        id: item.id,
+        title: item.titulo,
+        description: item.descripcion,
+        coorpName: item.empresaName,
+        imageUrl: item.empresaImg,
+        actions: [
+          {
+            key: "edit",
+            label: "Editar",
+            onClick: () => {
+              form.setFieldsValue({
+                titulo: item.titulo,
+                sector: item.idSector,
+                tags: item.tags,
+                descripcion: item.descripcion,
+                id: item.id,
+              });
+              setEsUpdate(true);
+              setOpen(true);
+            },
+          },
+          {
+            key: "delete",
+            label: "Eliminar",
+            onClick: () => {
+              eliminar(item.id);
+              fetchData();
+            },
+          },
+          {
+            key: "view",
+            label: "Ver Propuestas",
+            onClick: () => navigate(`./ver-propuesta/${item.id}`),
+          },
+        ],
+      }));
+      setCardsData(mappedData);
+    } catch (error) {
+      console.error("Error al obtener publicaciones:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const [cardsData, setCardsData] = useState<DashboardCardsProps[]>([]);
+  const [esUpdate, setEsUpdate] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // const cardsData: DashboardCardsProps[] = [
-  //   {
-  //     id: 1,
-  //     title: "Ventas del mes",
-  //     description:
-  //       "Resumen general de operaciones dbashjkdb sahjkdbkjsa hbdjkashdjksadh jksa bdkjasbdkjasdbhksabdkjsabdksadbkasbdksabdkjsab",
-  //     coorpName: "ACME Corp",
-  //     imageUrl: "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-  //     actions: [
-  //       { key: "edit", label: "Editar", onClick: () => setOpen(true) },
-  //       { key: "delete", label: "Eliminar", onClick: () => undefined },
-  //       {
-  //         key: "view",
-  //         label: "Ver Propuestas",
-  //         onClick: () => {
-  //           navigate(`./ver-propuesta/${1}`);
-  //         },
-  //       },
-  //     ],
-  //   },
-  // ];
-
   useEffect(() => {
-    const fetchData = async () =>{
-      try{
-        setLoading(true);
-        const data = await getAll(1);
-        const mappedData = data.map((item) => ({
-              id: item.id,
-              title: item.titulo,
-              description: item.descripcion,
-              coorpName: item.empresaName,
-              imageUrl: item.empresaImg,
-              actions: [
-                { key: "edit", label: "Editar", onClick: () => setOpen(true) },
-                { key: "delete", label: "Eliminar", onClick: () => undefined },
-                {
-                  key: "view",
-                  label: "Ver Propuestas",
-                  onClick: () => navigate(`./ver-propuesta/${item.id}`),
-                },
-              ],
-            }));
-        setCardsData(mappedData);
-      } catch (error) {
-        console.error("Error al obtener publicaciones:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchData();
   }, [navigate]);
 
   const handleOk = async () => {
-    // console.log("Salio todo piola");
-    console.log(form.getFieldsValue());
     const req = form.getFieldsValue() as PublicacionFormModel;
-    await create(req);
+    let res: any;
+    if (esUpdate) {
+      res = await update(req);
+    } else {
+      res = await create(req);
+    }
+    if (res.errores) {
+      return;
+    }
+    setEsUpdate(false);
     setOpen(false);
+    fetchData();
     // TODO: Tiene que actualizar cada vez que cierra el dialog
   };
   const handleCancel = () => {
+    setEsUpdate(false);
     setOpen(false);
     //Tiene que actualizar cada vez que cierra el dialog
   };
@@ -128,6 +151,13 @@ export const GestionPublicaciones: React.FC = () => {
             type="primary"
             style={{ marginLeft: "auto" }}
             onClick={() => {
+              form.setFieldsValue({
+                titulo: undefined,
+                sector: undefined,
+                tags: undefined,
+                descripcion: undefined,
+                id: undefined,
+              });
               setOpen(true);
             }}
           >
@@ -143,7 +173,6 @@ export const GestionPublicaciones: React.FC = () => {
         ) : (
           <DashboardCards cards={cardsData} />
         )}
-        
       </CardView>
 
       <Modal
