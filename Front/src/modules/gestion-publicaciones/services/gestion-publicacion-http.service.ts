@@ -1,15 +1,15 @@
 import { environments } from "../../../configs/enviroments"
-import { get, post } from "../../../hooks/http.service";
+import { get, post } from "../../../services/http.service";
 import type { GestionPublicacionesGetAll } from "../models/gestion-publicaciones.model";
 import type { PublicacionFormModel } from "../models/publicacion-form.model";
 
-const urlPublicaciones = environments.apiUrl +  'publicaciones/'
+const urlPublicaciones = environments.apiUrl +  'gestion-publicaciones/'
 
 export const getAll = async (): Promise<GestionPublicacionesGetAll[]> => {
     const fullUrl = urlPublicaciones + 'getAll'
     
     try{
-        const data = await get(fullUrl, null);
+        const data = await get(fullUrl);
 
         return data;
     }catch (error){

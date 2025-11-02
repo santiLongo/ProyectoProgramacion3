@@ -14,12 +14,56 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 const HeaderComponent: React.FC = () => {
   const navigate = useNavigate();
+  const itemsEmpresa = (): MenuItem[] => {
+    return [
+      {
+        key: "1",
+        icon: <AppstoreOutlined />,
+        label: "Inicio",
+        onClick: () => {
+          navigate("/");
+        },
+      },
+      {
+        key: "2",
+        icon: <PushpinOutlined />,
+        label: "Mis Publicaciones",
+        onClick: () => {
+          navigate("/gestion-publicaciones");
+        },
+      },
+      { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },
+    ];
+  };
 
-  const items: MenuItem[] = [
-  { key: "1", icon: <AppstoreOutlined />, label: "Inicio", onClick: () => { navigate('/') } },
-  { key: "2", icon: <PushpinOutlined />, label: "Mis Publicaciones", onClick: () => { navigate('/gestion-publicaciones') } },
-  { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },
-];
+  const itemsEmprendedor = (): MenuItem[] => {
+    return [
+      {
+        key: "1",
+        icon: <AppstoreOutlined />,
+        label: "Inicio",
+        onClick: () => {
+          navigate("/");
+        },
+      },
+      {
+        key: "2",
+        icon: <PushpinOutlined />,
+        label: "Mis Propuestas",
+        onClick: () => {
+          navigate("/gestion-publicaciones");
+        },
+      },
+      { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },
+    ];
+  };
+
+  const items =
+    JSON.parse(localStorage.getItem("user") ?? "").role === "empresa"
+      ? itemsEmpresa()
+      : itemsEmprendedor();
+
+  
 
   return (
     <>
@@ -54,7 +98,7 @@ const HeaderComponent: React.FC = () => {
           }}
         >
           <Avatar
-            onClick={() => window.location.href = "/"}
+            onClick={() => (window.location.href = "/")}
             size="large"
             src="https://api.dicebear.com/8.x/adventurer/svg?seed=RoboDev"
             icon={<AntDesignOutlined />}

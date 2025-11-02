@@ -4,34 +4,20 @@ import Empresa from '../../../schemas/empresa.ts'
 import type { RequestWithParams } from '../../../models/generic-request.ts'
 import express from 'express'
 
-export class GetAllPublicacionesHandler {
+export class GetAllHomeHandler {
   private _commnad: RequestWithParams<any>
 
   constructor(commnad: RequestWithParams<any>) {
     this._commnad = commnad
   }
 
-  public async handler(): Promise<{ errores: boolean; mensaje: string | any }> {
+  public async handler(): Promise<GetAllCardsPublicaciones[]> {
     let response: GetAllCardsPublicaciones[] = []
 
     try {
-      const userIdHeader = this._commnad.headers['user-id']
-
-      if (!userIdHeader) {
-        express.response.status(400).send('Falta el header user-id')
-      }
-
-      const userIdStr = Array.isArray(userIdHeader) ? userIdHeader[0] : userIdHeader
-
-      const empresa = await Empresa.findOne({ user: userIdStr })
-
-      if (!empresa) {
-        express.response.status(400).send('No se encontró una empresa asociada al usuario')
-      }
-
-      const publicaciones = await Publicacion.find({ empresa: empresa?._id })
-        .populate<{ empresa: { name: string } }>('empresa')
-        .populate<{ sector: { _id: ObjectId; name: string } }>('sector')
+      const publicaciones = await Publicacion.find()
+      .populate<{ empresa: { name: string } }>('empresa')
+      .populate<{ sector: { _id: ObjectId; name: string } }>('sector')
 
       publicaciones.forEach((publicacion) => {
         const id = publicacion?._id
@@ -52,16 +38,10 @@ export class GetAllPublicacionesHandler {
     }
 
     if (response.length == 0) {
-      return { errores: true, mensaje: 'No se encontraron publicaciones' }
+      express.response.status(400).send("No se encontraron publicaciones");
     }
 
-    return { errores: false, mensaje: response }
-  }
-
-  private async buscoTodas() {
-    return await Publicacion.find()
-      .populate<{ empresa: { name: string } }>('empresa')
-      .populate<{ sector: { _id: ObjectId; name: string } }>('sector')
+    return response
   }
 }
 

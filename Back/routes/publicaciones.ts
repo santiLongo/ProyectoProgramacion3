@@ -7,11 +7,11 @@ import { UpdatePublicacionesHandler } from '../handlers/publicaciones-handlers/u
 
 const router = express.Router();
 
-router.get('/getAll', async (req: RequestWithParams<void>, res: any) => {
+router.get('/getAll', async (req: RequestWithParams<any>, res: any) => {
 
-    const getAllHandler = new GetAllPublicacionesHandler;
+    const getAllHandler = new GetAllPublicacionesHandler(req);
     
-    const response = await getAllHandler.handler(req);
+    const response = await getAllHandler.handler();
 
     if(response.errores){
         res.status(400).send(response.mensaje)

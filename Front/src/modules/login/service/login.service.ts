@@ -1,5 +1,5 @@
 import { environments } from "../../../configs/enviroments";
-import { post } from "../../../hooks/http.service";
+import { post } from "../../../services/http.service";
 
 export const login = async (values: LoginForm) => {
     const fullUrl = environments.apiUrl + 'auth';
