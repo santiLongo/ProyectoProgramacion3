@@ -8,6 +8,7 @@ import authRouter from './routes/auth.ts'
 import comboRouter from './routes/combo-manager.ts'
 import publicacionesRouter from './routes/publicaciones.ts'
 import homeRouter from './routes/home.ts'
+import propuestasRouter from './routes/propuestas.ts'
 
 const app = express();
 
@@ -23,5 +24,6 @@ app.use('/api/auth', authRouter)
 app.use('/api/combos', comboRouter)
 app.use('/api/gestion-publicaciones', publicacionesRouter)
 app.use('/api/home-publicaciones', homeRouter)
+app.use('/api/propuestas', propuestasRouter)
 
 export default app;

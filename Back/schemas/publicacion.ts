@@ -11,6 +11,6 @@ const publicacionSchema = new Schema({
     fechaAlta: {type: Date, required: true}
 });
 
-const Publicacion = mongoose.model('Publicacion', publicacionSchema);
+const Publicacion = mongoose.model('Publicaciones', publicacionSchema);
 
 export default Publicacion;

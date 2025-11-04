@@ -18,6 +18,7 @@ export class GetAllHomeHandler {
       const publicaciones = await Publicacion.find()
       .populate<{ empresa: { name: string } }>('empresa')
       .populate<{ sector: { _id: ObjectId; name: string } }>('sector')
+      .exec();
 
       publicaciones.forEach((publicacion) => {
         const id = publicacion?._id

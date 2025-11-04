@@ -9,12 +9,14 @@ import {
   type BasicFormConfig,
 } from "../../components/basic-form/BasicFom";
 import { useNavigate } from "react-router-dom";
-import { getAll } from "../gestion-publicaciones/services/gestion-publicacion-http.service";
+import { create, getAll } from "./services/home.service";
+import { UserService } from "../../services/user.service";
+import type { FormPropuestasAltaModel } from "./models/form-propuestas-alta.model";
 
 const formConfigs: Array<BasicFormConfig> = [
   {
     formControlName: "titulo",
-    label: "TiTulo",
+    label: "Titulo",
     type: "form-field",
     col: 12,
     row: 1,
@@ -36,26 +38,46 @@ const formConfigs: Array<BasicFormConfig> = [
     row: 2,
     required: true,
   },
+  {
+    formControlName: "idPublicacion",
+    label: "Id Publicacion",
+    type: "form-field",
+    col: 24,
+    row: 2,
+    hidden: true,
+  },
 ];
 
 const Home: React.FC = () => {
+  const userService = new UserService();
+
   const fetchData = async () => {
     try {
       setLoading(true);
-      const data = await getAll(false);
+      const data = await getAll();
       const mappedData = data.map((item) => ({
         id: item.id,
         title: item.titulo,
         description: item.descripcion,
         coorpName: item.empresaName,
         imageUrl: item.empresaImg,
-        actions: [
-          {
-            key: "view",
-            label: "Hcer Propuestas",
-            onClick: () => console.log('Hago una propuestas'),
-          },
-        ],
+        actions: userService.soyEmprendedor()
+          ? [
+              {
+                key: "view",
+                label: "Hacer Propuestas",
+                onClick: () => {
+                  form.setFieldsValue({
+                    titulo: "",
+                    presupuesto: "",
+                    descripcion: "",
+                    idPublicacion: item.id,
+                  });
+                  setOpen(true);
+                },
+              },
+            ]
+          : [],
       }));
       setCardsData(mappedData);
     } catch (error) {
@@ -67,14 +89,17 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [cardsData, setCardsData] = useState<DashboardCardsProps[]>([]);
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [form] = Form.useForm();
   // const soyEmprendedor = false;
   useEffect(() => {
     fetchData();
-  }, [navigate]);
-  const handleOk = () => {
+  }, []);
+
+  const handleOk = async () => {
     console.log("Salio todo piola");
+    const formValues: FormPropuestasAltaModel = form.getFieldsValue();
+    await create(formValues);
     setOpen(false);
   };
   const handleCancel = () => {

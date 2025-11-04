@@ -1,11 +1,13 @@
 import { environments } from "../../../configs/enviroments"
-import { get } from "../../../services/http.service";
+import { get, post } from "../../../services/http.service";
 import type { GestionPublicacionesGetAll } from "../../gestion-publicaciones/models/gestion-publicaciones.model";
+import type { FormPropuestasAltaModel } from "../models/form-propuestas-alta.model";
 
-const urlPublicaciones = environments.apiUrl +  'home-publicaciones/'
+const urlHome = environments.apiUrl +  'home-publicaciones/';
+const urlPropuestas = environments.apiUrl + 'propuestas/';
 
 export const getAll = async (): Promise<GestionPublicacionesGetAll[]> => {
-    const fullUrl = urlPublicaciones + 'getAll'
+    const fullUrl = urlHome + 'getAll'
 
     try{
         const data = await get(fullUrl);
@@ -16,4 +18,18 @@ export const getAll = async (): Promise<GestionPublicacionesGetAll[]> => {
     }
 
     return [];
+}
+
+export const create = async (form: FormPropuestasAltaModel): Promise<any> => {
+    const fullUrl = urlPropuestas + 'create'
+
+    try{
+        const data = await post(fullUrl, form);
+
+        return data;
+    }catch (error){
+        console.log(error)
+    }
+
+    return;
 }

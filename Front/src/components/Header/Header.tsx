@@ -4,11 +4,13 @@ import {
   AppstoreOutlined,
   HolderOutlined,
   PushpinOutlined,
+  UserDeleteOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { type MenuProps, Menu, Avatar } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { useNavigate } from "react-router-dom";
+import { logOutService } from "./services/header.service";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -33,6 +35,9 @@ const HeaderComponent: React.FC = () => {
         },
       },
       { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },
+      { key: "4", icon: <UserDeleteOutlined />, label: "Salir", onClick: () => {
+        logOutService();
+      } },
     ];
   };
 
@@ -55,6 +60,9 @@ const HeaderComponent: React.FC = () => {
         },
       },
       { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },
+      { key: "4", icon: <UserDeleteOutlined />, label: "Salir", onClick: () => {
+        logOutService();
+      } },
     ];
   };
 
