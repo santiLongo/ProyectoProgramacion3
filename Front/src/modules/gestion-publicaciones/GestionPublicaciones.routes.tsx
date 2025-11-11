@@ -7,7 +7,7 @@ export function GestionPublicacionesRoutes() {
     <div className="GestionPublicacionesRouter">
       <Routes>
         <Route path="/" element={<GestionPublicaciones />} />
-        <Route path="/ver-propuesta/:id" element={<VerPropuestaRouter />} />
+        <Route path="/ver-propuesta/:id/:title" element={<VerPropuestaRouter />} />
       </Routes>
     </div>
   );

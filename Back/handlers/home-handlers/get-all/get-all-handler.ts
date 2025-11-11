@@ -14,8 +14,7 @@ export class GetAllHomeHandler {
   public async handler(): Promise<GetAllCardsPublicaciones[]> {
     let response: GetAllCardsPublicaciones[] = []
 
-    try {
-      const publicaciones = await Publicacion.find()
+    const publicaciones = await Publicacion.find()
       .populate<{ empresa: { name: string } }>('empresa')
       .populate<{ sector: { _id: ObjectId; name: string } }>('sector')
       .exec();
@@ -34,12 +33,9 @@ export class GetAllHomeHandler {
 
         response.push(data)
       })
-    } catch (error) {
-      console.log(error)
-    }
 
     if (response.length == 0) {
-      express.response.status(400).send("No se encontraron publicaciones");
+      throw new Error("No se encontraron publicaciones");
     }
 
     return response

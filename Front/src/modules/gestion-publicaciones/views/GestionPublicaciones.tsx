@@ -98,7 +98,7 @@ export const GestionPublicaciones: React.FC = () => {
           {
             key: "view",
             label: "Ver Propuestas",
-            onClick: () => navigate(`./ver-propuesta/${item.id}`),
+            onClick: () => navigate(`./ver-propuesta/${item.id}/${item.titulo}`),
           },
         ],
       }));

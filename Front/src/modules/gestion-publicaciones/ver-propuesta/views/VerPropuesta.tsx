@@ -20,7 +20,9 @@ import {
   type BasicFormConfig,
 } from "../../../../components/basic-form/BasicFom";
 import "./VerPropuesta.css";
-import React from "react";
+import React, { useEffect } from "react";
+import type { PropuestaGridModel } from "../models/propuestas-grid.model";
+import { getAll } from "../services/ver-propuestas-http.service";
 
 const config: BasicFormConfig[] = [
   {
@@ -66,31 +68,35 @@ const pagination: TablePaginationConfig = {
   position: ["bottomRight"],
 };
 
-const dataSource = [
-  {
-    titulo: "Propuesta",
-    descripcion: "Descripcion",
-    presupuesto: 10000,
-    estado: "Activa",
-    promVotos: 3.7,
-    emprendedor: "Carlos Bala",
-  },
-  {
-    titulo: "Propuesta",
-    descripcion: "Descripcion",
-    presupuesto: 9000,
-    estado: "Activa",
-    promVotos: 4.2,
-    emprendedor: "Pedro Pascal",
-  },
-];
+// const dataSource = [
+//   {
+//     titulo: "Propuesta",
+//     descripcion: "Descripcion",
+//     presupuesto: 10000,
+//     estado: "Activa",
+//     promVotos: 3.7,
+//     emprendedor: "Carlos Bala",
+//   },
+//   {
+//     titulo: "Propuesta",
+//     descripcion: "Descripcion",
+//     presupuesto: 9000,
+//     estado: "Activa",
+//     promVotos: 4.2,
+//     emprendedor: "Pedro Pascal",
+//   },
+// ];
 
-type Align = "Sin Votar" | "Votados" | "Ver Todos";
+type Align = "Pendientes" | "Aceptadas" | "Rechazadas" | "Ver Todos";
 
 export const VerPropuesta: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const fetchData = async () => {
+    const data = await getAll(id!, alignValue);
+    setDataSource(data);
+  }
+  const { id, title } = useParams<{ id: string; title: string }>();
   const [form] = Form.useForm();
-  const [alignValue, setAlignValue] = React.useState<Align>("Sin Votar");
+  const [alignValue, setAlignValue] = React.useState<Align>("Pendientes");
   const itemsCollapse: CollapseProps["items"] = [
     {
       key: "1",
@@ -102,6 +108,11 @@ export const VerPropuesta: React.FC = () => {
   const [openMensaje, setOpenMensaje] = React.useState<boolean>(false);
   const [openPropuesta, setOpenPropuesta] = React.useState<boolean>(false);
   const [openEmprendedor, setOpenEmprendedor] = React.useState<boolean>(false);
+  const [dataSource, setDataSource] = React.useState<PropuestaGridModel[]>();
+
+  useEffect( () => {
+    fetchData();
+  }, [alignValue]);
 
   const handleMesajeOk = () => {
     console.log("Salio todo piola");
@@ -139,28 +150,41 @@ export const VerPropuesta: React.FC = () => {
       sorter: (a, b) => a.promVotos - b.promVotos,
     },
     {
+      title: "Cantidad de Votos",
+      dataIndex: "cantidadVotos",
+      key: "cantidadVotos",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.promVotos - b.promVotos,
+    },
+    {
+      title: "Id Usuario",
+      dataIndex: "idUser",
+      key: "idUser",
+      hidden: true,
+    },
+    {
       title: "Emprendedor",
       dataIndex: "emprendedor",
       key: "estado",
       render: (text) => <a onClick={() => setOpenEmprendedor(true)}>{text}</a>,
     },
     {
-      render: () => <MessageOutlined onClick={() => setOpenMensaje(true)}/>,
+      render: () => <MessageOutlined onClick={() => setOpenMensaje(true)} />,
     },
     {
-      render: () => <FileOutlined onClick={() => setOpenPropuesta(true)}/>,
+      render: () => <FileOutlined onClick={() => setOpenPropuesta(true)} />,
     },
   ];
 
   return (
     <>
-      <CardView title={`Propuesta ${id}`}>
+      <CardView title={`Propuesta ${title}`}>
         <Collapse expandIconPosition="end" items={itemsCollapse}></Collapse>
         <Segmented
           value={alignValue}
           style={{ marginBottom: 15, marginTop: 15 }}
           onChange={setAlignValue}
-          options={["Sin Votar", "Votados", "Ver Todos"]}
+          options={["Pendientes", "Aceptadas", "Rechazadas", "Ver Todos"]}
         />
         <Table
           pagination={pagination}
@@ -186,8 +210,8 @@ export const VerPropuesta: React.FC = () => {
         width={800}
         centered
         open={openPropuesta}
-        onOk={() =>setOpenPropuesta(false)}
-        onCancel={() =>setOpenPropuesta(false)}
+        onOk={() => setOpenPropuesta(false)}
+        onCancel={() => setOpenPropuesta(false)}
         destroyOnClose
       >
         {/* <BasicForm form={form} config={formConfigs}></BasicForm> */}

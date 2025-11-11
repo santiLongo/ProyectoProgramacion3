@@ -23,7 +23,7 @@ router.get('/:comboName', async (req: RequestWithParams<ComboRequest>, res: any)
             data = await _combosRemotos.GetSectorEmpresa();
             break;
         default:
-            res.status(400).send('No se encontro el combo');
+            throw new Error('No se encontro el combo');
     }
     
     

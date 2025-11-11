@@ -14,3 +14,9 @@ export type RequestWithParams<P, B = any> = Request<
     Record<string, any>
 >;
 
+export type RequestWithQuery<Q = Record<string, any>> = Request<
+  Record<string, string>, // params
+  any,                    // response body
+  any,                    // request body
+  Q                       // query params
+>;

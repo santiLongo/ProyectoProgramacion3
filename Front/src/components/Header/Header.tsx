@@ -56,7 +56,7 @@ const HeaderComponent: React.FC = () => {
         icon: <PushpinOutlined />,
         label: "Mis Propuestas",
         onClick: () => {
-          navigate("/gestion-publicaciones");
+          // navigate("/gestion-publicaciones");
         },
       },
       { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },

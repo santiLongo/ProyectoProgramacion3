@@ -11,14 +11,13 @@ export class GetAllPublicacionesHandler {
     this._commnad = commnad
   }
 
-  public async handler(): Promise<{ errores: boolean; mensaje: string | any }> {
+  public async handler(): Promise<GetAllCardsPublicaciones[]> {
     let response: GetAllCardsPublicaciones[] = []
 
-    try {
-      const userIdHeader = this._commnad.headers['user-id']
+    const userIdHeader = this._commnad.headers['user-id']
 
       if (!userIdHeader) {
-        express.response.status(400).send('Falta el header user-id')
+        throw new Error('Falta el header user-id')
       }
 
       const userIdStr = Array.isArray(userIdHeader) ? userIdHeader[0] : userIdHeader
@@ -26,7 +25,7 @@ export class GetAllPublicacionesHandler {
       const empresa = await Empresa.findOne({ user: userIdStr })
 
       if (!empresa) {
-        express.response.status(400).send('No se encontró una empresa asociada al usuario')
+        throw new Error('No se encontró una empresa asociada al usuario')
       }
 
       const publicaciones = await Publicacion.find({ empresa: empresa?._id })
@@ -47,15 +46,12 @@ export class GetAllPublicacionesHandler {
 
         response.push(data)
       })
-    } catch (error) {
-      console.log(error)
-    }
 
     if (response.length == 0) {
-      return { errores: true, mensaje: 'No se encontraron publicaciones' }
+      throw new Error('No se encontraron publicaciones')
     }
 
-    return { errores: false, mensaje: response }
+    return response
   }
 
   private async buscoTodas() {

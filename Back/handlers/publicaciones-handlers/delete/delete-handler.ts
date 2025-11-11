@@ -1,26 +1,17 @@
 import Publicacion from '../../../schemas/publicacion.ts'
 import type { RequestWithBody } from '../../../models/generic-request.ts'
-import { ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb'
 
 export class DeletePublicacionesHandler {
-  public async handler(
-    command: RequestWithBody<DeleteCommand>,
-  ): Promise<{ errores: boolean; mensaje: string | any }> {
+  public async handler(command: RequestWithBody<DeleteCommand>): Promise<void> {
     const idPublicacion = command.body.idPublicacion
 
-    if(!idPublicacion || idPublicacion == ''){
-        return {errores: true, mensaje: 'Se necesita de un id para esta accion'}
+    if (!idPublicacion || idPublicacion == '') {
+      throw new Error('Se necesita de un id para esta accion')
     }
+    const _id = new ObjectId(idPublicacion)
 
-    try {
-        const _id = new ObjectId(idPublicacion);
-
-        const publicacion = await Publicacion.findByIdAndDelete({_id: _id});
-
-        return { errores: false, mensaje: publicacion}
-    } catch (error) {
-      return {errores: true, mensaje: error}
-    }
+    const publicacion = await Publicacion.findByIdAndDelete({ _id: _id })
   }
 }
 

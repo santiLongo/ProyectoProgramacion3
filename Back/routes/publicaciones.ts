@@ -13,12 +13,8 @@ router.get('/getAll', async (req: RequestWithParams<any>, res: any) => {
     
     const response = await getAllHandler.handler();
 
-    if(response.errores){
-        res.status(400).send(response.mensaje)
-    }
-
     res.status(200).send(
-        response.mensaje
+        response
     )
 });
 
@@ -27,16 +23,10 @@ router.post('/create', async (req: RequestWithBody<FormAltaModel>, res: any) => 
 
     const handler = new CreatePublicacionesHandler();
 
-    const response = await handler.handler(req);
-
-    if(response.errores){
-        res.status(500).send(
-            response
-        );
-    }
+    await handler.handler(req);
 
     res.status(200).send(
-        response
+        "Cargado con exito"
     );
 })
 
@@ -45,16 +35,10 @@ router.post('/delete', async (req: RequestWithBody<DeleteCommand>, res: any) => 
 
     const handler = new DeletePublicacionesHandler();
 
-    const response = await handler.handler(req);
-
-    if(response.errores){
-        res.status(500).send(
-            response
-        );
-    }
+    await handler.handler(req);
 
     res.status(200).send(
-        response
+        "Borrado con exito"
     );
 })
 
@@ -63,16 +47,10 @@ router.post('/update', async (req: RequestWithBody<FormAltaModel>, res: any) => 
 
     const handler = new UpdatePublicacionesHandler();
 
-    const response = await handler.handler(req);
-
-    if(response.errores){
-        res.status(500).send(
-            response
-        );
-    }
+    await handler.handler(req);
 
     res.status(200).send(
-        response
+        "Actualizado con exito"
     );
 })
 

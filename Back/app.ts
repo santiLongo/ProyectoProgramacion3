@@ -1,7 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
-import cors from 'cors'
+import cors from 'cors';
 
 import statusRouter from './routes/status.ts'
 import authRouter from './routes/auth.ts'
@@ -9,6 +9,7 @@ import comboRouter from './routes/combo-manager.ts'
 import publicacionesRouter from './routes/publicaciones.ts'
 import homeRouter from './routes/home.ts'
 import propuestasRouter from './routes/propuestas.ts'
+import { errorHandler } from './middlewares/manejo-errores.ts';
 
 const app = express();
 
@@ -25,5 +26,7 @@ app.use('/api/combos', comboRouter)
 app.use('/api/gestion-publicaciones', publicacionesRouter)
 app.use('/api/home-publicaciones', homeRouter)
 app.use('/api/propuestas', propuestasRouter)
+
+app.use(errorHandler);
 
 export default app;
