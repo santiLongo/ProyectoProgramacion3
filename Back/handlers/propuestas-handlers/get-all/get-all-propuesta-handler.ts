@@ -63,8 +63,8 @@ export class GetAllPropuestasHandler {
         estado: propuesta.estado,
         promVotos: promVotos,
         cantidadVotos: votos.length,
-        idUser: propuesta.emprendedor._id.toString(),
-        emprendedor: propuesta.emprendedor.user.userName,
+        idUser: propuesta.emprendedor.user?._id.toString(),
+        emprendedor: propuesta.emprendedor.user?.userName,
     }));
 
     return response;

@@ -2,3 +2,7 @@
     margin-bottom: 20px;
 }
 
+.ant-pro-form-login-container {
+    border-radius: 20px;
+    box-shadow: 10px 5px 15px grey;
+}

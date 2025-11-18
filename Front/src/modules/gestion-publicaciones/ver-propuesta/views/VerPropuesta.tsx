@@ -22,7 +22,11 @@ import {
 import "./VerPropuesta.css";
 import React, { useEffect } from "react";
 import type { PropuestaGridModel } from "../models/propuestas-grid.model";
-import { getAll } from "../services/ver-propuestas-http.service";
+import {
+  getAll,
+  getEmprendedorById,
+} from "../services/ver-propuestas-http.service";
+import dayjs from "dayjs";
 
 const config: BasicFormConfig[] = [
   {
@@ -68,32 +72,13 @@ const pagination: TablePaginationConfig = {
   position: ["bottomRight"],
 };
 
-// const dataSource = [
-//   {
-//     titulo: "Propuesta",
-//     descripcion: "Descripcion",
-//     presupuesto: 10000,
-//     estado: "Activa",
-//     promVotos: 3.7,
-//     emprendedor: "Carlos Bala",
-//   },
-//   {
-//     titulo: "Propuesta",
-//     descripcion: "Descripcion",
-//     presupuesto: 9000,
-//     estado: "Activa",
-//     promVotos: 4.2,
-//     emprendedor: "Pedro Pascal",
-//   },
-// ];
-
 type Align = "Pendientes" | "Aceptadas" | "Rechazadas" | "Ver Todos";
 
 export const VerPropuesta: React.FC = () => {
   const fetchData = async () => {
     const data = await getAll(id!, alignValue);
     setDataSource(data);
-  }
+  };
   const { id, title } = useParams<{ id: string; title: string }>();
   const [form] = Form.useForm();
   const [alignValue, setAlignValue] = React.useState<Align>("Pendientes");
@@ -110,7 +95,7 @@ export const VerPropuesta: React.FC = () => {
   const [openEmprendedor, setOpenEmprendedor] = React.useState<boolean>(false);
   const [dataSource, setDataSource] = React.useState<PropuestaGridModel[]>();
 
-  useEffect( () => {
+  useEffect(() => {
     fetchData();
   }, [alignValue]);
 
@@ -166,7 +151,25 @@ export const VerPropuesta: React.FC = () => {
       title: "Emprendedor",
       dataIndex: "emprendedor",
       key: "estado",
-      render: (text) => <a onClick={() => setOpenEmprendedor(true)}>{text}</a>,
+      render: (text, record) => (
+        <a
+          onClick={async () => {
+            const data = await getEmprendedorById(record.idUser);
+            console.log(data);
+            form.setFieldsValue({
+              nombre: data.nombre,
+              apellido: data.apellido,
+              email: data.email,
+              dni: data.dni,
+              fechaNacimiento: dayjs(data.fechaNacimiento),
+              pais: data.pais,
+            });
+            setOpenEmprendedor(true);
+          }}
+        >
+          {text}
+        </a>
+      ),
     },
     {
       render: () => <MessageOutlined onClick={() => setOpenMensaje(true)} />,
@@ -201,7 +204,6 @@ export const VerPropuesta: React.FC = () => {
         open={openMensaje}
         onOk={handleMesajeOk}
         onCancel={() => setOpenMensaje(false)}
-        destroyOnClose
       >
         {/* <BasicForm form={form} config={formConfigs}></BasicForm> */}
       </Modal>
@@ -212,7 +214,6 @@ export const VerPropuesta: React.FC = () => {
         open={openPropuesta}
         onOk={() => setOpenPropuesta(false)}
         onCancel={() => setOpenPropuesta(false)}
-        destroyOnClose
       >
         {/* <BasicForm form={form} config={formConfigs}></BasicForm> */}
       </Modal>
@@ -221,14 +222,72 @@ export const VerPropuesta: React.FC = () => {
         width={800}
         centered
         open={openEmprendedor}
-        onOk={() => setOpenEmprendedor(false)}
-        onCancel={() => setOpenEmprendedor(false)}
-        destroyOnClose
+        onOk={() => {
+          form.resetFields();
+          setOpenEmprendedor(false)
+        }}
+        onCancel={() => {
+          form.resetFields();
+          setOpenEmprendedor(false)
+        }}
       >
-        {/* <BasicForm form={form} config={formConfigs}></BasicForm> */}
+        <BasicForm form={form} config={formEmpConfig()}></BasicForm>
       </Modal>
     </>
   );
+};
+
+const formEmpConfig = (): BasicFormConfig[] => {
+  return [
+    {
+      formControlName: "nombre",
+      label: "Nombre",
+      type: "form-field",
+      row: 1,
+      col: 12,
+      readonly: true,
+    },
+    {
+      formControlName: "apellido",
+      label: "Apellido",
+      type: "form-field",
+      row: 1,
+      col: 12,
+      readonly: true,
+    },
+    {
+      formControlName: "email",
+      label: "Email",
+      type: "form-field",
+      row: 2,
+      col: 12,
+      readonly: true,
+    },
+    {
+      formControlName: "dni",
+      label: "DNI",
+      type: "form-field",
+      row: 2,
+      col: 12,
+      readonly: true,
+    },
+    {
+      formControlName: "fechaNacimiento",
+      label: "Fecha de Nacimiento",
+      type: "form-date",
+      row: 3,
+      col: 12,
+      readonly: true,
+    },
+    {
+      formControlName: "pais",
+      label: "Pais",
+      type: "form-field",
+      row: 3,
+      col: 12,
+      readonly: true,
+    },
+  ];
 };
 
 interface DataPromp {
@@ -239,3 +298,4 @@ interface DataPromp {
   promVotos: number;
   emprendedor: string;
 }
+

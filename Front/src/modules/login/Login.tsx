@@ -28,8 +28,9 @@ export const Login:React.FC = () => {
   };
 
   return (
-    <ProConfigProvider hashed={false}>
-      <div style={{ backgroundColor: 'var(--primary-color)', color: 'var(--text-color)', borderRadius: 50 }}>
+    <div style={{height: '100%',width: '100%', backgroundColor: '#fff', display: 'flex', justifyContent: 'center'}}>
+      <ProConfigProvider hashed={false}>
+      <div style={{ backgroundColor: 'var(--primary-color)', color: 'var(--text-color)', borderRadius: 50, alignItems: 'center', margin: 'auto',}}>
         <LoginForm
           logo="https://github.githubassets.com/favicons/favicon.png"
           title="Ayudame"
@@ -124,5 +125,6 @@ export const Login:React.FC = () => {
         </LoginForm>
       </div>
     </ProConfigProvider>
+    </div>
   );
 };
