@@ -1,3 +1,4 @@
+import Emprendedor from "../../../schemas/emprendedor.ts";
 import Sector from "../../../schemas/sector.ts";
 import type { ComboModel } from "../Models/combosModels.ts";
 
@@ -12,6 +13,26 @@ export class CombosRemotos{
                 const resp: ComboModel = {
                     numero: dato._id,
                     descripcion: dato.name
+                }
+                response.push(resp)
+            })
+
+            return response
+        }catch (error){
+            console.log('error');
+        }
+        return response;
+    }
+
+    public async GetEmprendedor(): Promise<Array<ComboModel>> {
+        let response: ComboModel[] = [];
+        try{
+            const data = await Emprendedor.find({})
+
+            data.forEach((dato) => {
+                const resp: ComboModel = {
+                    numero: dato._id,
+                    descripcion: dato.nombre + ' ' + dato.apellido
                 }
                 response.push(resp)
             })

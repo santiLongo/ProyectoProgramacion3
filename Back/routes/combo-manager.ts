@@ -22,6 +22,9 @@ router.get('/:comboName', async (req: RequestWithParams<ComboRequest>, res: any)
         case 'SectorEmpresaV1':
             data = await _combosRemotos.GetSectorEmpresa();
             break;
+        case 'EmprendedorV1':
+            data = await _combosRemotos.GetEmprendedor();
+            break;
         default:
             throw new Error('No se encontro el combo');
     }

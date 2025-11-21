@@ -8,49 +8,39 @@ export class GetAllPropuestasHandler {
         throw new Error('Se necesita un id de publicacion para esta accion');
     }
 
-    let propuestas;
-
-    switch (command.estado) {
-        case 'Aceptadas':
-            propuestas = await Propuesta.find({publicacion: command.idPublicacion, estado: 'aceptada'})
-            .populate({
-                path: 'emprendedor',
-                populate: { 
-                    path: 'user',
-                    select: 'userName'
-                }
-            });
+    let estado;
+    switch (Number(command.estado)) {
+        case 1:
+            estado = 'aceptada';
             break;
-        case 'Rechazadas':
-            propuestas = await Propuesta.find({publicacion: command.idPublicacion, estado: 'rechazada'})
-            .populate({
-                path: 'emprendedor',
-                populate: { 
-                    path: 'user',
-                    select: 'userName'
-                }
-            });
+        case 2:
+            estado = 'pendiente';
             break;
-        case 'Pendientes':
-            propuestas = await Propuesta.find({publicacion: command.idPublicacion, estado: 'pendiente'})
-            .populate({
-                path: 'emprendedor',
-                populate: { 
-                    path: 'user',
-                    select: 'userName'
-                }
-            });
+        case 3:
+            estado = 'rechazado';
             break;
         default:
-            propuestas = await Propuesta.find({publicacion: command.idPublicacion})
+            estado = null;
+            break;
+    }
+
+    const propuestas = await Propuesta.find({
+        publicacion: command.idPublicacion,
+        estado: estado || { $exists: true },
+        titulo: { $regex: command.titulo || '', $options: 'i' },
+        presupuesto: {
+            $gte: command.presupuestoMin || 0,
+            $lte: command.presupuestoMax || Number.MAX_SAFE_INTEGER,
+        },
+        emprendedor: command.emprendedor || { $exists: true },
+    })
             .populate({
                 path: 'emprendedor',
                 populate: { 
                     path: 'user',
-                    select: 'userName _id'
+                    select: 'userName'
                 }
             });
-    }
 
     const votos = await Voto.find({idPublicacion: command.idPublicacion});
 
@@ -73,7 +63,11 @@ export class GetAllPropuestasHandler {
 
 export interface GetAllPropuestasCommand {
     idPublicacion: string;
-    estado?: string;
+    titulo: string;
+    estado: number;
+    presupuestoMin: number;
+    presupuestoMax: number;
+    emprendedor: string;
 }
 
 interface PropuestaGridModel{

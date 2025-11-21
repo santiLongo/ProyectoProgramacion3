@@ -6,10 +6,10 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import {
+  Button,
   Collapse,
   Form,
   Modal,
-  Segmented,
   Table,
   type CollapseProps,
   type TablePaginationConfig,
@@ -27,6 +27,7 @@ import {
   getEmprendedorById,
 } from "../services/ver-propuestas-http.service";
 import dayjs from "dayjs";
+import type { PropuestasFilterModel } from "../models/propuestas-filter.model";
 
 const config: BasicFormConfig[] = [
   {
@@ -61,7 +62,8 @@ const config: BasicFormConfig[] = [
   {
     formControlName: "emprededor",
     label: "Emprededor",
-    type: "form-field",
+    type: "combo",
+    comboType: "EmprendedorV1",
     row: 2,
     col: 12,
   },
@@ -72,22 +74,35 @@ const pagination: TablePaginationConfig = {
   position: ["bottomRight"],
 };
 
-type Align = "Pendientes" | "Aceptadas" | "Rechazadas" | "Ver Todos";
 
 export const VerPropuesta: React.FC = () => {
   const fetchData = async () => {
-    const data = await getAll(id!, alignValue);
+    const command: PropuestasFilterModel = {
+      idPublicacion: id!,
+      titulo: form.getFieldValue("titulo"),
+      estado: form.getFieldValue("estado"),
+      presupuestoMin: form.getFieldValue("presupuestoMin"),
+      presupuestoMax: form.getFieldValue("presupuestoMax"),
+      emprendedor: form.getFieldValue("emprededor"),
+    };
+    const data = await getAll(command);
     setDataSource(data);
   };
   const { id, title } = useParams<{ id: string; title: string }>();
   const [form] = Form.useForm();
-  const [alignValue, setAlignValue] = React.useState<Align>("Pendientes");
   const itemsCollapse: CollapseProps["items"] = [
     {
       key: "1",
       label: "Filtros",
       extra: <SearchOutlined />,
-      children: <BasicForm form={form} config={config}></BasicForm>,
+      children: <>
+        <BasicForm form={form} config={config}></BasicForm>
+        <Button type="primary" icon={<SearchOutlined />} iconPosition={"start"} onClick={async () => {
+          await fetchData();
+        }}>
+            Buscar
+          </Button>
+      </>,
     },
   ];
   const [openMensaje, setOpenMensaje] = React.useState<boolean>(false);
@@ -97,7 +112,7 @@ export const VerPropuesta: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, [alignValue]);
+  }, []);
 
   const handleMesajeOk = () => {
     console.log("Salio todo piola");
@@ -183,16 +198,11 @@ export const VerPropuesta: React.FC = () => {
     <>
       <CardView title={`Propuesta ${title}`}>
         <Collapse expandIconPosition="end" items={itemsCollapse}></Collapse>
-        <Segmented
-          value={alignValue}
-          style={{ marginBottom: 15, marginTop: 15 }}
-          onChange={setAlignValue}
-          options={["Pendientes", "Aceptadas", "Rechazadas", "Ver Todos"]}
-        />
         <Table
           pagination={pagination}
           columns={columns}
           dataSource={dataSource}
+          style={{marginTop: 20}}
         />
         ;
       </CardView>

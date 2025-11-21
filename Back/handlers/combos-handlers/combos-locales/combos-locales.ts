@@ -6,11 +6,11 @@ export class CombosLocales {
         const data: ComboModel[] = [
             {
                 numero: 1,
-                descripcion: 'Activo'
+                descripcion: 'Aceptada'
             },
             {
                 numero: 2,
-                descripcion: 'Respuesta del Emprendedor'
+                descripcion: 'Pendiente'
             },
             {
                 numero: 3,

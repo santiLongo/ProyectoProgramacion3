@@ -1,19 +1,15 @@
 import { environments } from "../../../../configs/enviroments";
 import { get } from "../../../../services/http.service";
 import type { PropuestaGridModel } from "../models/propuestas-grid.model";
+import type { PropuestasFilterModel } from "../models/propuestas-filter.model";
 
 const urlPropuestas = environments.apiUrl + 'propuestas/';
 const urlEmprendedores = environments.apiUrl + 'emprendedores/';
 
-export const getAll = async (idPublicacion: string, estado: string): Promise<PropuestaGridModel[]> => {
+export const getAll = async (commnad: PropuestasFilterModel): Promise<PropuestaGridModel[]> => {
     const fullUrl = urlPropuestas + 'getAll';
 
-    const query = {
-        idPublicacion: idPublicacion,
-        estado: estado
-    }
-
-    const data = await get(fullUrl, query);
+    const data = await get(fullUrl, commnad);
 
     return data;
 }
