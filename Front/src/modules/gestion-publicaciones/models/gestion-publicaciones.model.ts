@@ -7,4 +7,5 @@ export interface GestionPublicacionesGetAll{
     tags: string;
     empresaName: string;
     empresaImg?: string;
+    estado: string;
 }

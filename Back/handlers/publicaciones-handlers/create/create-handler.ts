@@ -4,6 +4,7 @@ import type { RequestWithBody } from '../../../models/generic-request.ts'
 import { ObjectId } from 'mongodb'
 import Sector from '../../../schemas/sector.ts'
 import { fixedObjectId } from '../../../utils/fixed-object-id.ts'
+import EstadoPublicacion from '../../../schemas/estado-publicacion.ts'
 
 export class CreatePublicacionesHandler {
   public async handler(command: RequestWithBody<FormAltaModel>): Promise<void> {
@@ -29,13 +30,19 @@ export class CreatePublicacionesHandler {
       throw new Error('No se encontró el sector')
     }
 
+    const estadoActivoId = await EstadoPublicacion.findOne({ name: /act/i }).select('_id')
+
+    if (!estadoActivoId) {
+      throw new Error('No se encontró el estado activo')
+    }
+
     const publicacion = await Publicacion.create({
       titulo: command.body.titulo,
       descripcion: command.body.descripcion,
       sector: sector?._id,
       tags: command.body.tags,
       empresa: empresa?._id,
-      estado: 'activo',
+      estado: estadoActivoId._id,
       fechaAlta: new Date(),
     })
   }

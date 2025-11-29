@@ -2,7 +2,7 @@ import axios, { type AxiosRequestConfig } from "axios";
 import { triggerGlobalError } from "../utils/error-handler";
 
 const getAuthData = () => {
-  const token = localStorage.getItem("jwt") || sessionStorage.getItem("jwt");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   const userData =
     localStorage.getItem("user") || sessionStorage.getItem("user");
 

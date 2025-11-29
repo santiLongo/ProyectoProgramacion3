@@ -3,6 +3,8 @@ import Publicacion from '../../../schemas/publicacion.ts'
 import Empresa from '../../../schemas/empresa.ts'
 import type { RequestWithParams } from '../../../models/generic-request.ts'
 import express from 'express'
+import EstadoPropuesta from '../../../schemas/estado-prouesta.ts'
+import EstadoPublicacion from '../../../schemas/estado-publicacion.ts'
 
 export class GetAllHomeHandler {
   private _commnad: RequestWithParams<any>
@@ -14,9 +16,16 @@ export class GetAllHomeHandler {
   public async handler(): Promise<GetAllCardsPublicaciones[]> {
     let response: GetAllCardsPublicaciones[] = []
 
-    const publicaciones = await Publicacion.find()
+    const activa = await EstadoPublicacion.findOne({ name: /Act/i }).select('_id')
+
+    if (!activa) {
+      throw new Error('No se encontró el estado activo')
+    }
+
+    const publicaciones = await Publicacion.find({ estado: activa._id })
       .populate<{ empresa: { name: string } }>('empresa')
       .populate<{ sector: { _id: ObjectId; name: string } }>('sector')
+      .populate<{ estado: { _id: ObjectId; name: string } }>('estado')
       .exec();
 
       publicaciones.forEach((publicacion) => {

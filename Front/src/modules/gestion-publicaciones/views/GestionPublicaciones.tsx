@@ -10,6 +10,7 @@ import {
   type BasicFormConfig,
 } from "../../../components/basic-form/BasicFom";
 import {
+  activar,
   create,
   eliminar,
   getAll,
@@ -38,7 +39,7 @@ const formConfigs: Array<BasicFormConfig> = [
   {
     formControlName: "tags",
     label: "Tags",
-    type: "textarea",
+    type: "tags",
     col: 24,
     row: 2,
   },
@@ -89,9 +90,19 @@ export const GestionPublicaciones: React.FC = () => {
           },
           {
             key: "delete",
-            label: "Eliminar",
-            onClick: () => {
-              eliminar(item.id);
+            hidden: item.estado === "Suspendida" || item.estado === "Finalizada",
+            label: "Suspender",
+            onClick: async () => {
+              await eliminar(item.id);
+              fetchData();
+            },
+          },
+          {
+            key: "activar",
+            hidden: item.estado === "Activa" || item.estado === "Finalizada",
+            label: "Activar",
+            onClick: async () => {
+              await activar(item.id);
               fetchData();
             },
           },

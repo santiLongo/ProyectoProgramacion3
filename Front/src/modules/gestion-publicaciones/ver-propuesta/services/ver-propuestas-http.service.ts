@@ -4,6 +4,7 @@ import type { PropuestaGridModel } from "../models/propuestas-grid.model";
 import type { PropuestasFilterModel } from "../models/propuestas-filter.model";
 
 const urlPropuestas = environments.apiUrl + 'propuestas/';
+const urlPublicaciones = environments.apiUrl + 'gestion-publicaciones/';
 const urlEmprendedores = environments.apiUrl + 'emprendedores/';
 
 export const getAll = async (commnad: PropuestasFilterModel): Promise<PropuestaGridModel[]> => {
@@ -30,4 +31,12 @@ export const updateEstadoPublicacion = (idPropuesta: string, estado: string) => 
         estado: estado
     }
     post(fullUrl, body);
+}
+
+export const getPubliById = async (idPublicacion: string) => {
+    const fullUrl = urlPublicaciones + 'get';
+    const query = {
+        idPublicacion: idPublicacion
+    }
+    return await get(fullUrl, query);
 }

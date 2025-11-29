@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Checkbox, Row, Col, DatePicker } from "antd";
 import type { FormInstance } from "antd/es/form";
 import { BasicCombo } from "../combo/Combo";
+import { HashtagEditor } from "../hashtag-editor/HashtagEditor";
 
 export interface BasicFormConfig {
   formControlName: string;
@@ -10,6 +11,7 @@ export interface BasicFormConfig {
     | "form-field"
     | "form-number"
     | "textarea"
+    | "tags"
     | "checkbox"
     | "combo";
   comboType?: string;
@@ -65,6 +67,8 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             readOnly={item.readonly ?? false}
           />
         );
+      case "tags":
+        return <HashtagEditor readonly={item.readonly ?? false} />;
       case "checkbox":
         return (
           <Checkbox

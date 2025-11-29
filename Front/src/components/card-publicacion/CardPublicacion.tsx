@@ -17,7 +17,9 @@ export const CardPublicacion: React.FC<DashboardCardsProps> = ({
           border: "1px solid var(--secondary-color)",
           height: "100%",
         }}
-        actions={actions.map(action => (
+        actions={actions
+          .filter(action => !action.hidden)
+          .map(action => (
             <a key={action.key} onClick={action.onClick}>{action.label}</a>
         ))}
       >
@@ -50,4 +52,5 @@ type TypeActions = {
   key: string;
   label: string;
   onClick?: () => void;
+  hidden?: boolean;
 };

@@ -47,6 +47,20 @@ export const eliminar = async (idPublicacion: string): Promise<any> => {
     return;
 }
 
+export const activar = async (idPublicacion: string): Promise<any> => {
+    const fullUrl  =  urlPublicaciones + 'activar';
+    const body = { idPublicacion: idPublicacion}
+    try{
+        const response = await post(fullUrl, body);
+
+        return response;
+    }catch (error){
+        console.log(error);
+    }
+
+    return;
+}
+
 export const update = async (form: PublicacionFormModel): Promise<any> => {
     const fullUrl  =  urlPublicaciones + 'update';
 

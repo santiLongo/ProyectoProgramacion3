@@ -11,6 +11,7 @@ import publicacionesRouter from './routes/publicaciones.ts'
 import homeRouter from './routes/home.ts'
 import propuestasRouter from './routes/propuestas.ts'
 import emprendedoresRouter from './routes/emprendedores.ts'
+import authentication from './middlewares/authentication.ts';
 
 const app = express();
 
@@ -23,11 +24,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', statusRouter)
 app.use('/api/auth', authRouter)
-app.use('/api/combos', comboRouter)
-app.use('/api/gestion-publicaciones', publicacionesRouter)
-app.use('/api/home-publicaciones', homeRouter)
-app.use('/api/propuestas', propuestasRouter)
-app.use('/api/emprendedores', emprendedoresRouter)
+app.use('/api/combos', authentication, comboRouter)
+app.use('/api/gestion-publicaciones', authentication, publicacionesRouter)
+app.use('/api/home-publicaciones', authentication, homeRouter)
+app.use('/api/propuestas', authentication, propuestasRouter)
+app.use('/api/emprendedores', authentication, emprendedoresRouter)
 
 app.use(errorHandler);
 

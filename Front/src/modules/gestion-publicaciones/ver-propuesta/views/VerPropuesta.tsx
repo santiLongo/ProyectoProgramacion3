@@ -1,16 +1,18 @@
 import { useParams } from "react-router-dom";
 import { CardView } from "../../../../components/card-view/CardView";
 import {
-  FileOutlined,
   MessageOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import {
   Button,
   Collapse,
+  Divider,
+  Flex,
   Form,
   Modal,
   Table,
+  Tag,
   type CollapseProps,
   type TablePaginationConfig,
   type TableProps,
@@ -25,6 +27,7 @@ import type { PropuestaGridModel } from "../models/propuestas-grid.model";
 import {
   getAll,
   getEmprendedorById,
+  getPubliById,
   updateEstadoPublicacion,
 } from "../services/ver-propuestas-http.service";
 import dayjs from "dayjs";
@@ -71,6 +74,33 @@ const config: BasicFormConfig[] = [
   },
 ];
 
+const configPubli: BasicFormConfig[] = [
+  {
+    formControlName: "titulo",
+    label: "Titulo",
+    type: "form-field",
+    row: 1,
+    col: 12,
+    readonly: true,
+  },
+  {
+    formControlName: "categoria",
+    label: "Categoria",
+    type: "form-field",
+    row: 1,
+    col: 12,
+    readonly: true,
+  },
+  {
+    formControlName: "descripcion",
+    label: "Descripcion",
+    type: "textarea",
+    row: 2,
+    col: 24,
+    readonly: true,
+  },
+];
+
 const pagination: TablePaginationConfig = {
   pageSize: 10,
   position: ["bottomRight"],
@@ -89,7 +119,14 @@ export const VerPropuesta: React.FC = () => {
     const data = await getAll(command);
     setDataSource(data);
   };
+  const cargarPubli = async () => {
+    const data = await getPubliById(id!);
+    const tags = data.tags.split(" ");
+    setTags(tags);
+    formPubli.setFieldsValue(data);
+  };
   const { id, title } = useParams<{ id: string; title: string }>();
+  const [formPubli] = Form.useForm();
   const [form] = Form.useForm();
   const itemsCollapse: CollapseProps["items"] = [
     {
@@ -114,12 +151,13 @@ export const VerPropuesta: React.FC = () => {
     },
   ];
   const [openMensaje, setOpenMensaje] = React.useState<boolean>(false);
-  const [openPropuesta, setOpenPropuesta] = React.useState<boolean>(false);
   const [openEmprendedor, setOpenEmprendedor] = React.useState<boolean>(false);
   const [dataSource, setDataSource] = React.useState<PropuestaGridModel[]>();
+  const [tags, setTags] = React.useState<string[]>([]);
 
   useEffect(() => {
     fetchData();
+    cargarPubli();
   }, []);
 
   const handleMesajeOk = () => {
@@ -166,6 +204,10 @@ export const VerPropuesta: React.FC = () => {
               );
 
               updateEstadoPublicacion(record.idPropuesta, value);
+
+              if(value === "ACEPTADA"){
+                fetchData();
+              }
             }}
           ></BasicCombo>
         </>
@@ -224,14 +266,20 @@ export const VerPropuesta: React.FC = () => {
     {
       render: () => <MessageOutlined onClick={() => setOpenMensaje(true)} />,
     },
-    {
-      render: () => <FileOutlined onClick={() => setOpenPropuesta(true)} />,
-    },
   ];
 
   return (
     <>
-      <CardView title={`Propuesta ${title}`}>
+      <CardView title={title ?? "Publicacion"}>
+        <BasicForm form={formPubli} config={configPubli}></BasicForm>
+        <Flex gap="small" align="baseline" wrap>
+          {tags!.map((tag) => (
+            <Tag key={tag} color={"blue"}>
+              {tag}
+            </Tag>
+          ))}
+        </Flex>
+        <Divider orientation="start">Propuestas</Divider>
         <Collapse expandIconPosition="end" items={itemsCollapse}></Collapse>
         <Table
           pagination={pagination}
@@ -249,16 +297,6 @@ export const VerPropuesta: React.FC = () => {
         open={openMensaje}
         onOk={handleMesajeOk}
         onCancel={() => setOpenMensaje(false)}
-      >
-        {/* <BasicForm form={form} config={formConfigs}></BasicForm> */}
-      </Modal>
-      <Modal
-        title={"Ver Propuesta"}
-        width={800}
-        centered
-        open={openPropuesta}
-        onOk={() => setOpenPropuesta(false)}
-        onCancel={() => setOpenPropuesta(false)}
       >
         {/* <BasicForm form={form} config={formConfigs}></BasicForm> */}
       </Modal>
