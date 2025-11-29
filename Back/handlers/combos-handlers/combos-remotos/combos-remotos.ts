@@ -1,9 +1,10 @@
 import Emprendedor from "../../../schemas/emprendedor.ts";
+import EstadoPropuesta from "../../../schemas/estado-prouesta.ts";
 import Sector from "../../../schemas/sector.ts";
 import type { ComboModel } from "../Models/combosModels.ts";
 
 export class CombosRemotos{
-    
+
     public async GetSectorEmpresa(): Promise<Array<ComboModel>> {
         let response: ComboModel[] = [];
         try{
@@ -42,5 +43,14 @@ export class CombosRemotos{
             console.log('error');
         }
         return response;
+    }
+
+    public async GetEstadoPublicacion(): Promise<Array<ComboModel>> {
+        const data = await EstadoPropuesta.find({})
+
+        return data.map<ComboModel>((dato) => ({
+            numero: dato._id,
+            descripcion: dato.name
+        }))
     }
 }

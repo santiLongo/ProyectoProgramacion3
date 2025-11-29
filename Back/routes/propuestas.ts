@@ -5,6 +5,7 @@ import {
   type FormPropuestaAltaModel,
 } from '../handlers/propuestas-handlers/create/create-propuesta-handler.ts'
 import { GetAllPropuestasHandler, type GetAllPropuestasCommand } from '../handlers/propuestas-handlers/get-all/get-all-propuesta-handler.ts'
+import { UpdateEstadoPropuestaHandler, type UpdateEstadoPropuestaCommand } from '../handlers/propuestas-handlers/update-estado/update-estado-handler.ts'
 
 const router = express.Router()
 
@@ -22,6 +23,16 @@ router.get('/getAll', async (req: RequestWithQuery<GetAllPropuestasCommand>, res
   const response = await handler.handler(req.query)
 
   res.status(200).send(response)
+})
+
+router.post('/updateEstado', async (req: RequestWithBody<UpdateEstadoPropuestaCommand>, res: any, next) => {
+  const command: UpdateEstadoPropuestaCommand = req.body;
+
+  const handler = new UpdateEstadoPropuestaHandler();
+
+  await handler.handler(command);
+  res.status(201);
+
 })
 
 export default router

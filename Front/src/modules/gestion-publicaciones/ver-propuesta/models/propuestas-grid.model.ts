@@ -7,4 +7,5 @@ export interface PropuestaGridModel{
     cantidadVotos: number;
     idUser: string;
     emprendedor: string;
+    idPropuesta: string;
 }

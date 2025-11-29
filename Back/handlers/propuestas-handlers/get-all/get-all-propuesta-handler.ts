@@ -8,25 +8,9 @@ export class GetAllPropuestasHandler {
         throw new Error('Se necesita un id de publicacion para esta accion');
     }
 
-    let estado;
-    switch (Number(command.estado)) {
-        case 1:
-            estado = 'aceptada';
-            break;
-        case 2:
-            estado = 'pendiente';
-            break;
-        case 3:
-            estado = 'rechazado';
-            break;
-        default:
-            estado = null;
-            break;
-    }
-
     const propuestas = await Propuesta.find({
         publicacion: command.idPublicacion,
-        estado: estado || { $exists: true },
+        estado: command.estado || { $exists: true },
         titulo: { $regex: command.titulo || '', $options: 'i' },
         presupuesto: {
             $gte: command.presupuestoMin || 0,
@@ -39,7 +23,11 @@ export class GetAllPropuestasHandler {
                 populate: { 
                     path: 'user',
                     select: 'userName'
-                }
+                },
+            })
+            .populate({
+                path: 'estado',
+                select: 'name'
             });
 
     const votos = await Voto.find({idPublicacion: command.idPublicacion});
@@ -50,11 +38,12 @@ export class GetAllPropuestasHandler {
         titulo: propuesta.titulo,
         descripcion: propuesta.descripcion,
         presupuesto: propuesta.presupuesto,
-        estado: propuesta.estado,
+        estado: propuesta.estado.name,
         promVotos: promVotos,
         cantidadVotos: votos.length,
         idUser: propuesta.emprendedor.user?._id.toString(),
         emprendedor: propuesta.emprendedor.user?.userName,
+        idPropuesta: propuesta._id.toString(),
     }));
 
     return response;
@@ -64,7 +53,7 @@ export class GetAllPropuestasHandler {
 export interface GetAllPropuestasCommand {
     idPublicacion: string;
     titulo: string;
-    estado: number;
+    estado: string;
     presupuestoMin: number;
     presupuestoMax: number;
     emprendedor: string;
@@ -79,4 +68,5 @@ interface PropuestaGridModel{
     cantidadVotos: number;
     idUser: string;
     emprendedor: string;
+    idPropuesta: string;
 }

@@ -17,7 +17,7 @@ router.get('/:comboName', async (req: RequestWithParams<ComboRequest>, res: any)
 
     switch (comboName){
         case 'EstadoPublicacionV1':
-            data = _combosLocales.GetEstadoPublicacion();
+            data = await _combosRemotos.GetEstadoPublicacion();
             break;
         case 'SectorEmpresaV1':
             data = await _combosRemotos.GetSectorEmpresa();

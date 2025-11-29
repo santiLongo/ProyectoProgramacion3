@@ -1,5 +1,5 @@
 import { environments } from "../../../../configs/enviroments";
-import { get } from "../../../../services/http.service";
+import { get, post } from "../../../../services/http.service";
 import type { PropuestaGridModel } from "../models/propuestas-grid.model";
 import type { PropuestasFilterModel } from "../models/propuestas-filter.model";
 
@@ -21,4 +21,13 @@ export const getEmprendedorById = async (idEmprendedor: string) => {
     }
     return await get(fullUrl, query);
     
+}
+
+export const updateEstadoPublicacion = (idPropuesta: string, estado: string) => {
+    const fullUrl = urlPropuestas + 'updateEstado';
+    const body = {
+        idPropuesta: idPropuesta,
+        estado: estado
+    }
+    post(fullUrl, body);
 }

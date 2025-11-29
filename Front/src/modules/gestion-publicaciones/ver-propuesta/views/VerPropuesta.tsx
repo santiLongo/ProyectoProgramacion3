@@ -25,9 +25,11 @@ import type { PropuestaGridModel } from "../models/propuestas-grid.model";
 import {
   getAll,
   getEmprendedorById,
+  updateEstadoPublicacion,
 } from "../services/ver-propuestas-http.service";
 import dayjs from "dayjs";
 import type { PropuestasFilterModel } from "../models/propuestas-filter.model";
+import { BasicCombo } from "../../../../components/combo/Combo";
 
 const config: BasicFormConfig[] = [
   {
@@ -74,7 +76,6 @@ const pagination: TablePaginationConfig = {
   position: ["bottomRight"],
 };
 
-
 export const VerPropuesta: React.FC = () => {
   const fetchData = async () => {
     const command: PropuestasFilterModel = {
@@ -95,14 +96,21 @@ export const VerPropuesta: React.FC = () => {
       key: "1",
       label: "Filtros",
       extra: <SearchOutlined />,
-      children: <>
-        <BasicForm form={form} config={config}></BasicForm>
-        <Button type="primary" icon={<SearchOutlined />} iconPosition={"start"} onClick={async () => {
-          await fetchData();
-        }}>
+      children: (
+        <>
+          <BasicForm form={form} config={config}></BasicForm>
+          <Button
+            type="primary"
+            icon={<SearchOutlined />}
+            iconPosition={"start"}
+            onClick={async () => {
+              await fetchData();
+            }}
+          >
             Buscar
           </Button>
-      </>,
+        </>
+      ),
     },
   ];
   const [openMensaje, setOpenMensaje] = React.useState<boolean>(false);
@@ -119,7 +127,7 @@ export const VerPropuesta: React.FC = () => {
     setOpenMensaje(false);
   };
 
-  const columns: TableProps<DataPromp>["columns"] = [
+  const columns: TableProps<PropuestaGridModel>["columns"] = [
     {
       title: "Titulo",
       dataIndex: "titulo",
@@ -141,6 +149,27 @@ export const VerPropuesta: React.FC = () => {
       title: "Estado",
       dataIndex: "estado",
       key: "estado",
+      render: (text, record) => (
+        <>
+          <BasicCombo
+            comboName="EstadoPublicacionV1"
+            value={text}
+            onChange={(value) => {
+              if (value === undefined) return;
+
+              setDataSource((prev) =>
+                prev?.map((row) =>
+                  row.idPropuesta === record.idPropuesta
+                    ? { ...row, estado: value }
+                    : row
+                )
+              );
+
+              updateEstadoPublicacion(record.idPropuesta, value);
+            }}
+          ></BasicCombo>
+        </>
+      ),
     },
     {
       title: "Promedio de Votos",
@@ -160,6 +189,12 @@ export const VerPropuesta: React.FC = () => {
       title: "Id Usuario",
       dataIndex: "idUser",
       key: "idUser",
+      hidden: true,
+    },
+    {
+      title: "Id Propuesta",
+      dataIndex: "idPropuesta",
+      key: "idPropuesta",
       hidden: true,
     },
     {
@@ -202,7 +237,7 @@ export const VerPropuesta: React.FC = () => {
           pagination={pagination}
           columns={columns}
           dataSource={dataSource}
-          style={{marginTop: 20}}
+          style={{ marginTop: 20 }}
         />
         ;
       </CardView>
@@ -234,11 +269,11 @@ export const VerPropuesta: React.FC = () => {
         open={openEmprendedor}
         onOk={() => {
           form.resetFields();
-          setOpenEmprendedor(false)
+          setOpenEmprendedor(false);
         }}
         onCancel={() => {
           form.resetFields();
-          setOpenEmprendedor(false)
+          setOpenEmprendedor(false);
         }}
       >
         <BasicForm form={form} config={formEmpConfig()}></BasicForm>
@@ -299,13 +334,3 @@ const formEmpConfig = (): BasicFormConfig[] => {
     },
   ];
 };
-
-interface DataPromp {
-  titulo: string;
-  descripcion: string;
-  presupuesto: number;
-  estado: string;
-  promVotos: number;
-  emprendedor: string;
-}
-

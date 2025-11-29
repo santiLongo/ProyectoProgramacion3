@@ -5,8 +5,8 @@ import { getCombo, type ComboModel } from "./services/combo.service";
 export interface ComboProps {
   comboName: string;
   readonly?: boolean;
-  value?: number | string; // <-- Agregado
-  onChange?: (value: any) => void; // <-- Agregado
+  value?: number | string;
+  onChange?: (value: any) => void;
 }
 
 export const BasicCombo: React.FC<ComboProps> = ({ comboName, readonly = false, value, onChange  }) => {
@@ -29,11 +29,13 @@ export const BasicCombo: React.FC<ComboProps> = ({ comboName, readonly = false, 
         value: opt.numero,
         label: opt.descripcion
       }))}
-      value={value}          // <-- conecta con el form
-      onChange={onChange}    // <-- conecta con el form
+      value={value}
+      onChange={onChange}
       loading={loading}
       disabled={readonly}
       style={{ width: "100%" }}
+      allowClear
+      placeholder="Seleccione un valor"
     />
   );
 };
