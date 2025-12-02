@@ -1,4 +1,5 @@
 import app from '../app.ts'
+import "../utils/generic-methods/index.ts";
 import debug from 'debug'
 import http from 'http'
 import figlet from 'figlet'

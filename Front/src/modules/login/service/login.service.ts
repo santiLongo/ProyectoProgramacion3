@@ -1,28 +1,25 @@
 import { environments } from "../../../configs/enviroments";
 import { post } from "../../../services/http.service";
+import type { LoginForm } from "../models/login-form";
+import type { SingUpForm } from "../models/sign-up-form";
 
 export const login = async (values: LoginForm) => {
-    const fullUrl = environments.apiUrl + 'auth';
+  const fullUrl = environments.apiUrl + "auth";
 
-    const body = values;
+  const data = await post(fullUrl, values);
 
-    try{
-        const data = await post(fullUrl, body);
-
-        if(data.token == null){
-            return;
-        }
-        window.localStorage.setItem('token',data.token);
-        window.localStorage.setItem('user',JSON.stringify(data.user));
-        window.location.href = '/'
-        return;
-    }catch (error){
-        console.log('Error al logear' + error)
-    }
+  if (data.token == null) {
     return;
-}
+  }
 
-export interface LoginForm{
-    email: string;
-    password: string;
-}
+  window.localStorage.setItem("token", data.token);
+  window.localStorage.setItem("user", JSON.stringify(data.user));
+  window.location.href = "/";
+  return;
+};
+
+export const singUp = async (values: SingUpForm) => {
+  const fullUrl = environments.apiUrl + "auth/sing-up";
+  await post(fullUrl, values);
+  return;
+};

@@ -13,7 +13,8 @@ export interface BasicFormConfig {
     | "textarea"
     | "tags"
     | "checkbox"
-    | "combo";
+    | "combo"
+    | "password";
   comboType?: string;
   label: string;
   col: 2 | 4 | 6 | 8 | 12 | 24;
@@ -27,12 +28,15 @@ interface BasicFormProps {
   form: FormInstance;
   config: BasicFormConfig[];
   onSubmit?: (values: any) => void;
+  onValueChanges?: (changedValues: any, allValues: any) => any;
+  autoComplete?: boolean;
 }
 
 export const BasicForm: React.FC<BasicFormProps> = ({
   form,
   config,
   onSubmit,
+  onValueChanges,
 }) => {
   // Agrupar por las rows para ordenar el codigo
   const groupedRows = Array.from(
@@ -50,7 +54,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
     switch (item.type) {
       case "form-field":
         return (
-          <Input style={{ width: "100%" }} readOnly={item.readonly ?? false} />
+          <Input style={{ width: "100%" }} readOnly={item.readonly ?? false} autoComplete="off" />
         );
       case "form-number":
         return (
@@ -58,6 +62,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             style={{ width: "100%" }}
             type="number"
             readOnly={item.readonly ?? false}
+            autoComplete="off"
           />
         );
       case "textarea":
@@ -65,6 +70,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
           <Input.TextArea
             style={{ width: "100%" }}
             readOnly={item.readonly ?? false}
+            autoComplete="off"
           />
         );
       case "tags":
@@ -91,9 +97,17 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             value={form.getFieldValue(item.formControlName) ?? undefined}
           ></BasicCombo>
         );
+        case "password":
+        return (
+          <Input.Password
+            style={{ width: "100%" }}
+            readOnly={item.readonly ?? false}
+            autoComplete="off"
+          />
+        );
       default:
         return (
-          <Input style={{ width: "100%" }} readOnly={item.readonly ?? false} />
+          <Input style={{ width: "100%" }} readOnly={item.readonly ?? false} autoComplete="off" />
         );
     }
   };
@@ -104,6 +118,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
       style={{ width: "100%" }}
       autoComplete="off"
       onFinish={onSubmit}
+      onValuesChange={onValueChanges}
     >
       {groupedRows.map((group) => (
         <Row key={group.row} gutter={16}>

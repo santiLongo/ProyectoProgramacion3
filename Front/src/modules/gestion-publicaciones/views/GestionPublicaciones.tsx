@@ -18,48 +18,7 @@ import {
 } from "../services/gestion-publicacion-http.service";
 import type { PublicacionFormModel } from "../models/publicacion-form.model";
 
-const formConfigs: Array<BasicFormConfig> = [
-  {
-    formControlName: "titulo",
-    label: "Titulo",
-    type: "form-field",
-    col: 12,
-    row: 1,
-    required: true,
-  },
-  {
-    formControlName: "sector",
-    label: "Sector",
-    type: "combo",
-    comboType: "SectorEmpresaV1",
-    col: 12,
-    row: 1,
-    required: true,
-  },
-  {
-    formControlName: "tags",
-    label: "Tags",
-    type: "tags",
-    col: 24,
-    row: 2,
-  },
-  {
-    formControlName: "descripcion",
-    label: "Descripcion",
-    type: "textarea",
-    col: 24,
-    row: 3,
-    required: true,
-  },
-  {
-    formControlName: "id",
-    label: "Id",
-    type: "form-field",
-    col: 24,
-    row: 4,
-    hidden: true,
-  },
-];
+
 
 export const GestionPublicaciones: React.FC = () => {
   const fetchData = async () => {
@@ -87,6 +46,7 @@ export const GestionPublicaciones: React.FC = () => {
               setEsUpdate(true);
               setOpen(true);
             },
+            hidden: item.estado === "Finalizada"
           },
           {
             key: "delete",
@@ -146,13 +106,58 @@ export const GestionPublicaciones: React.FC = () => {
     setEsUpdate(false);
     setOpen(false);
     fetchData();
-    // TODO: Tiene que actualizar cada vez que cierra el dialog
   };
   const handleCancel = () => {
     setEsUpdate(false);
     setOpen(false);
     //Tiene que actualizar cada vez que cierra el dialog
   };
+
+  const formConfigs: Array<BasicFormConfig> = [
+  {
+    formControlName: "titulo",
+    label: "Titulo",
+    type: "form-field",
+    col: 12,
+    row: 1,
+    required: true,
+    readonly: esUpdate
+  },
+  {
+    formControlName: "sector",
+    label: "Sector",
+    type: "combo",
+    comboType: "SectorEmpresaV1",
+    col: 12,
+    row: 1,
+    required: true,
+    readonly: esUpdate,
+  },
+  {
+    formControlName: "tags",
+    label: "Tags",
+    type: "tags",
+    col: 24,
+    row: 2,
+  },
+  {
+    formControlName: "descripcion",
+    label: "Descripcion",
+    type: "textarea",
+    col: 24,
+    row: 3,
+    required: true,
+  },
+  {
+    formControlName: "id",
+    label: "Id",
+    type: "form-field",
+    col: 24,
+    row: 4,
+    hidden: true,
+    readonly: esUpdate,
+  },
+];
 
   return (
     <>

@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', statusRouter)
 app.use('/api/auth', authRouter)
-app.use('/api/combos', authentication, comboRouter)
+app.use('/api/combos', comboRouter)
 app.use('/api/gestion-publicaciones', authentication, publicacionesRouter)
 app.use('/api/home-publicaciones', authentication, homeRouter)
 app.use('/api/propuestas', authentication, propuestasRouter)

@@ -57,3 +57,15 @@ export interface IUserLogin {
   email: string
   password: string
 }
+
+export interface IUserSingUp {
+  nombreUsuario: string
+  email: string
+  contraseña: string
+  confirmContraseña: string
+  esEmpresa: boolean
+  nombreEmpresa: string
+  cuitEmpresa: number
+  fechaFundacion: Date
+  sector: string
+}
