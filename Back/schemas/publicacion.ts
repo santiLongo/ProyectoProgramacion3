@@ -5,7 +5,7 @@ const publicacionSchema = new Schema({
     titulo: { type: String, required: true, trim: true},
     descripcion: { type: String, required: true, trim: true},
     sector: { type: ObjectId, ref: 'Sector', required: true},
-    tags: { type: String, required: true, trim: true},
+    tags: { type: String, trim: true},
     estado: { type: ObjectId, ref: 'EstadoPublicacion', required: true, lowercase: true, trim: true},
     empresa: {type: ObjectId, ref: 'Empresa', required: true},
     fechaAlta: {type: Date, required: true}

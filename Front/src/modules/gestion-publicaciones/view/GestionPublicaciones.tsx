@@ -17,6 +17,7 @@ import {
   update,
 } from "../services/gestion-publicacion-http.service";
 import type { PublicacionFormModel } from "../models/publicacion-form.model";
+import { alertService } from "../../../services/alert.service";
 
 
 
@@ -93,15 +94,17 @@ export const GestionPublicaciones: React.FC = () => {
   }, [navigate]);
 
   const handleOk = async () => {
-    const req = form.getFieldsValue() as PublicacionFormModel;
-    let res: any;
-    if (esUpdate) {
-      res = await update(req);
-    } else {
-      res = await create(req);
-    }
-    if (res.errores) {
+    if(!form.isFieldsValidating()){
+      alertService.error({title: "Campos con errores", descripcion: "Algunos campos contienen errores o estan vacios"});
       return;
+    }
+    const req = form.getFieldsValue() as PublicacionFormModel;
+    if (esUpdate) {
+      await update(req);
+      await alertService.success({title: "Actualizacion Exitosa", descripcion: "Se actualizo la publicacion con exito"});
+    } else {
+      await create(req);
+      await alertService.success({title: "Publicacion Exitosa", descripcion: "Se subio la publicacion con exito"});
     }
     setEsUpdate(false);
     setOpen(false);
@@ -198,7 +201,7 @@ export const GestionPublicaciones: React.FC = () => {
         open={open}
         onOk={handleOk}
         onCancel={handleCancel}
-        destroyOnClose
+        destroyOnHidden={true}
       >
         <BasicForm form={form} config={formConfigs}></BasicForm>
       </Modal>

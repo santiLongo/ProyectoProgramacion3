@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { CardView } from "../../../../components/card-view/CardView";
+import { CardView } from "../../../../../components/card-view/CardView";
 import {
   MessageOutlined,
   SearchOutlined,
@@ -20,7 +20,7 @@ import {
 import {
   BasicForm,
   type BasicFormConfig,
-} from "../../../../components/basic-form/BasicFom";
+} from "../../../../../components/basic-form/BasicFom";
 import "./VerPropuesta.css";
 import React, { useEffect } from "react";
 import type { PropuestaGridModel } from "../models/propuestas-grid.model";
@@ -32,7 +32,7 @@ import {
 } from "../services/ver-propuestas-http.service";
 import dayjs from "dayjs";
 import type { PropuestasFilterModel } from "../models/propuestas-filter.model";
-import { BasicCombo } from "../../../../components/combo/Combo";
+import { BasicCombo } from "../../../../../components/combo/Combo";
 
 const config: BasicFormConfig[] = [
   {
@@ -297,6 +297,7 @@ export const VerPropuesta: React.FC = () => {
         open={openMensaje}
         onOk={handleMesajeOk}
         onCancel={() => setOpenMensaje(false)}
+        destroyOnHidden={true}
       >
         {/* <BasicForm form={form} config={formConfigs}></BasicForm> */}
       </Modal>
@@ -313,6 +314,7 @@ export const VerPropuesta: React.FC = () => {
           form.resetFields();
           setOpenEmprendedor(false);
         }}
+        destroyOnHidden={true}
       >
         <BasicForm form={form} config={formEmpConfig()}></BasicForm>
       </Modal>

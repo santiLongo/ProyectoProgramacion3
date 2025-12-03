@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { DashboardCards } from "../../components/dashboard-card/DashboardCards";
-import { type DashboardCardsProps } from "../../components/card-publicacion/CardPublicacion";
-import { CardView } from "../../components/card-view/CardView";
 import { Form, Modal, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import {
-  BasicForm,
-  type BasicFormConfig,
-} from "../../components/basic-form/BasicFom";
-import { useNavigate } from "react-router-dom";
-import { create, getAll } from "./services/home.service";
-import { UserService } from "../../services/user.service";
-import type { FormPropuestasAltaModel } from "./models/form-propuestas-alta.model";
+import { type BasicFormConfig, BasicForm } from "../../../components/basic-form/BasicFom";
+import type { DashboardCardsProps } from "../../../components/card-publicacion/CardPublicacion";
+import { CardView } from "../../../components/card-view/CardView";
+import { DashboardCards } from "../../../components/dashboard-card/DashboardCards";
+import { UserService } from "../../../services/user.service";
+import type { FormPropuestasAltaModel } from "../models/form-propuestas-alta.model";
+import { create, getAll } from "../services/home.service";
+
 
 const formConfigs: Array<BasicFormConfig> = [
   {
@@ -126,7 +123,7 @@ const Home: React.FC = () => {
         open={open}
         onOk={handleOk}
         onCancel={handleCancel}
-        destroyOnClose
+        destroyOnHidden={true}
       >
         <BasicForm form={form} config={formConfigs}></BasicForm>
       </Modal>

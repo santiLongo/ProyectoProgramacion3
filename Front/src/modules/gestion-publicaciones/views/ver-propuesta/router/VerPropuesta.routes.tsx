@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { VerPropuesta } from "./views/VerPropuesta";
+import { VerPropuesta } from "../view/VerPropuesta";
 
 export function VerPropuestaRoutes() {
   return (

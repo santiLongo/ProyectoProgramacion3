@@ -34,10 +34,22 @@ const HeaderComponent: React.FC = () => {
           navigate("/gestion-publicaciones");
         },
       },
-      { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },
-      { key: "4", icon: <UserDeleteOutlined />, label: "Salir", onClick: () => {
-        logOutService();
-      } },
+      {
+        key: "3",
+        icon: <UserOutlined />,
+        label: "Mi Perfil",
+        onClick: () => {
+          navigate("/mi-perfil");
+        },
+      },
+      {
+        key: "4",
+        icon: <UserDeleteOutlined />,
+        label: "Salir",
+        onClick: () => {
+          logOutService();
+        },
+      },
     ];
   };
 
@@ -59,10 +71,22 @@ const HeaderComponent: React.FC = () => {
           // navigate("/gestion-publicaciones");
         },
       },
-      { key: "3", icon: <UserOutlined />, label: "Mi Perfil" },
-      { key: "4", icon: <UserDeleteOutlined />, label: "Salir", onClick: () => {
-        logOutService();
-      } },
+      {
+        key: "3",
+        icon: <UserOutlined />,
+        label: "Mi Perfil",
+        onClick: () => {
+          navigate("/mi-perfil");
+        },
+      },
+      {
+        key: "4",
+        icon: <UserDeleteOutlined />,
+        label: "Salir",
+        onClick: () => {
+          logOutService();
+        },
+      },
     ];
   };
 
@@ -70,8 +94,6 @@ const HeaderComponent: React.FC = () => {
     JSON.parse(localStorage.getItem("user") ?? "").role === "empresa"
       ? itemsEmpresa()
       : itemsEmprendedor();
-
-  
 
   return (
     <>

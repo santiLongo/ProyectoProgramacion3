@@ -7,9 +7,16 @@ export interface ComboProps {
   readonly?: boolean;
   value?: number | string;
   onChange?: (value: any) => void;
+  required?: boolean;
 }
 
-export const BasicCombo: React.FC<ComboProps> = ({ comboName, readonly = false, value, onChange  }) => {
+export const BasicCombo: React.FC<ComboProps> = ({
+  comboName,
+  readonly = false,
+  value,
+  onChange,
+  required,
+}) => {
   const [options, setOptions] = useState<ComboModel[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,14 +32,16 @@ export const BasicCombo: React.FC<ComboProps> = ({ comboName, readonly = false, 
 
   return (
     <Select
-      options={options.map(opt => ({
+      options={options.map((opt) => ({
         value: opt.numero,
-        label: opt.descripcion
+        label: opt.descripcion,
+        required: required,
+        readonly: readonly
       }))}
       value={value}
       onChange={onChange}
       loading={loading}
-      disabled={readonly}
+      // disabled={readonly}
       style={{ width: "100%" }}
       allowClear
       placeholder="Seleccione un valor"

@@ -3,8 +3,6 @@ import { Login } from "../modules/login/Login";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { AuthProvider } from "../context/AuthContext";
 import App from "../App";
-import Home from "../modules/home/Home";
-import { GestionPublicacionesRouter } from "../modules/gestion-publicaciones/GestionPublicacionesRouter";
 
 function MainRoutes() {
   return (

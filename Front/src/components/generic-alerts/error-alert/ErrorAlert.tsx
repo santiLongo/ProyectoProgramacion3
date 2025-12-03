@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Result } from "antd";
+import { Button, Modal, Result } from "antd";
 
 export interface ErrorAlertProps {
   title: string;
@@ -15,16 +15,36 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({
   okButton,
   cancelButton,
   onAceptar,
-}) => (
-  <Result
-    status="error"
-    title={title}
-    subTitle={descripcion ?? ""}
-    extra={[
-      <Button hidden={okButton ?? false} type="primary" key="console" onClick={onAceptar}>
-        Aceptar
-      </Button>,
-      <Button hidden={cancelButton ?? true} key="buy">Cancelar</Button>,
-    ]}
-  />
-);
+}) => {
+  const [open, setOpen] = React.useState<boolean>(true);
+
+  return (
+    <Modal open={open} footer={null} closable={false} centered>
+      <Result
+        status="error"
+        title={title}
+        subTitle={descripcion ?? ""}
+        extra={[
+          <Button
+            hidden={okButton ?? false}
+            type="primary"
+            key="console"
+            onClick={() => {
+              onAceptar;
+              setOpen(false);
+            }}
+          >
+            Aceptar
+          </Button>,
+          <Button
+            hidden={cancelButton ?? true}
+            key="buy"
+            onClick={() => setOpen(false)}
+          >
+            Cancelar
+          </Button>,
+        ]}
+      />
+    </Modal>
+  );
+};

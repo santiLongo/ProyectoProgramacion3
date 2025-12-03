@@ -11,12 +11,14 @@ interface HashtagEditorProps {
   readonly?: boolean;
   value?: string;
   onChange?: (value: string) => void;
+  required?: boolean;
 }
 
 export const HashtagEditor: React.FC<HashtagEditorProps> = ({
   readonly,
   value,
   onChange,
+  required
 }) => {
   const safeValue = value ?? "";
 
@@ -43,6 +45,7 @@ export const HashtagEditor: React.FC<HashtagEditorProps> = ({
         readOnly={readonly}
         value={safeValue}
         onChange={(e) => onChange?.(e.target.value)}
+        required={required}
       />
 
       <Text strong style={{ display: "block", marginTop: 8 }}>

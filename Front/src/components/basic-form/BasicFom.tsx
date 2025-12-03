@@ -54,7 +54,12 @@ export const BasicForm: React.FC<BasicFormProps> = ({
     switch (item.type) {
       case "form-field":
         return (
-          <Input style={{ width: "100%" }} readOnly={item.readonly ?? false} autoComplete="off" />
+          <Input
+            style={{ width: "100%" }}
+            readOnly={item.readonly ?? false}
+            autoComplete="off"
+            required={item.required ?? false}
+          />
         );
       case "form-number":
         return (
@@ -62,6 +67,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             style={{ width: "100%" }}
             type="number"
             readOnly={item.readonly ?? false}
+            required={item.required ?? false}
             autoComplete="off"
           />
         );
@@ -71,10 +77,16 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             style={{ width: "100%" }}
             readOnly={item.readonly ?? false}
             autoComplete="off"
+            required={item.required ?? false}
           />
         );
       case "tags":
-        return <HashtagEditor readonly={item.readonly ?? false} />;
+        return (
+          <HashtagEditor
+            readonly={item.readonly ?? false}
+            required={item.required ?? false}
+          />
+        );
       case "checkbox":
         return (
           <Checkbox
@@ -87,6 +99,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
           <DatePicker
             style={{ width: "100%" }}
             disabled={item.readonly ?? false}
+            required={item.required ?? false}
           />
         );
       case "combo":
@@ -95,19 +108,25 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             comboName={item.comboType ?? ""}
             readonly={item.readonly ?? false}
             value={form.getFieldValue(item.formControlName) ?? undefined}
+            required={item.required ?? false}
           ></BasicCombo>
         );
-        case "password":
+      case "password":
         return (
           <Input.Password
             style={{ width: "100%" }}
             readOnly={item.readonly ?? false}
             autoComplete="off"
+            required={item.required ?? false}
           />
         );
       default:
         return (
-          <Input style={{ width: "100%" }} readOnly={item.readonly ?? false} autoComplete="off" />
+          <Input
+            style={{ width: "100%" }}
+            readOnly={item.readonly ?? false}
+            autoComplete="off"
+          />
         );
     }
   };
@@ -119,6 +138,9 @@ export const BasicForm: React.FC<BasicFormProps> = ({
       autoComplete="off"
       onFinish={onSubmit}
       onValuesChange={onValueChanges}
+      onFinishFailed={({ errorFields }) => {
+        form.scrollToField(errorFields[0].name); // opcional
+      }}
     >
       {groupedRows.map((group) => (
         <Row key={group.row} gutter={16}>
@@ -135,6 +157,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
                     message: "Este campo es requerido",
                   },
                 ]}
+                validateTrigger={["onChange", "onBlur", "onSubmit"]}
                 hidden={item.hidden ?? false}
               >
                 {renderField(item)}

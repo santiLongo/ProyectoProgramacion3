@@ -1,5 +1,5 @@
-import { environments } from "../../../../configs/enviroments";
-import { get, post } from "../../../../services/http.service";
+import { environments } from "../../../../../configs/enviroments";
+import { get, post } from "../../../../../services/http.service";
 import type { PropuestaGridModel } from "../models/propuestas-grid.model";
 import type { PropuestasFilterModel } from "../models/propuestas-filter.model";
 
