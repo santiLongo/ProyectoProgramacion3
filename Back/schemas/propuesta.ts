@@ -15,6 +15,14 @@ const propuestaSchema = new Schema({
 
 propuestaSchema.index({ emprendedor: 1, publicacion: 1 }, { unique: true });
 
+propuestaSchema.virtual("comentarios", {
+    ref: "ComentarioPropuesta",
+    localField: "_id",
+    foreignField: "propuesta"
+})
+
+propuestaSchema.set("toObject", { virtuals: true });
+
 const Propuesta = mongoose.model('Propuestas', propuestaSchema)
 
 export default Propuesta

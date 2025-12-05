@@ -1,14 +1,18 @@
 import { Avatar, Card } from "antd";
 import React from "react";
 import "./CardPublicacion.css";
+import { useNavigate } from "react-router-dom";
 
 export const CardPublicacion: React.FC<DashboardCardsProps> = ({
+  id,
   title,
   description,
   coorpName,
   imageUrl,
   actions,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Card
@@ -18,15 +22,22 @@ export const CardPublicacion: React.FC<DashboardCardsProps> = ({
           height: "100%",
         }}
         actions={actions
-          .filter(action => !action.hidden)
-          .map(action => (
-            <a key={action.key} onClick={action.onClick}>{action.label}</a>
-        ))}
+          .filter((action) => !action.hidden)
+          .map((action) => (
+            <a key={action.key} onClick={action.onClick}>
+              {action.label}
+            </a>
+          ))}
       >
         <div className="card-content">
           <div className="card-header">
             <Avatar src={imageUrl} />
-            <h4>{title}</h4>
+            <h4
+              onClick={() => navigate("./publicacion/" + id)}
+              style={{ cursor: "pointer" }}
+            >
+              {title}
+            </h4>
           </div>
           <div className="card-description">
             <p>{description}</p>

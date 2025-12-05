@@ -23,7 +23,7 @@ export const DashboardCards: React.FC<DashboardCardsPropsList> = ({
               coorpName={card.coorpName}
               imageUrl={card.imageUrl}
               actions={card.actions}
-              id={""}
+              id={card.id}
             ></CardPublicacion>
           </Col>
         ))}

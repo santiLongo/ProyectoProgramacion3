@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import Propuesta from "../../../schemas/propuesta.ts";
-import EstadoPropuesta from "../../../schemas/estado-prouesta.ts";
+import EstadoPropuesta from "../../../schemas/estado-propuesta.ts";
 import Publicacion from "../../../schemas/publicacion.ts";
 import EstadoPublicacion from "../../../schemas/estado-publicacion.ts";
 

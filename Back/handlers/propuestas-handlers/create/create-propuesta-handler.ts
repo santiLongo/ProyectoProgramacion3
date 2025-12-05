@@ -4,7 +4,9 @@ import Emprendedor from '../../../schemas/emprendedor.ts'
 import { ObjectId } from 'mongodb'
 import Propuesta from '../../../schemas/propuesta.ts'
 import Publicacion from '../../../schemas/publicacion.ts'
-import EstadoPropuesta from '../../../schemas/estado-prouesta.ts'
+import EstadoPropuesta from '../../../schemas/estado-propuesta.ts'
+import { EstadosPublicacion } from '../../../enums/estados-publicacion.ts'
+import { EstadosPropuestas } from '../../../enums/estados-propuestas.ts'
 
 export class CreatePropuestaHandler {
   public async handler(command: RequestWithBody<FormPropuestaAltaModel>) {
@@ -27,7 +29,7 @@ export class CreatePropuestaHandler {
 
     const publicacion = await Publicacion.findOne({
       _id: propuestaCommand.idPublicacion,
-      estado: 'activo',
+      estado: EstadosPublicacion.Activa,
     })
 
     if (!publicacion) {
@@ -36,15 +38,11 @@ export class CreatePropuestaHandler {
       )
     }
 
-    const estadosSinPosibilidadDeNuevaPropuesta = await EstadoPropuesta.find({
-      name: { $in: [/Aceptada/i, /Pendiente/i] },
-    }).select('_id');
-
     const existePropuesta = await Propuesta.findOne({
       $and: [
         { emprendedor: emprendedor?._id },
         { publicacion: publicacion?._id },
-        { estado: { $in: estadosSinPosibilidadDeNuevaPropuesta } },
+        { estado: { $ne: EstadosPropuestas.Rechazada } },
       ],
     })
 

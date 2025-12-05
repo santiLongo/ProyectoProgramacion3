@@ -11,6 +11,14 @@ const publicacionSchema = new Schema({
     fechaAlta: {type: Date, required: true}
 });
 
+publicacionSchema.virtual("comentarios", {
+    ref: "ComentarioPublicacion",
+    localField: "_id",
+    foreignField: "publicacion"
+})
+
+publicacionSchema.set("toObject", { virtuals: true });
+
 const Publicacion = mongoose.model('Publicaciones', publicacionSchema);
 
 export default Publicacion;

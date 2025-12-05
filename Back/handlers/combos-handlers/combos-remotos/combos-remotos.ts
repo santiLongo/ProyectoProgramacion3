@@ -1,5 +1,5 @@
 import Emprendedor from "../../../schemas/emprendedor.ts";
-import EstadoPropuesta from "../../../schemas/estado-prouesta.ts";
+import EstadoPropuesta from "../../../schemas/estado-propuesta.ts";
 import Sector from "../../../schemas/sector.ts";
 import type { ComboModel } from "../Models/combosModels.ts";
 

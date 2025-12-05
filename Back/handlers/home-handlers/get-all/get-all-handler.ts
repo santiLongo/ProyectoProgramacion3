@@ -3,7 +3,7 @@ import Publicacion from '../../../schemas/publicacion.ts'
 import Empresa from '../../../schemas/empresa.ts'
 import type { RequestWithParams } from '../../../models/generic-request.ts'
 import express from 'express'
-import EstadoPropuesta from '../../../schemas/estado-prouesta.ts'
+import EstadoPropuesta from '../../../schemas/estado-propuesta.ts'
 import EstadoPublicacion from '../../../schemas/estado-publicacion.ts'
 
 export class GetAllHomeHandler {

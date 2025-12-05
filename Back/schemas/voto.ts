@@ -2,10 +2,12 @@ import { ObjectId } from "mongodb";
 import mongoose, { Schema } from "mongoose";
 
 const votosSchema = new Schema({
-    idPublicacion: { type: ObjectId, ref: 'Publicaciones', required: true},
-    idUsuario: { type: ObjectId, ref: 'User', required: true},
+    propuesta: { type: ObjectId, ref: 'Propuestas', required: true},
+    user: { type: ObjectId, ref: 'User', required: true},
     valor: { type: Number, required: true}
 });
+
+votosSchema.index({ propuesta: 1, user: 1 }, { unique: true });
 
 const Voto = mongoose.model('Voto', votosSchema);
 
