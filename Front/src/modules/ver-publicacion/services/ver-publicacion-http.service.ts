@@ -3,6 +3,7 @@ import { get, post } from "../../../services/http.service";
 import type { ComentarPropuestaCommand } from "../models/comentar-propuesta-commando";
 import type { ComentarPublicacionCommand } from "../models/comentar-publicacion-command";
 import type { GetPublicacionCommand } from "../models/get-publicacion-command";
+import type { VotarPropuestaCommand } from "../models/votar-propuestas-command";
 
 const publicacionUrl = environments.apiUrl + 'publicacion/'
 const propuestaUrl = environments.apiUrl + 'propuestas/'
@@ -23,4 +24,10 @@ export function comentarPublicacion(command: ComentarPublicacionCommand){
 export function comentarPropuesta(command: ComentarPropuestaCommand){
     const fullUrl = propuestaUrl + 'comentar';
     post(fullUrl, command);
+}
+
+
+export async function votarPropuesta(command: VotarPropuestaCommand){
+    const fullUrl = propuestaUrl + 'votar';
+    await post(fullUrl, command);
 }

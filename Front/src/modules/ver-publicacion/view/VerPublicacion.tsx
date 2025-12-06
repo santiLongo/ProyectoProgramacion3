@@ -5,6 +5,7 @@ import {
   comentarPropuesta,
   comentarPublicacion,
   getPublicacion,
+  votarPropuesta,
 } from "../services/ver-publicacion-http.service";
 import type { GetPublicacionResponse } from "../models/get-publicacion-response";
 import {
@@ -206,6 +207,10 @@ export const VerPublicacion: React.FC = () => {
                       <Rate
                         value={propuesta.promedioVotos}
                         disabled={propuesta.puedoVotar ? false : true}
+                        onChange={async (value) => {
+                          await votarPropuesta({propuesta: propuesta.id, voto: value});
+                          fechData();
+                        }}
                       />
                     </Col>
                   </Row>

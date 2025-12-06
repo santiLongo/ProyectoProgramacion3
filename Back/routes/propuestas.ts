@@ -8,6 +8,8 @@ import { GetAllPropuestasHandler, type GetAllPropuestasCommand } from '../handle
 import { UpdateEstadoPropuestaHandler, type UpdateEstadoPropuestaCommand } from '../handlers/propuestas-handlers/update-estado/update-estado-handler.ts'
 import { ComentarPropuestaHandler } from '../handlers/propuestas-handlers/comentar/comentar-publicacion-handler.ts'
 import type { ComentarPropuestaCommand } from '../handlers/propuestas-handlers/comentar/models/comentar-propuesta-command.ts'
+import { VotarPropuestaHandler } from '../handlers/propuestas-handlers/votar/votar-propuesta-handler.ts'
+import type { VotarPropuestaCommand } from '../handlers/propuestas-handlers/votar/models/votar-propuesta-command.ts'
 
 const router = express.Router()
 
@@ -49,6 +51,25 @@ router.post('/comentar', async (req: RequestWithBody<ComentarPropuestaCommand>, 
     const idUsuario = Array.isArray(userIdHeader) ? userIdHeader[0] : userIdHeader
 
   const handler = new ComentarPropuestaHandler();
+
+  await handler.handle(command, idUsuario!);
+
+  res.status(201).send();
+})
+
+
+router.post('/votar', async (req: RequestWithBody<VotarPropuestaCommand>, res: any, next) => {
+  const command: VotarPropuestaCommand = req.body;
+
+  const userIdHeader = req.headers['user-id']
+
+    if (!userIdHeader) {
+      throw new Error('Falta el header user-id')
+    }
+
+    const idUsuario = Array.isArray(userIdHeader) ? userIdHeader[0] : userIdHeader
+
+  const handler = new VotarPropuestaHandler();
 
   await handler.handle(command, idUsuario!);
 
