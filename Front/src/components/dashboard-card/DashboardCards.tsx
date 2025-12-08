@@ -21,6 +21,7 @@ export const DashboardCards: React.FC<DashboardCardsPropsList> = ({
               title={card.title}
               description={card.description}
               coorpName={card.coorpName}
+              idCoorp={card.idCoorp}
               imageUrl={card.imageUrl}
               actions={card.actions}
               id={card.id}

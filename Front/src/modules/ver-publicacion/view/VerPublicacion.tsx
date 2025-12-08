@@ -294,9 +294,9 @@ export const VerPublicacion: React.FC = () => {
           </div>
 
           <Row>
-            <TagsOutlined />
+            <TagsOutlined/>
             <Flex style={{ margin: 10 }} gap="small" align="center" wrap>
-              {publi?.publicacion.tags.split(" ").map((tag) => (
+              {publi?.publicacion.tags?.split(" ").map((tag) => (
                 <Tag key={tag} color={"blue"}>
                   {tag}
                 </Tag>

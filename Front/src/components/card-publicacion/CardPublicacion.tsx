@@ -8,6 +8,7 @@ export const CardPublicacion: React.FC<DashboardCardsProps> = ({
   title,
   description,
   coorpName,
+  idCoorp,
   imageUrl,
   actions,
 }) => {
@@ -43,7 +44,12 @@ export const CardPublicacion: React.FC<DashboardCardsProps> = ({
             <p>{description}</p>
           </div>
           <div className="coorp-name">
-            <strong>{coorpName}</strong>
+            <strong
+              onClick={() => navigate("./perfil/" + idCoorp)}
+              style={{ cursor: "pointer" }}
+            >
+              {coorpName}
+            </strong>
           </div>
         </div>
       </Card>
@@ -55,6 +61,7 @@ export interface DashboardCardsProps {
   title: string;
   description: string;
   coorpName: string;
+  idCoorp: string;
   imageUrl?: string;
   actions: TypeActions[];
 }

@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 const empresaSchema = new Schema({
-  name: { type: String, required: true, lowercase: true, trim: true},
+  name: { type: String, required: true, trim: true},
   cuit: { type: String, required: true, lowercase: true, trim: true, unique: true },
   fechaFundacion: { type: Date, required: true, lowercase: true, trim: true},
   sector: { type: ObjectId, ref: 'Sector', required: true },

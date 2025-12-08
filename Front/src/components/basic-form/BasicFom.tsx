@@ -38,7 +38,6 @@ export const BasicForm: React.FC<BasicFormProps> = ({
   onSubmit,
   onValueChanges,
 }) => {
-  // Agrupar por las rows para ordenar el codigo
   const groupedRows = Array.from(
     config.reduce((acc, item) => {
       if (!acc.has(item.row)) acc.set(item.row, []);
@@ -49,7 +48,6 @@ export const BasicForm: React.FC<BasicFormProps> = ({
     .map(([row, items]) => ({ row, items }))
     .sort((a, b) => a.row - b.row);
 
-  // Switch con todos los posibles campos
   const renderField = (item: BasicFormConfig) => {
     switch (item.type) {
       case "form-field":
@@ -58,7 +56,6 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             style={{ width: "100%" }}
             readOnly={item.readonly ?? false}
             autoComplete="off"
-            required={item.required ?? false}
           />
         );
       case "form-number":
@@ -67,7 +64,6 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             style={{ width: "100%" }}
             type="number"
             readOnly={item.readonly ?? false}
-            required={item.required ?? false}
             autoComplete="off"
           />
         );
@@ -77,14 +73,12 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             style={{ width: "100%" }}
             readOnly={item.readonly ?? false}
             autoComplete="off"
-            required={item.required ?? false}
           />
         );
       case "tags":
         return (
           <HashtagEditor
             readonly={item.readonly ?? false}
-            required={item.required ?? false}
           />
         );
       case "checkbox":
@@ -99,7 +93,6 @@ export const BasicForm: React.FC<BasicFormProps> = ({
           <DatePicker
             style={{ width: "100%" }}
             disabled={item.readonly ?? false}
-            required={item.required ?? false}
           />
         );
       case "combo":
@@ -108,7 +101,6 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             comboName={item.comboType ?? ""}
             readonly={item.readonly ?? false}
             value={form.getFieldValue(item.formControlName) ?? undefined}
-            required={item.required ?? false}
           ></BasicCombo>
         );
       case "password":
@@ -117,7 +109,6 @@ export const BasicForm: React.FC<BasicFormProps> = ({
             style={{ width: "100%" }}
             readOnly={item.readonly ?? false}
             autoComplete="off"
-            required={item.required ?? false}
           />
         );
       default:
@@ -139,7 +130,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
       onFinish={onSubmit}
       onValuesChange={onValueChanges}
       onFinishFailed={({ errorFields }) => {
-        form.scrollToField(errorFields[0].name); // opcional
+        form.scrollToField(errorFields[0].name);
       }}
     >
       {groupedRows.map((group) => (

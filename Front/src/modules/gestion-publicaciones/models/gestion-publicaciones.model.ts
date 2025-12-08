@@ -6,6 +6,7 @@ export interface GestionPublicacionesGetAll{
     sector: string;
     tags: string;
     empresaName: string;
+    empresaId: string;
     empresaImg?: string;
     estado: string;
 }

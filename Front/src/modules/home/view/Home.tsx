@@ -57,6 +57,7 @@ const Home: React.FC = () => {
         title: item.titulo,
         description: item.descripcion,
         coorpName: item.empresaName,
+        idCoorp: item.empresaId,
         imageUrl: item.empresaImg,
         actions: userService.soyEmprendedor()
           ? [
@@ -86,9 +87,7 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [cardsData, setCardsData] = useState<DashboardCardsProps[]>([]);
   const [open, setOpen] = useState(false);
-  // const navigate = useNavigate();
   const [form] = Form.useForm();
-  // const soyEmprendedor = false;
   useEffect(() => {
     fetchData();
   }, []);

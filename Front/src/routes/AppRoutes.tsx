@@ -13,7 +13,8 @@ function AppRoutes() {
           path="/gestion-publicaciones/*"
           element={<GestionPublicacionesRouter />}
         />
-        <Route path="/mi-perfil/*" element={<MiPerfilRouter />} />
+        <Route path="/mi-perfil" element={<MiPerfilRouter />} />
+        <Route path="/perfil/:id" element={<MiPerfilRouter />} />
         <Route path="/publicacion/:id" element={<VerPublicacionRouter />} />
       </Routes>
     </div>

@@ -29,7 +29,7 @@ export class GetAllPublicacionesHandler {
       }
 
       const publicaciones = await Publicacion.find({ empresa: empresa?._id })
-        .populate<{ empresa: { name: string } }>('empresa')
+        .populate<{ empresa: { name: string, _id: string } }>('empresa')
         .populate<{ sector: { _id: ObjectId; name: string } }>('sector')
         .populate<{ estado: { _id: ObjectId; name: string } }>('estado')
         .exec();
@@ -38,13 +38,14 @@ export class GetAllPublicacionesHandler {
         const id = publicacion?._id
         const data: GetAllCardsPublicaciones = {
           id: id.toString(),
-          titulo: publicacion.titulo,
-          descripcion: publicacion.descripcion,
-          empresaName: publicacion.empresa?.name,
-          idSector: publicacion.sector?._id.toString(),
-          sector: publicacion.sector?.name,
-          tags: publicacion.tags,
-          estado: publicacion.estado?.name
+          titulo: publicacion?.titulo,
+          descripcion: publicacion?.descripcion,
+          empresaName: publicacion?.empresa?.name,
+          empresaId: publicacion?.empresa?._id.toString(),
+          idSector: publicacion?.sector?._id.toString(),
+          sector: publicacion?.sector?.name,
+          tags: publicacion?.tags!,
+          estado: publicacion?.estado?.name
         }
 
         response.push(data)
@@ -72,6 +73,7 @@ interface GetAllCardsPublicaciones {
   sector: string
   tags: string
   empresaName: string
+  empresaId: string
   empresaImg?: string
   estado: string
 }

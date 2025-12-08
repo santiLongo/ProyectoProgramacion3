@@ -19,18 +19,17 @@ import {
 import type { PublicacionFormModel } from "../models/publicacion-form.model";
 import { alertService } from "../../../services/alert.service";
 
-
-
 export const GestionPublicaciones: React.FC = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
       const data = await getAll();
-      const mappedData = data.map((item) => ({
+      const mappedData = data.map<DashboardCardsProps>((item) => ({
         id: item.id,
         title: item.titulo,
         description: item.descripcion,
         coorpName: item.empresaName,
+        idCoorp: item.empresaId,
         imageUrl: item.empresaImg,
         actions: [
           {
@@ -47,11 +46,12 @@ export const GestionPublicaciones: React.FC = () => {
               setEsUpdate(true);
               setOpen(true);
             },
-            hidden: item.estado === "Finalizada"
+            hidden: item.estado === "Finalizada",
           },
           {
             key: "delete",
-            hidden: item.estado === "Suspendida" || item.estado === "Finalizada",
+            hidden:
+              item.estado === "Suspendida" || item.estado === "Finalizada",
             label: "Suspender",
             onClick: async () => {
               await eliminar(item.id);
@@ -70,7 +70,8 @@ export const GestionPublicaciones: React.FC = () => {
           {
             key: "view",
             label: "Ver Propuestas",
-            onClick: () => navigate(`./ver-propuesta/${item.id}/${item.titulo}`),
+            onClick: () =>
+              navigate(`./ver-propuesta/${item.id}/${item.titulo}`),
           },
         ],
       }));
@@ -94,21 +95,34 @@ export const GestionPublicaciones: React.FC = () => {
   }, [navigate]);
 
   const handleOk = async () => {
-    if(!form.isFieldsValidating()){
-      alertService.error({title: "Campos con errores", descripcion: "Algunos campos contienen errores o estan vacios"});
-      return;
+    try {
+      await form.validateFields();
+
+      const req = form.getFieldsValue() as PublicacionFormModel;
+
+      if (esUpdate) {
+        await update(req);
+        await alertService.success({
+          title: "Actualizacion Exitosa",
+          descripcion: "Se actualizo la publicacion con exito",
+        });
+      } else {
+        await create(req);
+        await alertService.success({
+          title: "Publicacion Exitosa",
+          descripcion: "Se subio la publicacion con exito",
+        });
+      }
+
+      setEsUpdate(false);
+      setOpen(false);
+      fetchData();
+    } catch (error) {
+      alertService.error({
+        title: "Campos con errores",
+        descripcion: "Algunos campos contienen errores o están vacíos" ,
+      });
     }
-    const req = form.getFieldsValue() as PublicacionFormModel;
-    if (esUpdate) {
-      await update(req);
-      await alertService.success({title: "Actualizacion Exitosa", descripcion: "Se actualizo la publicacion con exito"});
-    } else {
-      await create(req);
-      await alertService.success({title: "Publicacion Exitosa", descripcion: "Se subio la publicacion con exito"});
-    }
-    setEsUpdate(false);
-    setOpen(false);
-    fetchData();
   };
   const handleCancel = () => {
     setEsUpdate(false);
@@ -117,50 +131,50 @@ export const GestionPublicaciones: React.FC = () => {
   };
 
   const formConfigs: Array<BasicFormConfig> = [
-  {
-    formControlName: "titulo",
-    label: "Titulo",
-    type: "form-field",
-    col: 12,
-    row: 1,
-    required: true,
-    readonly: esUpdate
-  },
-  {
-    formControlName: "sector",
-    label: "Sector",
-    type: "combo",
-    comboType: "SectorEmpresaV1",
-    col: 12,
-    row: 1,
-    required: true,
-    readonly: esUpdate,
-  },
-  {
-    formControlName: "tags",
-    label: "Tags",
-    type: "tags",
-    col: 24,
-    row: 2,
-  },
-  {
-    formControlName: "descripcion",
-    label: "Descripcion",
-    type: "textarea",
-    col: 24,
-    row: 3,
-    required: true,
-  },
-  {
-    formControlName: "id",
-    label: "Id",
-    type: "form-field",
-    col: 24,
-    row: 4,
-    hidden: true,
-    readonly: esUpdate,
-  },
-];
+    {
+      formControlName: "titulo",
+      label: "Titulo",
+      type: "form-field",
+      col: 12,
+      row: 1,
+      required: true,
+      readonly: esUpdate,
+    },
+    {
+      formControlName: "sector",
+      label: "Sector",
+      type: "combo",
+      comboType: "SectorEmpresaV1",
+      col: 12,
+      row: 1,
+      required: true,
+      readonly: esUpdate,
+    },
+    {
+      formControlName: "tags",
+      label: "Tags",
+      type: "tags",
+      col: 24,
+      row: 2,
+    },
+    {
+      formControlName: "descripcion",
+      label: "Descripcion",
+      type: "textarea",
+      col: 24,
+      row: 3,
+      required: true,
+    },
+    {
+      formControlName: "id",
+      label: "Id",
+      type: "form-field",
+      col: 24,
+      row: 4,
+      hidden: true,
+      readonly: esUpdate,
+    },
+  ];
 
   return (
     <>
