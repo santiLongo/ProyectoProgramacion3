@@ -1,13 +1,25 @@
 export class UserService {
-  soyEmpresa = (): boolean => {
+  static soyEmpresa = (): boolean => {
     const user = JSON.parse(localStorage.getItem("user") ?? "");
 
     return user.role === "empresa";
   };
 
-  soyEmprendedor = (): boolean => {
+  static soyEmprendedor = (): boolean => {
     const user = JSON.parse(localStorage.getItem("user") ?? "");
 
     return user.role === "emprendedor";
   };
+
+  static userId = (): string => {
+    const user = JSON.parse(localStorage.getItem("user") ?? "");
+
+    return user?._id;
+  }
+
+  static role = (): string => {
+    const user = JSON.parse(localStorage.getItem("user") ?? "");
+
+    return user?.role;
+  }
 }

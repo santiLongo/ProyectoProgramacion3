@@ -45,7 +45,7 @@ export const CardPublicacion: React.FC<DashboardCardsProps> = ({
           </div>
           <div className="coorp-name">
             <strong
-              onClick={() => navigate("./perfil/" + idCoorp)}
+              onClick={() => navigate(`./perfil/empresa/${idCoorp}`)}
               style={{ cursor: "pointer" }}
             >
               {coorpName}

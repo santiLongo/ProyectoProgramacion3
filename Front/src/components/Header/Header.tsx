@@ -11,6 +11,7 @@ import { type MenuProps, Menu, Avatar } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { useNavigate } from "react-router-dom";
 import { logOutService } from "./services/header.service";
+import { UserService } from "../../services/user.service";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -39,7 +40,7 @@ const HeaderComponent: React.FC = () => {
         icon: <UserOutlined />,
         label: "Mi Perfil",
         onClick: () => {
-          navigate("/mi-perfil");
+          navigate(`/mi-perfil/${UserService.role()}/${UserService.userId()}`);
         },
       },
       {

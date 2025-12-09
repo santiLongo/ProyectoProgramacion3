@@ -13,6 +13,7 @@ import publicacionesRouter from './routes/publicacion.ts'
 import homeRouter from './routes/home.ts'
 import propuestasRouter from './routes/propuestas.ts'
 import emprendedoresRouter from './routes/emprendedores.ts'
+import perfilRouter from './routes/perfil.ts'
 import authentication from './middlewares/authentication.ts';
 
 const app = express();
@@ -31,6 +32,7 @@ app.use('/api/publicacion', authentication, publicacionesRouter)
 app.use('/api/home-publicaciones', authentication, homeRouter)
 app.use('/api/propuestas', authentication, propuestasRouter)
 app.use('/api/emprendedores', authentication, emprendedoresRouter)
+app.use('/api/perfil', authentication, perfilRouter)
 
 app.use(errorHandler);
 

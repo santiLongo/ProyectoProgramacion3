@@ -36,12 +36,11 @@ export const BasicCombo: React.FC<ComboProps> = ({
         value: opt.numero,
         label: opt.descripcion,
         required: required,
-        readonly: readonly
       }))}
+      disabled={readonly}
       value={value}
       onChange={onChange}
       loading={loading}
-      // disabled={readonly}
       style={{ width: "100%" }}
       allowClear
       placeholder="Seleccione un valor"

@@ -5,11 +5,9 @@ import {
 } from "../components/generic-alerts/success-alert/SuccessAlert";
 import { ErrorAlert, type ErrorAlertProps } from "../components/generic-alerts/error-alert/ErrorAlert";
 
-class AlertService {
+export class AlertService {
 
-  
-
-  async success(config: SuccessAlertProps) {
+  static success(config: SuccessAlertProps) {
     const container = document.createElement("div");
     document.body.appendChild(container);
 
@@ -24,7 +22,7 @@ class AlertService {
     root.render(<SuccessAlert {...config} onAceptar={handleAceptar} />);
   }
 
-  async error(config: ErrorAlertProps) {
+  static error(config: ErrorAlertProps) {
     const container = document.createElement("div");
     document.body.appendChild(container);
 
@@ -40,4 +38,3 @@ class AlertService {
   }
 }
 
-export const alertService = new AlertService();

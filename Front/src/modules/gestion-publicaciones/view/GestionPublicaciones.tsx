@@ -17,7 +17,7 @@ import {
   update,
 } from "../services/gestion-publicacion-http.service";
 import type { PublicacionFormModel } from "../models/publicacion-form.model";
-import { alertService } from "../../../services/alert.service";
+import { AlertService } from "../../../services/alert.service";
 
 export const GestionPublicaciones: React.FC = () => {
   const fetchData = async () => {
@@ -102,13 +102,13 @@ export const GestionPublicaciones: React.FC = () => {
 
       if (esUpdate) {
         await update(req);
-        await alertService.success({
+        await AlertService.success({
           title: "Actualizacion Exitosa",
           descripcion: "Se actualizo la publicacion con exito",
         });
       } else {
         await create(req);
-        await alertService.success({
+        await AlertService.success({
           title: "Publicacion Exitosa",
           descripcion: "Se subio la publicacion con exito",
         });
@@ -117,17 +117,16 @@ export const GestionPublicaciones: React.FC = () => {
       setEsUpdate(false);
       setOpen(false);
       fetchData();
-    } catch (error) {
-      alertService.error({
+    } catch (e) {
+      AlertService.error({
         title: "Campos con errores",
-        descripcion: "Algunos campos contienen errores o están vacíos" ,
+        descripcion: "Algunos campos contienen errores o están vacíos",
       });
     }
   };
   const handleCancel = () => {
     setEsUpdate(false);
     setOpen(false);
-    //Tiene que actualizar cada vez que cierra el dialog
   };
 
   const formConfigs: Array<BasicFormConfig> = [

@@ -46,8 +46,6 @@ const formConfigs: Array<BasicFormConfig> = [
 ];
 
 const Home: React.FC = () => {
-  const userService = new UserService();
-
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -59,7 +57,7 @@ const Home: React.FC = () => {
         coorpName: item.empresaName,
         idCoorp: item.empresaId,
         imageUrl: item.empresaImg,
-        actions: userService.soyEmprendedor()
+        actions: UserService.soyEmprendedor()
           ? [
               {
                 key: "view",

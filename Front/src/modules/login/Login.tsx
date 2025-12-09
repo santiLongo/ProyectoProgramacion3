@@ -19,7 +19,7 @@ import {
   type BasicFormConfig,
 } from "../../components/basic-form/BasicFom";
 import type { SingUpForm } from "./models/sign-up-form";
-import { alertService } from "../../services/alert.service";
+import { AlertService } from "../../services/alert.service";
 
 export const Login: React.FC = () => {
   const { token } = theme.useToken();
@@ -264,7 +264,7 @@ export const Login: React.FC = () => {
         onOk={ async () => {
           const form: SingUpForm = formRegistro.getFieldsValue()
           await singUp(form);
-          alertService.success({title: "Registro con exito", descripcion: "Se ha registrado con exito"});
+          AlertService.success({title: "Registro con exito", descripcion: "Se ha registrado con exito"});
           setOpenRegistro(false);
         }}
         okText={'Registrarse'}

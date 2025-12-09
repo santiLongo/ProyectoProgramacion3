@@ -13,7 +13,7 @@ export function GestionPublicacionesRoutes() {
           path="/ver-propuesta/:id/:title"
           element={<VerPropuestaRouter />}
         />
-        <Route path="/perfil/:id" element={<MiPerfilRouter />} />
+        <Route path="/perfil/:role/:id" element={<MiPerfilRouter />} />
         <Route path="/publicacion/:id" element={<VerPublicacionRouter />} />
       </Routes>
     </div>

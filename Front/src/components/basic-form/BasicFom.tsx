@@ -76,11 +76,7 @@ export const BasicForm: React.FC<BasicFormProps> = ({
           />
         );
       case "tags":
-        return (
-          <HashtagEditor
-            readonly={item.readonly ?? false}
-          />
-        );
+        return <HashtagEditor readonly={item.readonly ?? false} />;
       case "checkbox":
         return (
           <Checkbox
