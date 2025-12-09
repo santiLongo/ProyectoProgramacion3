@@ -1,0 +1,28 @@
+GET http://localhost:9000/api/status
+
+###
+POST http://localhost:9000/api/auth
+Content-Type: application/json
+
+{
+    "email": "admin@baseapi.com",
+    "password": "Password1"
+}
+
+###
+POST http://localhost:9000/api/auth
+Content-Type: application/json
+
+{
+    "email": "empresa@prueba.com.ar",
+    "password": "Password1"
+}
+
+###
+GET http://localhost:9000/api/combos/EstadoPublicacionV1
+
+###
+GET http://localhost:9000/api/combos/SectorEmpresaV1
+
+###
+GET http://localhost:9000/api/publicaciones/getAll
