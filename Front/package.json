@@ -21,7 +21,8 @@
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.3",
     "slate": "^0.118.1",
-    "slate-react": "^0.119.0"
+    "slate-react": "^0.119.0",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",

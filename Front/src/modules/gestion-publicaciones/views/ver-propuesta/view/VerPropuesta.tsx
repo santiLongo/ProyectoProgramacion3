@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CardView } from "../../../../../components/card-view/CardView";
 import {
   MessageOutlined,
@@ -25,6 +25,7 @@ import "./VerPropuesta.css";
 import React, { useEffect } from "react";
 import type { PropuestaGridModel } from "../models/propuestas-grid.model";
 import {
+  createCanal,
   getAll,
   getEmprendedorById,
   getPubliById,
@@ -33,6 +34,8 @@ import {
 import dayjs from "dayjs";
 import type { PropuestasFilterModel } from "../models/propuestas-filter.model";
 import { BasicCombo } from "../../../../../components/combo/Combo";
+import type { CreateCanalCommand } from "../models/create-canal-command";
+import { UserService } from "../../../../../services/user.service";
 
 const config: BasicFormConfig[] = [
   {
@@ -125,6 +128,7 @@ export const VerPropuesta: React.FC = () => {
     setTags(tags);
     formPubli.setFieldsValue(data);
   };
+  const navigate = useNavigate();
   const { id, title } = useParams<{ id: string; title: string }>();
   const [formPubli] = Form.useForm();
   const [form] = Form.useForm();
@@ -150,7 +154,6 @@ export const VerPropuesta: React.FC = () => {
       ),
     },
   ];
-  const [openMensaje, setOpenMensaje] = React.useState<boolean>(false);
   const [openEmprendedor, setOpenEmprendedor] = React.useState<boolean>(false);
   const [dataSource, setDataSource] = React.useState<PropuestaGridModel[]>();
   const [tags, setTags] = React.useState<string[]>([]);
@@ -159,11 +162,6 @@ export const VerPropuesta: React.FC = () => {
     fetchData();
     cargarPubli();
   }, []);
-
-  const handleMesajeOk = () => {
-    console.log("Salio todo piola");
-    setOpenMensaje(false);
-  };
 
   const columns: TableProps<PropuestaGridModel>["columns"] = [
     {
@@ -264,7 +262,15 @@ export const VerPropuesta: React.FC = () => {
       ),
     },
     {
-      render: () => <MessageOutlined onClick={() => setOpenMensaje(true)} />,
+      render: (value, record) => <MessageOutlined onClick={ async () => {
+        const command: CreateCanalCommand = {
+          user1Id: UserService.userId(),
+          user2Id: record.idUser,
+          propuestaId: record.idPropuesta
+        }; 
+        await createCanal(command);
+        navigate(`/mensajes/${UserService.userId()}`);
+      }} />,
     },
   ];
 
@@ -290,17 +296,6 @@ export const VerPropuesta: React.FC = () => {
         ;
       </CardView>
 
-      <Modal
-        title={"Enviar Mensaje"}
-        width={800}
-        centered
-        open={openMensaje}
-        onOk={handleMesajeOk}
-        onCancel={() => setOpenMensaje(false)}
-        destroyOnHidden={true}
-      >
-        {/* <BasicForm form={form} config={formConfigs}></BasicForm> */}
-      </Modal>
       <Modal
         title={"Ver Emprendedor"}
         width={800}

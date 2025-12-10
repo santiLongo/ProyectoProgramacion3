@@ -2,10 +2,12 @@ import { environments } from "../../../../../configs/enviroments";
 import { get, post } from "../../../../../services/http.service";
 import type { PropuestaGridModel } from "../models/propuestas-grid.model";
 import type { PropuestasFilterModel } from "../models/propuestas-filter.model";
+import type { CreateCanalCommand } from "../models/create-canal-command";
 
 const urlPropuestas = environments.apiUrl + 'propuestas/';
 const urlPublicaciones = environments.apiUrl + 'gestion-publicaciones/';
 const urlEmprendedores = environments.apiUrl + 'emprendedores/';
+const urlCanales = environments.mensajesUrl + 'api/canal/';
 
 export const getAll = async (commnad: PropuestasFilterModel): Promise<PropuestaGridModel[]> => {
     const fullUrl = urlPropuestas + 'getAll';
@@ -39,4 +41,9 @@ export const getPubliById = async (idPublicacion: string) => {
         idPublicacion: idPublicacion
     }
     return await get(fullUrl, query);
+}
+
+export const createCanal = async (command: CreateCanalCommand) => {
+    const fullUrl = urlCanales + 'create';
+    return await post(fullUrl, command);
 }

@@ -1,5 +1,5 @@
 import app from '../app.ts'
-import "../utils/generic-methods/index.ts";
+import '../utils/generic-methods/index.ts'
 import debug from 'debug'
 import http from 'http'
 import figlet from 'figlet'
@@ -8,12 +8,13 @@ import { readFileSync } from 'fs'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 import dotenv from 'dotenv'
+import { Server } from 'socket.io'
+import { SocketHandler } from '../socket-handler/socket-handler.ts'
 
 //Leo el package.json
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const pkg = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'))
-
 
 //Activo espacio de debug
 debug('api-prog-3:server')
@@ -30,6 +31,15 @@ app.set('port', port)
 //Creo el servidor http
 const server = http.createServer(app)
 
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+})
+
+SocketHandler(io);
+
 //Configuro los datos de la base datos
 const db_url = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/'
 const db_name = process.env.MONGO_DB || 'test'
@@ -40,11 +50,15 @@ initDatabase()
   .catch((err) => console.log(err))
 
 async function initDatabase() {
-  await mongoose.connect(db_url + db_name)
-  .then(() => { console.log('Connected to MongoDB') })
-  .catch((err) => { console.error('Error connecting to MongoDB:', err) })
+  await mongoose
+    .connect(db_url + db_name)
+    .then(() => {
+      console.log('Connected to MongoDB')
+    })
+    .catch((err) => {
+      console.error('Error connecting to MongoDB:', err)
+    })
 }
-
 
 // Inicio el servidor.
 server.listen(port, printTitle)
@@ -61,11 +75,11 @@ function onError(error: any) {
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
-    case 'EACCES':  //El puerto requiere permisos de administrador
+    case 'EACCES': //El puerto requiere permisos de administrador
       console.error(bind + ' requires elevated privileges')
       process.exit(1) //Termino el proceso
       break
-    case 'EADDRINUSE':  //El puerto ya esta ocupado
+    case 'EADDRINUSE': //El puerto ya esta ocupado
       console.error(bind + ' is already in use')
       process.exit(1) //Termino el proceso
       break

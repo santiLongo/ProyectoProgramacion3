@@ -1,22 +1,24 @@
-import express from 'express';
+import express from 'express'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
-import cors from 'cors';
-import { errorHandler } from './middlewares/manejo-errores.ts';
+import cors from 'cors'
+import { errorHandler } from './middlewares/manejo-errores.ts'
 import './schemas/index.ts'
+import authentication from './middlewares/authentication.ts'
 
-import authentication from './middlewares/authentication.ts';
+import canalRouter from './routes/canal.ts'
 
-const app = express();
+const app = express()
 
 app.use(logger('dev'))
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
+app.use(authentication)
 
-// app.use('/api', statusRouter);
+app.use('/api/canal', canalRouter)
 
-app.use(errorHandler);
+app.use(errorHandler)
 
-export default app;
+export default app

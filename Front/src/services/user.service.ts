@@ -22,4 +22,9 @@ export class UserService {
 
     return user?.role;
   }
+
+  static token = (): string | null => {
+    const token = localStorage.getItem("token") ?? "";
+    return token ?? null;
+  }
 }

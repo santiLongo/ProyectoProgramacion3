@@ -7,7 +7,6 @@ import type { RequestWithBody } from '../models/generic-request.ts'
 import { Roles } from '../enums/roles.ts'
 import Empresa from '../schemas/empresa.ts'
 import { ObjectId } from 'mongodb'
-import mongoose from 'mongoose'
 
 const router = express.Router()
 
