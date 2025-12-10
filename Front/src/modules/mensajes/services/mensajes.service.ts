@@ -2,6 +2,7 @@ import { io, Socket } from "socket.io-client";
 import { environments } from "../../../configs/enviroments";
 import { UserService } from "../../../services/user.service";
 import type { GetCanalesByIdCommand } from "../models/get-canales-by-id-command";
+import type { GetCanalesByIdResponse } from "../models/get-canales-by-id-response";
 
 export class MensajesService {
   private socket: Socket;
@@ -41,12 +42,15 @@ export class MensajesService {
   onMessage(callback: (msg: any) => void) {
     this.socket.on("message", callback);
   }
+  
+  getCanals(command: GetCanalesByIdCommand, callback: (canals: any) => void) {
+  this.socket.emit("get-canals", command, (response: any) => {
+    if (response.ok) callback(response.data);
+    else console.error("Error en get-canals:", response.error);
+  });
+}
 
-  getCanals(command: GetCanalesByIdCommand) {
-    this.socket.emit("get-canals", command);
-  }
-
-  onGetCanals(callback: (canals: any) => void) {
+  onGetCanals(callback: (canals: Array<GetCanalesByIdResponse>) => void) {
     this.socket.on("get-canals", callback);
   }
 }

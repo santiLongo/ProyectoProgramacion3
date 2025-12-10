@@ -11,10 +11,14 @@ export const SocketHandler = (io: any) => {
       console.log('message: ' + msg)
       io.emit('message', msg)
     })
-    socket.on('get-canals', async (command: GetCanalesByIdCommand) => {
+    socket.on('get-canals', async (command: GetCanalesByIdCommand, callback) => {
       const handler = new GetCanalesByIdHandler()
       const canals = await handler.handle(command)
-      io.emit('get-canals', canals)
+      // io.emit('get-canals', canals)
+      callback({
+        ok: true,
+        data: canals,
+      });
     })
   })
 }
