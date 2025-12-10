@@ -14,7 +14,6 @@ export const SocketHandler = (io: any) => {
     socket.on('get-canals', async (command: GetCanalesByIdCommand, callback) => {
       const handler = new GetCanalesByIdHandler()
       const canals = await handler.handle(command)
-      // io.emit('get-canals', canals)
       callback({
         ok: true,
         data: canals,
