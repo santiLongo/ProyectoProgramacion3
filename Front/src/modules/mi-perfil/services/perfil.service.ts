@@ -15,3 +15,4 @@ export async function updateEmpresa(command: UpdatePerfilEmpresaCommand): Promis
     const fullUrl = url + 'update-empresa';
     return await post(fullUrl, command);
 };
+

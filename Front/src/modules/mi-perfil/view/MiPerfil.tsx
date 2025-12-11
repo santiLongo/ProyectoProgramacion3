@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { getEmpresa, updateEmpresa } from "../services/perfil.service";
 import type { GetPerfilEmpresaResponse } from "../models/empresa/get-perfil-empresa-response";
 import {
-  Alert,
   Button,
   Divider,
   Flex,
@@ -35,7 +34,7 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
-  const [perfil, setPerfil] = useState<GetPerfilEmpresaResponse>();
+  const [empresa, setEmpresa] = useState<GetPerfilEmpresaResponse>();
   const [form] = Form.useForm();
   const salirModal = () => {
     setOpen(false);
@@ -43,11 +42,9 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
     fetchData();
   };
   const fetchData = async () => {
-    if (params.role == "empresa") {
-      const data = await getEmpresa({ id: params.id! });
-      setPerfil(data);
+    const data = await getEmpresa({ id: params.id! });
+      setEmpresa(data);
       return;
-    }
   };
 
   useEffect(() => {
@@ -123,6 +120,7 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
     },
   ];
 
+
   return (
     <>
       <CardView title={""}>
@@ -142,7 +140,7 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
             src={profileImg}
             style={{ borderRadius: 100 }}
           />
-          <h1>{perfil?.nombre}</h1>
+          <h1>{empresa?.nombre}</h1>
           <div style={{ padding: 10 }}>
             <Button
               type="primary"
@@ -150,15 +148,15 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
               onClick={() => {
                 setEdit(false);
                 form.setFieldsValue({
-                  nombre: perfil?.nombre,
-                  email: perfil?.email,
-                  fechaAlta: perfil?.fechaAlta ? dayjs(perfil.fechaAlta) : null,
-                  fechaFundacion: perfil?.fechaFundacion
-                    ? dayjs(perfil.fechaFundacion)
+                  nombre: empresa?.nombre,
+                  email: empresa?.email,
+                  fechaAlta: empresa?.fechaAlta ? dayjs(empresa.fechaAlta) : null,
+                  fechaFundacion: empresa?.fechaFundacion
+                    ? dayjs(empresa.fechaFundacion)
                     : null,
-                  cuit: perfil?.cuit,
-                  sector: perfil?.sector.id,
-                  estado: perfil?.estado ? "Activo" : "Baja",
+                  cuit: empresa?.cuit,
+                  sector: empresa?.sector.id,
+                  estado: empresa?.estado ? "Activo" : "Baja",
                 });
                 setOpen(true);
               }}
@@ -175,17 +173,17 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
                 onClick={() => {
                   setEdit(true);
                   form.setFieldsValue({
-                    nombre: perfil?.nombre,
-                    email: perfil?.email,
-                    fechaAlta: perfil?.fechaAlta
-                      ? dayjs(perfil.fechaAlta)
+                    nombre: empresa?.nombre,
+                    email: empresa?.email,
+                    fechaAlta: empresa?.fechaAlta
+                      ? dayjs(empresa.fechaAlta)
                       : null,
-                    fechaFundacion: perfil?.fechaFundacion
-                      ? dayjs(perfil.fechaFundacion)
+                    fechaFundacion: empresa?.fechaFundacion
+                      ? dayjs(empresa.fechaFundacion)
                       : null,
-                    cuit: perfil?.cuit,
-                    sector: perfil?.sector.id,
-                    estado: perfil?.estado ? "Activo" : "Baja",
+                    cuit: empresa?.cuit,
+                    sector: empresa?.sector.id,
+                    estado: empresa?.estado ? "Activo" : "Baja",
                   });
                   setOpen(true);
                 }}
@@ -202,15 +200,13 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
               justifyContent: "center",
             }}
           >
-            {params.role === "empresa" && (
-              <>
-                <Divider
+            <Divider
                   style={{ width: "100%", borderColor: "black" }}
                   orientation="start"
                 >
                   Publicaciones
                 </Divider>
-                {perfil?.publicaciones?.map((publi) => (
+                {empresa?.publicaciones?.map((publi) => (
                   <div
                     key={publi.id!}
                     style={{
@@ -272,8 +268,6 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
                     <Divider style={{ width: "100%", borderColor: "gray" }} />
                   </div>
                 ))}
-              </>
-            )}
           </div>
         </div>
       </CardView>
@@ -319,7 +313,7 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
           }
         }}
         onCancel={() => salirModal()}
-        title={perfil?.nombre}
+        title={empresa?.nombre}
       >
         <BasicForm config={configEmpresa} form={form}></BasicForm>
       </Modal>

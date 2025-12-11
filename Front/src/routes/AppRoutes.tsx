@@ -14,8 +14,8 @@ function AppRoutes() {
           path="/gestion-publicaciones/*"
           element={<GestionPublicacionesRouter />}
         />
-        <Route path="/mi-perfil/:role/:id" element={<MiPerfilRouter isEditable={true}/>} />
-        <Route path="/perfil/:role/:id" element={<MiPerfilRouter isEditable={false}/>} />
+        <Route path="/mi-perfil/empresa/:id" element={<MiPerfilRouter isEditable={true}/>} />
+        <Route path="/perfil/empresa/:id" element={<MiPerfilRouter isEditable={false}/>} />
         <Route path="/publicacion/:id" element={<VerPublicacionRouter />} />
         <Route path="/mensajes/:id" element={<MensajesRouter />} />
       </Routes>
