@@ -27,4 +27,9 @@ export class UserService {
     const token = localStorage.getItem("token") ?? "";
     return token ?? null;
   }
+
+  static userName = (): string => {
+    const user = JSON.parse(localStorage.getItem("user") ?? "");
+    return user?.userName
+  };
 }

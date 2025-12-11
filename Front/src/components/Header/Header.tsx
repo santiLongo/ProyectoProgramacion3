@@ -91,6 +91,14 @@ const HeaderComponent: React.FC = () => {
       },
       {
         key: "4",
+        icon: <MessageOutlined />,
+        label: "Mensajes",
+        onClick: () => {
+          navigate(`/mensajes/${UserService.userId()}`);
+        },
+      },
+      {
+        key: "5",
         icon: <UserDeleteOutlined />,
         label: "Salir",
         onClick: () => {
