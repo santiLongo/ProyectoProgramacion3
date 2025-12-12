@@ -39,6 +39,22 @@ userSchema.methods.checkPassword = async function (potentialPassword: string) {
   return { isOk: isMatch, isLocked: !this.estado }
 }
 
+userSchema.virtual("emprendedor", {
+  ref: "Emprendedores",
+  localField: "_id",
+  foreignField: "user",
+  justOne: true
+});
+
+
+userSchema.virtual("empresa", {
+  ref: "Empresa",
+  localField: "_id",
+  foreignField: "user",
+  justOne: true
+});
+
+
 const User = mongoose.model('User', userSchema)
 
 export default User

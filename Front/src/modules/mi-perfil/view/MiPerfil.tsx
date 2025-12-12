@@ -14,7 +14,7 @@ import {
   Row,
   Tag,
 } from "antd";
-import profileImg from "../../../assets/profile-img.jpg";
+import empresaImg from "../../../assets/empresa-img.png";
 import { EditOutlined } from "@ant-design/icons";
 import {
   BasicForm,
@@ -137,8 +137,9 @@ export const MiPerfil: React.FC<MiPerfilProps> = ({ isEditable }) => {
           <Image
             width={200}
             alt="perfil"
-            src={profileImg}
+            src={empresaImg}
             style={{ borderRadius: 100 }}
+            preview={false}
           />
           <h1>{empresa?.nombre}</h1>
           <div style={{ padding: 10 }}>

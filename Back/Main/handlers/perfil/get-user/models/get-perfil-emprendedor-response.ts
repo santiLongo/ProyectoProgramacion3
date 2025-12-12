@@ -8,5 +8,5 @@ export interface GetPerfilEmprendedorResponse{
     email?: string;
     pais?: string;
     dni?: number;
-    fechaNacimiento?: Date
+    fechaNacimiento: Date
 }

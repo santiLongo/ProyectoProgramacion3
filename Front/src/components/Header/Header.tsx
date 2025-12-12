@@ -86,7 +86,7 @@ const HeaderComponent: React.FC = () => {
         icon: <UserOutlined />,
         label: "Mi Perfil",
         onClick: () => {
-          navigate("/mi-perfil");
+          navigate(`/mi-perfil/${UserService.role()}/${UserService.userId()}`);
         },
       },
       {
