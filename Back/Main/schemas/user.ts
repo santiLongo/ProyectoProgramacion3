@@ -54,6 +54,14 @@ userSchema.virtual("empresa", {
   justOne: true
 });
 
+userSchema.virtual("solicitudes", {
+  ref: "Solicitud",
+  localField: "_id",
+  foreignField: "user"
+})
+
+userSchema.set('toObject', { virtuals: true })
+userSchema.set('toJSON', { virtuals: true })
 
 const User = mongoose.model('User', userSchema)
 

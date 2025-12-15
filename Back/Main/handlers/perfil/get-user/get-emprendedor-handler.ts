@@ -60,7 +60,7 @@ export class GetPerfilEmprendedorHandler {
 
         let solicito = false;
 
-        const solicitud = await Solicitud.findOne({user: command.id})
+        const solicitud = await Solicitud.findOne({user: command.id, estado: false})
 
         if(!solicitud && usuario.role.name === 'normalUser'){
             solicito = true;

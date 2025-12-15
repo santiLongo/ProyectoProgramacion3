@@ -18,6 +18,7 @@ publicacionSchema.virtual("comentarios", {
 })
 
 publicacionSchema.set("toObject", { virtuals: true });
+publicacionSchema.set('toJSON', { virtuals: true })
 
 const Publicacion = mongoose.model('Publicaciones', publicacionSchema);
 

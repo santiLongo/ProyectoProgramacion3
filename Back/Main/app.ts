@@ -14,6 +14,7 @@ import homeRouter from './routes/home.ts'
 import propuestasRouter from './routes/propuestas.ts'
 import emprendedoresRouter from './routes/emprendedores.ts'
 import perfilRouter from './routes/perfil.ts'
+import solicitudRouter from './routes/solicitudes.ts'
 import authentication from './middlewares/authentication.ts';
 
 const app = express();
@@ -33,6 +34,7 @@ app.use('/api/home-publicaciones', authentication, homeRouter)
 app.use('/api/propuestas', authentication, propuestasRouter)
 app.use('/api/emprendedores', authentication, emprendedoresRouter)
 app.use('/api/perfil', authentication, perfilRouter)
+app.use('/api/solicitudes', authentication, solicitudRouter)
 
 app.use(errorHandler);
 

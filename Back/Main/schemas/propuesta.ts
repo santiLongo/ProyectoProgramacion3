@@ -28,6 +28,7 @@ propuestaSchema.virtual("votos", {
 })
 
 propuestaSchema.set("toObject", { virtuals: true });
+propuestaSchema.set('toJSON', { virtuals: true })
 
 const Propuesta = mongoose.model('Propuestas', propuestaSchema)
 

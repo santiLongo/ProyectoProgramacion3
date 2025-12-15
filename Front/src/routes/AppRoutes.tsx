@@ -5,6 +5,7 @@ import { HomeRouter } from "../modules/home/router/HomeRouter";
 import { VerPublicacionRouter } from "../modules/ver-publicacion/router/VerPublicacionRouter";
 import { MensajesRouter } from "../modules/mensajes/router/MensajesRouter";
 import { PerfilEmprendedor } from "../modules/perfil-emprendedor/view/PerfilEmprendedor";
+import { SolicitudesRouter } from "../modules/solicitudes/router/SolicitudesRouter";
 
 function AppRoutes() {
   return (
@@ -22,6 +23,7 @@ function AppRoutes() {
         <Route path="/mi-perfil/normalUser/:id" element={<PerfilEmprendedor isEditable={true}/>} />
         <Route path="/publicacion/:id" element={<VerPublicacionRouter />} />
         <Route path="/mensajes/:id" element={<MensajesRouter />} />
+        <Route path="/solicitudes" element={<SolicitudesRouter/>}/>
       </Routes>
     </div>
   );
