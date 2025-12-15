@@ -99,8 +99,8 @@ export const Solicitudes: React.FC = () => {
                   variant="solid"
                   color="green"
                   style={{ marginTop: 20 }}
-                  onClick={() => {
-                    respuesta({ idSolcitud: solicitud.id, respuesta: true });
+                  onClick={async () => {
+                    await respuesta({ idSolcitud: solicitud.id, respuesta: true });
                     fetchData();
                   }}
                 >
@@ -110,8 +110,8 @@ export const Solicitudes: React.FC = () => {
                   variant="solid"
                   color="red"
                   style={{ marginTop: 20 }}
-                  onClick={() => {
-                    respuesta({ idSolcitud: solicitud.id, respuesta: false });
+                  onClick={async () => {
+                    await respuesta({ idSolcitud: solicitud.id, respuesta: false });
                     fetchData();
                   }}
                 >
