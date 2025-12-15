@@ -33,7 +33,7 @@ export class GetPublicacionHandler {
     }).populate<{ usuario: { userName: string } }>('usuario')
 
     const propuestas = await Propuesta.find({ publicacion: publicacion._id })
-      .populate<{ emprendedor: { nombre: string; apellido: string } }>('emprendedor')
+      .populate<{ emprendedor: { nombre: string, apellido: string, user: string } }>('emprendedor')
       .populate<{ estado: { name: string } }>('estado')
 
     const propuestasResponse: Array<PropuestasResponse> = await Promise.all(
@@ -54,6 +54,7 @@ export class GetPublicacionHandler {
 
         return {
           id: o._id.toString(),
+          emprendedorId: o.emprendedor.user.toString(),
           emprendedor: `${o.emprendedor.nombre} ${o.emprendedor.apellido}`,
           titulo: o.titulo,
           descripcion: o.descripcion,

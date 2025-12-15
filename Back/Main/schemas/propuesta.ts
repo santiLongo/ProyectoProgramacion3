@@ -21,6 +21,12 @@ propuestaSchema.virtual("comentarios", {
     foreignField: "propuesta"
 })
 
+propuestaSchema.virtual("votos", {
+    ref: "Voto",
+    localField: "_id",
+    foreignField: "propuesta"
+})
+
 propuestaSchema.set("toObject", { virtuals: true });
 
 const Propuesta = mongoose.model('Propuestas', propuestaSchema)

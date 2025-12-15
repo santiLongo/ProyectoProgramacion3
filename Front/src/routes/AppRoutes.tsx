@@ -18,6 +18,7 @@ function AppRoutes() {
         <Route path="/mi-perfil/empresa/:id" element={<MiPerfilRouter isEditable={true}/>} />
         <Route path="/perfil/empresa/:id" element={<MiPerfilRouter isEditable={false}/>} />
         <Route path="/mi-perfil/emprendedor/:id" element={<PerfilEmprendedor isEditable={true}/>} />
+        <Route path="/perfil/emprendedor/:id" element={<PerfilEmprendedor isEditable={false}/>} />
         <Route path="/mi-perfil/normalUser/:id" element={<PerfilEmprendedor isEditable={true}/>} />
         <Route path="/publicacion/:id" element={<VerPublicacionRouter />} />
         <Route path="/mensajes/:id" element={<MensajesRouter />} />

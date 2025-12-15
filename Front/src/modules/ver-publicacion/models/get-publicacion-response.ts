@@ -21,6 +21,7 @@ export interface ComentariosResponse{
 
 export interface PropuestasResponse{
     id: string;
+    emprendedorId: string;
     emprendedor: string;
     titulo: string;
     descripcion: string;

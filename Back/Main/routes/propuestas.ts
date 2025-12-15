@@ -10,6 +10,8 @@ import { ComentarPropuestaHandler } from '../handlers/propuestas-handlers/coment
 import type { ComentarPropuestaCommand } from '../handlers/propuestas-handlers/comentar/models/comentar-propuesta-command.ts'
 import { VotarPropuestaHandler } from '../handlers/propuestas-handlers/votar/votar-propuesta-handler.ts'
 import type { VotarPropuestaCommand } from '../handlers/propuestas-handlers/votar/models/votar-propuesta-command.ts'
+import type { UpdatePropuestaCommand } from '../handlers/propuestas-handlers/update/models/update-propuesta-command.ts'
+import { UpdatePropuestaHandler } from '../handlers/propuestas-handlers/update/update-propuesta-handler.ts'
 
 const router = express.Router()
 
@@ -35,7 +37,17 @@ router.post('/updateEstado', async (req: RequestWithBody<UpdateEstadoPropuestaCo
   const handler = new UpdateEstadoPropuestaHandler();
 
   await handler.handler(command);
-  res.status(201);
+  res.status(201).send();
+
+})
+
+router.post('/update-propuesta', async (req: RequestWithBody<UpdatePropuestaCommand>, res: any, next) => {
+  const command: UpdatePropuestaCommand = req.body;
+
+  const handler = new UpdatePropuestaHandler();
+
+  await handler.handle(command);
+  res.status(201).send();
 
 })
 

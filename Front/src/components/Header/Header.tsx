@@ -75,14 +75,6 @@ const HeaderComponent: React.FC = () => {
       },
       {
         key: "2",
-        icon: <PushpinOutlined />,
-        label: "Mis Propuestas",
-        onClick: () => {
-          // navigate("/gestion-publicaciones");
-        },
-      },
-      {
-        key: "3",
         icon: <UserOutlined />,
         label: "Mi Perfil",
         onClick: () => {
@@ -90,7 +82,7 @@ const HeaderComponent: React.FC = () => {
         },
       },
       {
-        key: "4",
+        key: "3",
         icon: <MessageOutlined />,
         label: "Mensajes",
         onClick: () => {
@@ -98,7 +90,7 @@ const HeaderComponent: React.FC = () => {
         },
       },
       {
-        key: "5",
+        key: "4",
         icon: <UserDeleteOutlined />,
         label: "Salir",
         onClick: () => {
@@ -108,10 +100,76 @@ const HeaderComponent: React.FC = () => {
     ];
   };
 
-  const items =
-    JSON.parse(localStorage.getItem("user") ?? "").role === "empresa"
-      ? itemsEmpresa()
-      : itemsEmprendedor();
+  const itemsAdmin = (): MenuItem[] => {
+    return [
+      {
+        key: "1",
+        icon: <AppstoreOutlined />,
+        label: "Inicio",
+        onClick: () => {
+          navigate("/");
+        },
+      },
+      {
+        key: "2",
+        icon: <UserOutlined />,
+        label: "Solicitudes",
+        onClick: () => {
+          navigate(`/solicitudes`);
+        },
+      },
+      {
+        key: "3",
+        icon: <UserDeleteOutlined />,
+        label: "Salir",
+        onClick: () => {
+          logOutService();
+        },
+      },
+    ];
+  };
+
+  const itemsNormalUser = (): MenuItem[] => {
+    return [
+      {
+        key: "1",
+        icon: <AppstoreOutlined />,
+        label: "Inicio",
+        onClick: () => {
+          navigate("/");
+        },
+      },
+      {
+        key: "2",
+        icon: <UserOutlined />,
+        label: "Mi Perfil",
+        onClick: () => {
+          navigate(`/mi-perfil/${UserService.role()}/${UserService.userId()}`);
+        },
+      },
+      {
+        key: "3",
+        icon: <UserDeleteOutlined />,
+        label: "Salir",
+        onClick: () => {
+          logOutService();
+        },
+      },
+    ];
+  };
+
+  const itemsUser = (): MenuItem[] => {
+    switch (UserService.role()) {
+      case "admin":
+        return itemsAdmin();
+      case "emprendedor":
+        return itemsEmprendedor();
+      case "empresa":
+        return itemsEmpresa();
+      default:
+        return itemsNormalUser();
+    }
+  };
 
   return (
     <>
@@ -133,7 +191,7 @@ const HeaderComponent: React.FC = () => {
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={["1"]}
-          items={items}
+          items={itemsUser()}
           style={{ flex: 1, minWidth: 0, background: "transparent" }}
           expandIcon={<HolderOutlined />}
         />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CardView } from "../../../components/card-view/CardView";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   comentarPropuesta,
   comentarPublicacion,
@@ -25,6 +25,7 @@ import {
 import { TagsOutlined, UserOutlined } from "@ant-design/icons";
 
 export const VerPublicacion: React.FC = () => {
+  const navigate = useNavigate();
   const [publi, setPubli] = useState<GetPublicacionResponse>();
   const [comentario, setComentario] = useState<string>("");
   const [comentar, setComentar] = useState<boolean>(false);
@@ -172,7 +173,7 @@ export const VerPublicacion: React.FC = () => {
                           borderRadius: 100,
                         }}
                       />
-                      <p style={{ margin: 0 }}>{propuesta.emprendedor}</p>
+                      <p style={{ margin: 0, cursor: 'pointer' }} onClick={() => navigate(`/perfil/emprendedor/${propuesta.emprendedorId}`)}>{propuesta.emprendedor}</p>
                     </Col>
                     <Col
                       span={20}
