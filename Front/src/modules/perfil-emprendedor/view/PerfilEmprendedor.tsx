@@ -261,7 +261,7 @@ export const PerfilEmprendedor: React.FC<PerfilEmprendedorProps> = ({
                   </Button>
                 )}
                 {isEditable && !user?.solicito && (
-                  <h3 style={{color: 'green'}}>Solicitud Enviada</h3>
+                  <h3 style={{ color: "green" }}>Solicitud Enviada</h3>
                 )}
               </>
             )}
@@ -392,9 +392,11 @@ export const PerfilEmprendedor: React.FC<PerfilEmprendedorProps> = ({
                       gap: "24px",
                     }}
                   >
-                    <p>
-                      <strong>Presupuesto:</strong> ${propuesta.presupuesto}
-                    </p>
+                    {isEditable && (
+                      <p>
+                        <strong>Presupuesto:</strong> ${propuesta.presupuesto}
+                      </p>
+                    )}
                     <p>
                       <strong>Estado:</strong> {propuesta.estado}
                     </p>

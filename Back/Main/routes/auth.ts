@@ -107,8 +107,8 @@ async function singUp(req: RequestWithBody<IUserSingUp>, res: any, next: any) {
     });
 
     user.role = new ObjectId(Roles.empresa);
-    user.save();
-    empresa.save();
+    await user.save();
+    await empresa.save();
     res.status(201).send();
   }
   user.save();
