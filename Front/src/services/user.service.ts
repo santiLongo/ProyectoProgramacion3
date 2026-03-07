@@ -15,21 +15,21 @@ export class UserService {
     const user = JSON.parse(localStorage.getItem("user") ?? "");
 
     return user?._id;
-  }
+  };
 
   static role = (): string => {
     const user = JSON.parse(localStorage.getItem("user") ?? "");
 
     return user?.role;
-  }
+  };
 
   static token = (): string | null => {
     const token = localStorage.getItem("token") ?? "";
     return token ?? null;
-  }
+  };
 
   static userName = (): string => {
     const user = JSON.parse(localStorage.getItem("user") ?? "");
-    return user?.userName
+    return user?.userName;
   };
 }
